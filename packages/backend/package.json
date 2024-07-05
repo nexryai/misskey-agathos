@@ -143,7 +143,7 @@
 		"@types/koa__multer": "2.0.7",
 		"@types/koa__router": "8.0.11",
 		"@types/mocha": "10.0.6",
-		"@types/node": "20.12.7",
+		"@types/node": "20.14.9",
 		"@types/node-fetch": "3.0.3",
 		"@types/nodemailer": "6.4.15",
 		"@types/oauth": "0.9.4",
