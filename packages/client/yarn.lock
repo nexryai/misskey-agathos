@@ -617,17 +617,17 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@tabler/icons-webfont@3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons-webfont/-/icons-webfont-3.6.0.tgz#45a75c87cf239c1d6fe55cd46ad7ab80f63d7fed"
-  integrity sha512-UiJ3j6m9VEyfNBBYFxa89t1HtC5n1zA6wrQ+Z04zx2hQ6kyHMoj8DnSNSt0/KJipvnIbWgNxDBmGTXA2KjK+SA==
+"@tabler/icons-webfont@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-webfont/-/icons-webfont-3.7.0.tgz#c15203d712955ad25b114d4df70e897d0a79c125"
+  integrity sha512-CMwRctyfa5+IU7OuRMUCH2cIJQIHsYQeWNkX0csqTWLvqzmPc7sj8mZTrLo3TPXJ5acZEqlnXri1bWIUD8SXrw==
   dependencies:
-    "@tabler/icons" "3.6.0"
+    "@tabler/icons" "3.7.0"
 
-"@tabler/icons@3.6.0":
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.6.0.tgz#9d5aeb4108bcd0d97b3c955ea425b645ea79a304"
-  integrity sha512-Zv0Ofc64RCMpZ2F8CvsWAphrSjerx5hEErt/RMmE+W8r4E5l5Lizi+My9KbbZQ4NyAtrtrOX80OY1oROZrRzEA==
+"@tabler/icons@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.7.0.tgz#b522723844644b50ccaddd0fd19a91c0eb3095da"
+  integrity sha512-lJGIZLSWrPO6VygRUbaVvQjWgL2EaiBMD8e6leCYUQ8ZPO4LIzKMq358C8KlhXJcyNiRz1Io3YWoc/DNTcWqSg==
 
 "@tokenizer/token@^0.3.0":
   version "0.3.0"

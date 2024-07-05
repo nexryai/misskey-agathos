@@ -15,7 +15,7 @@
 		"@rollup/plugin-alias": "5.1.0",
 		"@rollup/plugin-json": "6.1.0",
 		"@rollup/pluginutils": "5.1.0",
-		"@tabler/icons-webfont": "3.6.0",
+		"@tabler/icons-webfont": "3.7.0",
 		"@vitejs/plugin-vue": "5.0.5",
 		"@vue/compiler-sfc": "3.4.30",
         "@vue-macros/reactivity-transform": "0.4.6",
