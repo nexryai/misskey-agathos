@@ -32,18 +32,18 @@
 		"cleanall": "npm run clean-all"
 	},
 	"dependencies": {
-		"cssnano": "7.0.2",
-		"execa": "9.2.0",
+		"cssnano": "7.0.3",
+		"execa": "9.3.0",
 		"js-yaml": "4.1.0",
-		"postcss": "^8.4.38",
+		"postcss": "^8.4.39",
 		"terser": "5.31.1"
 	},
 	"devDependencies": {
 		"@types/gulp": "4.0.17",
 		"@types/gulp-rename": "2.0.6",
-		"@typescript-eslint/parser": "7.13.1",
+		"@typescript-eslint/parser": "7.15.0",
 		"cross-env": "7.0.3",
-		"cypress": "13.11.0",
+		"cypress": "13.13.0",
 		"start-server-and-test": "2.0.4",
 		"typescript": "5.4.5"
 	}
