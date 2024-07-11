@@ -26,6 +26,7 @@ WORKDIR /misskey
 COPY --chown=misskey:misskey --from=builder /misskey/built ./built
 COPY --chown=misskey:misskey --from=builder /misskey/packages/backend/node_modules ./packages/backend/node_modules
 COPY --chown=misskey:misskey --from=builder /misskey/packages/backend/built ./packages/backend/built
+COPY --chown=misskey:misskey package.json ./
 COPY --chown=misskey:misskey packages/backend/assets packages/backend/assets
 COPY --chown=misskey:misskey packages/backend/migration packages/backend/migration
 COPY --chown=misskey:misskey packages/backend/ormconfig.js packages/backend/package.json ./packages/backend
