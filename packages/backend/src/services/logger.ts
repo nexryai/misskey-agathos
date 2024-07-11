@@ -2,7 +2,6 @@ import cluster from "node:cluster";
 import chalk from "chalk";
 import { default as convertColor } from "color-convert";
 import { format as dateFormat } from "date-fns";
-import * as SyslogPro from "syslog-pro";
 import config from "@/config/index.js";
 import { envOption } from "../env.js";
 
@@ -25,20 +24,6 @@ export default class Logger {
             color: color,
         };
         this.store = store;
-
-        if (config.syslog) {
-            this.syslogClient = new SyslogPro.RFC5424({
-                applacationName: "Misskey",
-                timestamp: true,
-                encludeStructuredData: true,
-                color: true,
-                extendedColor: true,
-                server: {
-                    target: config.syslog.host,
-                    port: config.syslog.port,
-                },
-            });
-        }
     }
 
     public createSubLogger(domain: string, color?: string, store = true): Logger {

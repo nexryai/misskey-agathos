@@ -77,13 +77,8 @@ export type Source = {
 	deliverJobMaxAttempts?: number;
 	inboxJobMaxAttempts?: number;
 
-	syslog: {
-		host: string;
-		port: number;
-	};
-
 	mediaProxy?: string;
-	
+
 	disableAntenna?: boolean;
 	disableSearch?: boolean;
 
