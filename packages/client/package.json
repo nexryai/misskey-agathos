@@ -17,7 +17,7 @@
 		"@rollup/pluginutils": "5.1.0",
 		"@tabler/icons-webfont": "3.7.0",
 		"@vitejs/plugin-vue": "5.0.5",
-		"@vue/compiler-sfc": "3.4.30",
+		"@vue/compiler-sfc": "3.4.31",
         "@vue-macros/reactivity-transform": "0.4.6",
 		"autobind-decorator": "2.4.0",
 		"autosize": "6.0.1",
