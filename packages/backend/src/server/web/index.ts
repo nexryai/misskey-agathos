@@ -19,7 +19,6 @@ import config from "@/config/index.js";
 import { Users, Notes, UserProfiles, Pages, Clips } from "@/models/index.js";
 import * as Acct from "@/misc/acct.js";
 import { getNoteSummary } from "@/misc/get-note-summary.js";
-import { genOpenapiSpec } from "../api/openapi/gen-spec.js";
 import { urlPreviewHandler } from "./url-preview.js";
 import { manifestHandler } from "./manifest.js";
 import packFeed from "./feed.js";
@@ -241,27 +240,8 @@ router.get("/robots.txt", async ctx => {
 
 //#endregion
 
-// Docs
-router.get("/api-doc", async ctx => {
-    const { csp } = genCsp();
-    ctx.set("Content-Security-Policy", csp);
-    ctx.set("Cache-Control", "public, max-age=60");
-
-    try {
-        await send(ctx as any, "/redoc.html", {
-            root: staticAssets,
-        });
-    } catch (e) {
-        ctx.status = 500;
-    }
-});
-
 // URL preview endpoint
 router.get("/url", urlPreviewHandler);
-
-router.get("/api.json", async ctx => {
-    ctx.body = genOpenapiSpec();
-});
 
 const getFeed = async (acct: string) => {
     const { username, host } = Acct.parse(acct);

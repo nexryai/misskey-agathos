@@ -3,7 +3,6 @@ process.env.NODE_ENV = "test";
 import * as assert from "assert";
 import * as childProcess from "child_process";
 import * as crypto from "crypto";
-import * as openapi from "@redocly/openapi-core";
 import { createSignedPost } from "../src/remote/activitypub/ap-request";
 import { genRsaKeyPair } from "../src/misc/gen-key-pair";
 import { StatusError, getResponse } from "../src/misc/fetch";
@@ -17,7 +16,6 @@ const UNSPECIFIED = "*/*";
 
 // Response Contet-Type
 const AP = "application/activity+json; charset=utf-8";
-const TYPE_JSON = "application/json; charset=utf-8";
 const HTML = "text/html; charset=utf-8";
 
 describe("Fetch resource", () => {
@@ -56,32 +54,6 @@ describe("Fetch resource", () => {
             const res = await simpleGet("/docs/ja-JP/about");
             assert.strictEqual(res.status, 200);
             assert.strictEqual(res.type, HTML);
-        }));
-
-        it("GET api-doc", async(async () => {
-            const res = await simpleGet("/api-doc");
-            assert.strictEqual(res.status, 200);
-            assert.strictEqual(res.type, HTML);
-        }));
-
-        it("GET api.json", async(async () => {
-            const res = await simpleGet("/api.json");
-            assert.strictEqual(res.status, 200);
-            assert.strictEqual(res.type, TYPE_JSON);
-        }));
-
-        it("Validate api.json", async(async () => {
-            const config = await openapi.loadConfig();
-            const result = await openapi.bundle({
-                config,
-                ref: `http://localhost:${port}/api.json`,
-            });
-
-            for (const problem of result.problems) {
-                console.log(`${problem.message} - ${problem.location[0]?.pointer}`);
-            }
-
-            assert.strictEqual(result.problems.length, 0);
         }));
 
         it("GET favicon.ico", async(async () => {
