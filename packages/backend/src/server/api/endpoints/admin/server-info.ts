@@ -1,5 +1,4 @@
 import * as os from "node:os";
-import si from "systeminformation";
 import { db } from "@/db/postgre.js";
 import define from "../../define.js";
 import { redisClient } from "../../../../db/redis.js";
@@ -31,58 +30,6 @@ export const meta = {
                 type: "string",
                 optional: false, nullable: false,
             },
-            cpu: {
-                type: "object",
-                optional: false, nullable: false,
-                properties: {
-                    model: {
-                        type: "string",
-                        optional: false, nullable: false,
-                    },
-                    cores: {
-                        type: "number",
-                        optional: false, nullable: false,
-                    },
-                },
-            },
-            mem: {
-                type: "object",
-                optional: false, nullable: false,
-                properties: {
-                    total: {
-                        type: "number",
-                        optional: false, nullable: false,
-                        format: "bytes",
-                    },
-                },
-            },
-            fs: {
-                type: "object",
-                optional: false, nullable: false,
-                properties: {
-                    total: {
-                        type: "number",
-                        optional: false, nullable: false,
-                        format: "bytes",
-                    },
-                    used: {
-                        type: "number",
-                        optional: false, nullable: false,
-                        format: "bytes",
-                    },
-                },
-            },
-            net: {
-                type: "object",
-                optional: false, nullable: false,
-                properties: {
-                    interface: {
-                        type: "string",
-                        optional: false, nullable: false,
-                        example: "eth0",
-                    },
-                },
-            },
         },
     },
 } as const;
@@ -95,10 +42,6 @@ export const paramDef = {
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
-    const memStats = await si.mem();
-    const fsStats = await si.fsSize();
-    const netInterface = await si.networkInterfaceDefault();
-
     const redisServerInfo = await redisClient.info("Server");
     const m = redisServerInfo.match(new RegExp("^redis_version:(.*)", "m"));
     const redis_version = m?.[1];
@@ -112,16 +55,6 @@ export default define(meta, paramDef, async () => {
         cpu: {
             model: os.cpus()[0].model,
             cores: os.cpus().length,
-        },
-        mem: {
-            total: memStats.total,
-        },
-        fs: {
-            total: fsStats[0].size,
-            used: fsStats[0].used,
-        },
-        net: {
-            interface: netInterface,
         },
     };
 });

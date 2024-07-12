@@ -26,9 +26,9 @@ let used: number = $ref(0);
 let free: number = $ref(0);
 
 function onStats(stats) {
-    usage = stats.mem.active / props.meta.mem.total;
+    usage = stats.mem.usage / 100;
     total = props.meta.mem.total;
-    used = stats.mem.active;
+    used = stats.mem.used * 1024 * 1024;
     free = total - used;
 }
 

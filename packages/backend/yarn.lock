@@ -6727,11 +6727,6 @@ symbol-tree@^3.2.4:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
-systeminformation@5.22.6:
-  version "5.22.6"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.22.6.tgz#af892bc3ff6df8175f2c16cfc3bd06d1130da5dd"
-  integrity sha512-hUTQX+bRgIFbv1T/z251NtwGwNIeSyWURnT2BGnsYu6dQNbkiBl4oAwk50acVfITFq1Zvb8KDNgibQK9uGlUGg==
-
 tapable@^2.2.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.2.1.tgz#1967a73ef4060a82f12ab96af86d52fdb76eeca0"

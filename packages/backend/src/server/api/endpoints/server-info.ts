@@ -1,5 +1,4 @@
 import * as os from "node:os";
-import si from "systeminformation";
 import define from "../define.js";
 
 export const meta = {
@@ -16,9 +15,6 @@ export const paramDef = {
 
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
-    const memStats = await si.mem();
-    const fsStats = await si.fsSize();
-
     return {
         machine: os.hostname(),
         cpu: {
@@ -26,11 +22,7 @@ export default define(meta, paramDef, async () => {
             cores: os.cpus().length,
         },
         mem: {
-            total: memStats.total,
-        },
-        fs: {
-            total: fsStats[0].size,
-            used: fsStats[0].used,
+            total: os.totalmem(),
         },
     };
 });

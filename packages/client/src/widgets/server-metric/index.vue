@@ -5,22 +5,18 @@
 
     <div v-if="meta" class="mkw-serverMetric">
         <XCpuMemory v-if="widgetProps.view === 0" :connection="connection" :meta="meta"/>
-        <XNet v-else-if="widgetProps.view === 1" :connection="connection" :meta="meta"/>
-        <XCpu v-else-if="widgetProps.view === 2" :connection="connection" :meta="meta"/>
-        <XMemory v-else-if="widgetProps.view === 3" :connection="connection" :meta="meta"/>
-        <XDisk v-else-if="widgetProps.view === 4" :connection="connection" :meta="meta"/>
+        <XCpu v-else-if="widgetProps.view === 1" :connection="connection" :meta="meta"/>
+        <XMemory v-else-if="widgetProps.view === 2" :connection="connection" :meta="meta"/>
     </div>
 </MkContainer>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from "vue";
-import { useWidgetPropsManager, Widget, WidgetComponentEmits, WidgetComponentExpose, WidgetComponentProps } from "../widget";
+import { onUnmounted, ref } from "vue";
+import { useWidgetPropsManager, Widget, WidgetComponentExpose } from "../widget";
 import XCpuMemory from "./cpu-mem.vue";
-import XNet from "./net.vue";
 import XCpu from "./cpu.vue";
 import XMemory from "./mem.vue";
-import XDisk from "./disk.vue";
 import MkContainer from "@/components/MkContainer.vue";
 import { GetFormResultType } from "@/scripts/form";
 import * as os from "@/os";
@@ -66,7 +62,7 @@ os.api("server-info", {}).then(res => {
 });
 
 const toggleView = () => {
-    if (widgetProps.view === 4) {
+    if (widgetProps.view === 2) {
         widgetProps.view = 0;
     } else {
         widgetProps.view++;

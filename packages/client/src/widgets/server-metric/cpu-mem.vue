@@ -114,7 +114,7 @@ function onStats(connStats) {
     if (stats.length > 50) stats.shift();
 
     let cpuPolylinePointsStats = stats.map((s, i) => [viewBoxX - ((stats.length - 1) - i), (1 - s.cpu) * viewBoxY]);
-    let memPolylinePointsStats = stats.map((s, i) => [viewBoxX - ((stats.length - 1) - i), (1 - (s.mem.active / props.meta.mem.total)) * viewBoxY]);
+    let memPolylinePointsStats = stats.map((s, i) => [viewBoxX - ((stats.length - 1) - i), (1 - (s.mem.usage / 100)) * viewBoxY]);
     cpuPolylinePoints = cpuPolylinePointsStats.map(xy => `${xy[0]},${xy[1]}`).join(" ");
     memPolylinePoints = memPolylinePointsStats.map(xy => `${xy[0]},${xy[1]}`).join(" ");
 
@@ -127,7 +127,7 @@ function onStats(connStats) {
     memHeadY = memPolylinePointsStats[memPolylinePointsStats.length - 1][1];
 
     cpuP = (connStats.cpu * 100).toFixed(0);
-    memP = (connStats.mem.active / props.meta.mem.total * 100).toFixed(0);
+    memP = (connStats.mem.usage).toFixed(0);
 }
 
 function onStatsLog(statsLog) {

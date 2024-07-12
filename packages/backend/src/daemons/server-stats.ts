@@ -1,6 +1,6 @@
-import si from "systeminformation";
 import Xev from "xev";
 import * as osUtils from "os-utils";
+import * as process from "node:process";
 
 const ev = new Xev();
 
@@ -21,23 +21,12 @@ export default function() {
 
     async function tick() {
         const cpu = await cpuUsage();
-        const memStats = await mem();
-        const netStats = await net();
-        const fsStats = await fs();
 
         const stats = {
             cpu: roundCpu(cpu),
             mem: {
-                used: round(memStats.used - memStats.buffers - memStats.cached),
-                active: round(memStats.active),
-            },
-            net: {
-                rx: round(Math.max(0, netStats.rx_sec)),
-                tx: round(Math.max(0, netStats.tx_sec)),
-            },
-            fs: {
-                r: round(Math.max(0, fsStats.rIO_sec ?? 0)),
-                w: round(Math.max(0, fsStats.wIO_sec ?? 0)),
+                used: round(process.memoryUsage().rss / 1024 / 1024),
+                usage: round(((process.memoryUsage().rss / 1024 / 1024) / osUtils.totalmem()) * 100),
             },
         };
         ev.emit("serverStats", stats);
@@ -57,23 +46,4 @@ function cpuUsage(): Promise<number> {
             res(cpuUsage);
         });
     });
-}
-
-// MEMORY STAT
-async function mem() {
-    const data = await si.mem();
-    return data;
-}
-
-// NETWORK STAT
-async function net() {
-    const iface = await si.networkInterfaceDefault();
-    const data = await si.networkStats(iface);
-    return data[0];
-}
-
-// FS STAT
-async function fs() {
-    const data = await si.disksIO().catch(() => ({ rIO_sec: 0, wIO_sec: 0 }));
-    return data || { rIO_sec: 0, wIO_sec: 0 };
 }
