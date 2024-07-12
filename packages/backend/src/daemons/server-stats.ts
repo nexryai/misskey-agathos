@@ -1,7 +1,7 @@
-import Xev from "xev";
 import * as process from "node:process";
 import { readFile } from "node:fs";
 import * as os from "os";
+import Xev from "xev";
 
 const ev = new Xev();
 
