@@ -5,8 +5,10 @@
    * メモリ使用量がかなり削減されました
  - BREAKING: syslogのサポートを削除
  - Docker使用時のメモリ使用量を削減
-   * npmがnpmを呼び出していたのを修正し、メモリ使用量がかなり削減されました
+   * npmが呼び出したnpmが本体のプロセスを呼び出していたのを修正
+   * `npm run`を[npmrun](https://github.com/nexryai/npmrun)に置き換え
  - Dockerコンテナのイメージサイズを削減
+ - Update deps
 
 ## 12.24Q2.6
  - コントロールパネルが開けない問題を修正
