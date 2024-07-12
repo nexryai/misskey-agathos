@@ -2,17 +2,15 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import * as os from "node:os";
-import cluster from "node:cluster";
 import chalk from "chalk";
 import chalkTemplate from "chalk-template";
 
 import Logger from "@/services/logger.js";
 import loadConfig from "@/config/load.js";
 import { Config } from "@/config/types.js";
-import { lessThan } from "@/prelude/array.js";
 import { showMachineInfo } from "@/misc/show-machine-info.js";
-import { envOption } from "../env.js";
-import { db, initDb } from "../db/postgre.js";
+import { envOption } from "@/env.js";
+import { db, initDb } from "@/db/postgre.js";
 
 const _filename = fileURLToPath(import.meta.url);
 const _dirname = dirname(_filename);
@@ -24,7 +22,7 @@ const bootLogger = logger.createSubLogger("boot", "magenta", false);
 
 const themeColor = chalk.hex("#86b300");
 
-function greet() {
+function greet(): void {
     if (!envOption.quiet) {
         //#region Misskey logo
         const v = `v${meta.version}`;
@@ -49,7 +47,7 @@ function greet() {
 /**
  * Init master process
  */
-export async function masterMain() {
+export async function startServer(): Promise<void> {
     let config!: Config;
 
     // initialize app
@@ -65,10 +63,16 @@ export async function masterMain() {
         process.exit(1);
     }
 
-    bootLogger.succ("Misskey initialized");
+    bootLogger.succ("initialized");
 
-    if (!envOption.disableClustering) {
-        await spawnWorkers(config.clusterLimit);
+    if (!config.onlyQueueProcessor) {
+        // start server
+        await import("../server/index.js").then((x) => x.default());
+    }
+
+    if (!config.disableQueueProcessor) {
+        // start job queue
+        import("../queue/index.js").then(x => x.default());
     }
 
     bootLogger.succ(`Now listening on port ${config.port} on ${config.url}`, null, true);
@@ -134,25 +138,4 @@ async function connectDb(): Promise<void> {
 
         process.exit(1);
     }
-}
-
-async function spawnWorkers(limit = 1) {
-    const workers = Math.min(limit, os.cpus().length);
-    bootLogger.info(`Starting ${workers} worker${workers === 1 ? "" : "s"}...`);
-    await Promise.all([...Array(workers)].map(spawnWorker));
-    bootLogger.succ("All workers started");
-}
-
-function spawnWorker(): Promise<void> {
-    return new Promise(res => {
-        const worker = cluster.fork();
-        worker.on("message", message => {
-            if (message === "listenFailed") {
-                bootLogger.error("The server Listen failed due to the previous error.");
-                process.exit(1);
-            }
-            if (message !== "ready") return;
-            res();
-        });
-    });
 }

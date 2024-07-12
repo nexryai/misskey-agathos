@@ -1,5 +1,4 @@
 import cluster from "node:cluster";
-import chalk from "chalk";
 import Xev from "xev";
 
 import Logger from "@/services/logger.js";
@@ -7,29 +6,21 @@ import { envOption } from "../env.js";
 
 // for typeorm
 import "reflect-metadata";
-import { masterMain } from "./master.js";
-import { workerMain } from "./worker.js";
+import { startServer } from "./boot.js";
 
 const logger = new Logger("core", "cyan");
-const clusterLogger = logger.createSubLogger("cluster", "orange", false);
 const ev = new Xev();
 
 /**
  * Init process
  */
 export default async function() {
-    process.title = `Nexkey (${cluster.isPrimary ? "master" : "worker"})`;
+    process.title = "Nexkey Server";
 
-    if (cluster.isPrimary || envOption.disableClustering) {
-        await masterMain();
+    await startServer();
 
-        if (cluster.isPrimary) {
-            ev.mount();
-        }
-    }
-
-    if (cluster.isWorker || envOption.disableClustering) {
-        await workerMain();
+    if (cluster.isPrimary) {
+        ev.mount();
     }
 
     // ユニットテスト時にMisskeyが子プロセスで起動された時のため
@@ -41,24 +32,6 @@ export default async function() {
 
 //#region Events
 
-// Listen new workers
-cluster.on("fork", worker => {
-    clusterLogger.debug(`Process forked: [${worker.id}]`);
-});
-
-// Listen online workers
-cluster.on("online", worker => {
-    clusterLogger.debug(`Process is now online: [${worker.id}]`);
-});
-
-// Listen for dying workers
-cluster.on("exit", worker => {
-    // Replace the dead worker,
-    // we're not sentimental
-    clusterLogger.error(chalk.red(`[${worker.id}] died :(`));
-    cluster.fork();
-});
-
 // Display detail of unhandled promise rejection
 if (!envOption.quiet) {
     process.on("unhandledRejection", console.dir);
@@ -68,7 +41,9 @@ if (!envOption.quiet) {
 process.on("uncaughtException", err => {
     try {
         logger.error(err);
-    } catch { }
+    } catch {
+        // do nothing
+    }
 });
 
 // Dying away...
