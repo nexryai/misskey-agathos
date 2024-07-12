@@ -1,7 +1,7 @@
 import Xev from "xev";
-import * as osUtils from "os-utils";
 import * as process from "node:process";
 import { readFile } from "node:fs";
+import * as os from "os";
 
 const ev = new Xev();
 
@@ -20,15 +20,15 @@ export default function() {
         ev.emit(`serverStatsLog:${x.id}`, log.slice(0, x.length || 50));
     });
 
-    async function tick() {
-        const cpu = await cpuUsage();
+    async function tick(): Promise<void> {
+        const cpuUsage = await getCpuUsage();
         const memUsage = (await getMemoryUsage() || 0) / 1024 / 1024;
 
         const stats = {
-            cpu: roundCpu(cpu),
+            cpu: roundCpu(cpuUsage),
             mem: {
                 used: round(memUsage),
-                usage: round((memUsage / osUtils.totalmem()) * 100),
+                usage: round((memUsage / os.totalmem()) * 100),
             },
         };
         ev.emit("serverStats", stats);
@@ -42,12 +42,55 @@ export default function() {
 }
 
 // CPU STAT
-function cpuUsage(): Promise<number> {
+function getCpuUsage(): Promise<number> {
     return new Promise((res, rej) => {
-        osUtils.cpuUsage((cpuUsage) => {
-            res(cpuUsage);
-        });
+        try {
+            const stats1 = getCpu();
+            setTimeout(() => {
+                const stats2 = getCpu();
+                const idleDiff = stats2.idle - stats1.idle;
+                const totalDiff = stats2.total - stats1.total;
+
+                // Prevent division by zero
+                if (totalDiff === 0) {
+                    res(0);
+                    return;
+                }
+
+                const usagePercent = 1 - idleDiff / totalDiff;
+                res(usagePercent);
+            }, 1000);
+        } catch (e) {
+            rej(e);
+        }
     });
+}
+
+function getCpu(): { idle: number; total: number } {
+    const cpus = os.cpus();
+    let user = 0;
+    let nice = 0;
+    let sys = 0;
+    let idle = 0;
+    let irq = 0;
+
+    for (const cpu of cpus) {
+        if (!cpu.times) {
+            continue;
+        }
+
+        user += cpu.times.user;
+        nice += cpu.times.nice;
+        sys += cpu.times.sys;
+        idle += cpu.times.idle;
+        irq += cpu.times.irq;
+    }
+
+    const total = user + nice + sys + idle + irq;
+    return {
+        idle,
+        total,
+    };
 }
 
 function getMemoryUsage(): Promise<number | null> {

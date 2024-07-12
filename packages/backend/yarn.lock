@@ -5272,11 +5272,6 @@ os-filter-obj@^2.0.0:
   dependencies:
     arch "^2.1.0"
 
-os-utils@0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/os-utils/-/os-utils-0.0.14.tgz#29e511697b1982b8c627722175fe39797ef64156"
-  integrity sha512-ajB8csaHLBvJOYsHJkp8YdO2FvlBbf/ZxaYQwXXRDyQ84UoE+uTuLXxqd0shekXMX6Qr/pt/DDyLMRAMsgfWzg==
-
 otpauth@9.2.4:
   version "9.2.4"
   resolved "https://registry.yarnpkg.com/otpauth/-/otpauth-9.2.4.tgz#3b7941a689f63c31db43ab2494d3c2d90bc1f150"
