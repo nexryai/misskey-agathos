@@ -2,7 +2,7 @@ import * as os from "node:os";
 import define from "../define.js";
 
 export const meta = {
-    requireCredential: false,
+    requireCredential: true,
 
     tags: ["meta"],
 } as const;
