@@ -33,4 +33,4 @@ COPY --chown=misskey:misskey packages/backend/ormconfig.js packages/backend/pack
 
 ENV NODE_ENV=production
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["npm", "run", "migrateandstart"]
+CMD ["npm", "run", "docker:start"]

@@ -18,7 +18,7 @@
 		"start:test": "cd packages/backend && cross-env NODE_ENV=test node --experimental-json-modules ./built/index.js",
 		"init": "npm run migrate",
 		"migrate": "cd packages/backend && npx typeorm migration:run -d ormconfig.js",
-		"migrateandstart": "npm run migrate && npm run start",
+		"docker:start": "npm run migrate && cd packages/backend && node --experimental-json-modules ./built/index.js",
 		"watch": "npm run dev",
 		"dev": "node scripts/dev.mjs",
 		"lint": "node scripts/lint.mjs",
