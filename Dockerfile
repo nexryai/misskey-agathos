@@ -1,10 +1,11 @@
 # Build npmrun
 FROM rust:1-alpine as npmrun-builder
 WORKDIR /src
-RUN git clone https://github.com/nexryai/npmrun.git .
-RUN cargo build --release
 
 RUN apk add --no-cache git alpine-sdk
+
+RUN git clone https://github.com/nexryai/npmrun.git .
+RUN cargo build --release
 
 FROM node:20-alpine3.19 AS builder
 
