@@ -133,9 +133,6 @@ id: 'aid'
 # Whether disable HSTS
 #disableHsts: true
 
-# Number of worker processes
-#clusterLimit: 1
-
 # Worker only mode
 # onlyQueueProcessor: false
 

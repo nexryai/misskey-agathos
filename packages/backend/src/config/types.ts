@@ -60,8 +60,6 @@ export type Source = {
 
 	accesslog?: string;
 
-	clusterLimit?: number;
-
 	onlyQueueProcessor?: boolean;
 
 	disableQueueProcessor?: boolean;
