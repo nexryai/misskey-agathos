@@ -34,21 +34,10 @@
             </div>
         </div>
     </div>
-    <div class="subpub">
-        <div class="sub">
-            <div class="title">Sub</div>
-            <canvas ref="subDoughnutEl"></canvas>
-        </div>
-        <div class="pub">
-            <div class="title">Pub</div>
-            <canvas ref="pubDoughnutEl"></canvas>
-        </div>
-    </div>
 </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
 import {
     Chart,
     ArcElement,
@@ -69,8 +58,6 @@ import {
 } from "chart.js";
 import MkSelect from "@/components/form/select.vue";
 import MkChart from "@/components/MkChart.vue";
-import { useChartTooltip } from "@/scripts/use-chart-tooltip";
-import * as os from "@/os";
 import { i18n } from "@/i18n";
 
 Chart.register(
@@ -100,81 +87,6 @@ const props = withDefaults(defineProps<{
 
 const chartSpan = $ref<"hour" | "day">("hour");
 const chartSrc = $ref("active-users");
-let subDoughnutEl = $ref<HTMLCanvasElement>();
-let pubDoughnutEl = $ref<HTMLCanvasElement>();
-
-const { handler: externalTooltipHandler1 } = useChartTooltip();
-const { handler: externalTooltipHandler2 } = useChartTooltip();
-
-function createDoughnut(chartEl, tooltip, data) {
-    const chartInstance = new Chart(chartEl, {
-        type: "doughnut",
-        data: {
-            labels: data.map(x => x.name),
-            datasets: [{
-                backgroundColor: data.map(x => x.color),
-                borderColor: getComputedStyle(document.documentElement).getPropertyValue("--panel"),
-                borderWidth: 2,
-                hoverOffset: 0,
-                data: data.map(x => x.value),
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    left: 16,
-                    right: 16,
-                    top: 16,
-                    bottom: 16,
-                },
-            },
-            onClick: (ev) => {
-                const hit = chartInstance.getElementsAtEventForMode(ev, "nearest", { intersect: true }, false)[0];
-                if (hit && data[hit.index].onClick) {
-                    data[hit.index].onClick();
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                tooltip: {
-                    enabled: false,
-                    mode: "index",
-                    animation: {
-                        duration: 0,
-                    },
-                    external: tooltip,
-                },
-            },
-        },
-    });
-
-    return chartInstance;
-}
-
-onMounted(() => {
-    os.apiGet("federation/stats", { limit: 30 }).then(fedStats => {
-        createDoughnut(subDoughnutEl, externalTooltipHandler1, fedStats.topSubInstances.map(x => ({
-            name: x.host,
-            color: x.themeColor,
-            value: x.followersCount,
-            onClick: () => {
-                os.pageWindow(`/instance-info/${x.host}`);
-            },
-        })).concat([{ name: "(other)", color: "#80808080", value: fedStats.otherFollowersCount }]));
-
-        createDoughnut(pubDoughnutEl, externalTooltipHandler2, fedStats.topPubInstances.map(x => ({
-            name: x.host,
-            color: x.themeColor,
-            value: x.followingCount,
-            onClick: () => {
-                os.pageWindow(`/instance-info/${x.host}`);
-            },
-        })).concat([{ name: "(other)", color: "#80808080", value: fedStats.otherFollowingCount }]));
-    });
-});
 </script>
 
 <style lang="scss" scoped>
