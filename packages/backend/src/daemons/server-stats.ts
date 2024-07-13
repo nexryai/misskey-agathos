@@ -23,12 +23,13 @@ export default function() {
     async function tick(): Promise<void> {
         const cpuUsage = await getCpuUsage();
         const memUsage = (await getMemoryUsage() || 0) / 1024 / 1024;
+        const memTotal = os.totalmem() / 1024 / 1024;
 
         const stats = {
             cpu: roundCpu(cpuUsage),
             mem: {
                 used: round(memUsage),
-                usage: round((memUsage / os.totalmem()) * 100),
+                usage: round((memUsage / memTotal) * 100),
             },
         };
         ev.emit("serverStats", stats);
