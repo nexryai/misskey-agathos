@@ -1,7 +1,7 @@
 {
 	"name": "nexkey",
-	"version": "12.24Q2.6",
-	"codename": "SpringNap",
+	"version": "12.24Q3.1",
+	"codename": "HarmonyBird",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/nexryai/nexkey"
