@@ -202,9 +202,11 @@ watch(narrow, () => {
 });
 
 onMounted(() => {
-    ro.observe(el);
+    if (el.value) {
+        ro.observe(el.value);
+    }
 
-    narrow.value = el.offsetWidth < NARROW_THRESHOLD;
+    narrow.value = el.value?.offsetWidth < NARROW_THRESHOLD;
     if (currentPage.value?.route.name == null && !narrow.value) {
         router.push("/admin/overview");
     }
