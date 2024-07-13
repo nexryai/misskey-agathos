@@ -4,10 +4,18 @@
    * ロードバランシングしたい場合はK8Sを使うなどしてください
    * メモリ使用量がかなり削減されました
  - BREAKING: syslogのサポートを削除
+ - Security: /api/server-infoをクレデンシャル必須に変更
  - Docker使用時のメモリ使用量を削減
    * npmが呼び出したnpmが本体のプロセスを呼び出していたのを修正
    * `npm run`を[npmrun](https://github.com/nexryai/npmrun)に置き換え
  - Dockerコンテナのイメージサイズを削減
+ - サーバーメトリクスで見れる情報を減らしてsysteminformationを削除
+   * CPUとメモリ情報以外見れないようにする
+   * systeminformationがexecSyncなどのパフォーマンスに悪影響を及ぼす関数を使っているため・必要以上に詳細な情報が見れるのはセキュリティ的によくないため
+   * 現在使用しているメモリ量は`/proc/meminfo`から取得するようになりました。このファイルが存在しないLinux以外のOS使用時は、メモリ使用量として現在のNodeプロセスが使用しているメモリの量をサーバーメトリクスに表示します。
+ - Fix: コントロールパネルがモバイル端末で正常に表示されない問題を修正
+ - Fix: インスタンス情報の壊れていたチャートを削除
+ - Client: /admin/overviewの表示を改善
  - Update deps
 
 ## 12.24Q2.6
