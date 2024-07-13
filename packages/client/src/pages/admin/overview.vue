@@ -28,6 +28,26 @@
                 </div>
             </div>
 
+            <div v-if="stats" class="container federationStats">
+                <div class="title">Federation</div>
+                <div class="body">
+                    <div class="number _panel">
+                        <div class="label">Sub</div>
+                        <div class="value _monospace">
+                            {{ number(federationSubActive) }}
+                            <MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationSubActiveDiff"><template #before>(</template><template #after>)</template></MkNumberDiff>
+                        </div>
+                    </div>
+                    <div class="number _panel">
+                        <div class="label">Pub</div>
+                        <div class="value _monospace">
+                            {{ number(federationPubActive) }}
+                            <MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationPubActiveDiff"><template #before>(</template><template #after>)</template></MkNumberDiff>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="container queue">
                 <div class="title">Job queue</div>
                 <div class="body">
@@ -41,26 +61,13 @@
                     </div>
                 </div>
             </div>
-
-            <div class="container users">
-                <div class="title">New users</div>
-                <div v-if="newUsers" class="body">
-                    <XUser v-for="user in newUsers" :key="user.id" class="user" :user="user"/>
-                </div>
-            </div>
-
-            <div class="container files">
-                <div class="title">Recent files</div>
-                <div class="body">
-                    <MkFileListForAdmin :pagination="filesPagination" view-mode="grid"/>
-                </div>
-            </div>
-
+        </div>
+        <div class="right">
             <div class="container env">
                 <div class="title">Enviroment</div>
                 <div class="body">
                     <div class="number _panel">
-                        <div class="label">Misskey</div>
+                        <div class="label">Server Version</div>
                         <div class="value _monospace">{{ version }}</div>
                     </div>
                     <div v-if="serverInfo" class="number _panel">
@@ -81,62 +88,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="right">
-            <div class="container charts">
-                <div class="title">Active users</div>
-                <div class="body">
-                    <canvas ref="chartEl"></canvas>
-                </div>
-            </div>
+
             <div class="container federation">
                 <div class="title">Active instances</div>
                 <div class="body">
                     <XFederation/>
-                </div>
-            </div>
-            <div v-if="stats" class="container federationStats">
-                <div class="title">Federation</div>
-                <div class="body">
-                    <div class="number _panel">
-                        <div class="label">Sub</div>
-                        <div class="value _monospace">
-                            {{ number(federationSubActive) }}
-                            <MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationSubActiveDiff"><template #before>(</template><template #after>)</template></MkNumberDiff>
-                        </div>
-                    </div>
-                    <div class="number _panel">
-                        <div class="label">Pub</div>
-                        <div class="value _monospace">
-                            {{ number(federationPubActive) }}
-                            <MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationPubActiveDiff"><template #before>(</template><template #after>)</template></MkNumberDiff>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container tagCloud">
-                <div class="body">
-                    <MkTagCloud v-if="activeInstances">
-                        <li v-for="instance in activeInstances">
-                            <a v-if="instance.iconUrl" @click.prevent="onInstanceClick(instance)">
-                                <img style="width: 32px;" :src="instance.iconUrl">
-                            </a>
-                        </li>
-                    </MkTagCloud>
-                </div>
-            </div>
-            <div v-if="topSubInstancesForPie && topPubInstancesForPie" class="container federationPies">
-                <div class="body">
-                    <div class="chart deliver">
-                        <div class="title">Sub</div>
-                        <XPie :data="topSubInstancesForPie"/>
-                        <div class="subTitle">Top 10</div>
-                    </div>
-                    <div class="chart inbox">
-                        <div class="title">Pub</div>
-                        <XPie :data="topPubInstancesForPie"/>
-                        <div class="subTitle">Top 10</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -167,11 +123,8 @@ import { enUS } from "date-fns/locale";
 import tinycolor from "tinycolor2";
 import XFederation from "./overview.federation.vue";
 import XQueueChart from "./overview.queue-chart.vue";
-import XUser from "./overview.user.vue";
-import XPie from "./overview.pie.vue";
 import MkNumberDiff from "@/components/MkNumberDiff.vue";
-import MkTagCloud from "@/components/MkTagCloud.vue";
-import { version, url } from "@/config";
+import { version } from "@/config";
 import number from "@/filters/number";
 import * as os from "@/os";
 import { stream } from "@/stream";
@@ -180,7 +133,6 @@ import { definePageMetadata } from "@/scripts/page-metadata";
 import "chartjs-adapter-date-fns";
 import { defaultStore } from "@/store";
 import { useChartTooltip } from "@/scripts/use-chart-tooltip";
-import MkFileListForAdmin from "@/components/MkFileListForAdmin.vue";
 
 Chart.register(
     ArcElement,
@@ -205,8 +157,6 @@ const chartEl = $ref<HTMLCanvasElement>(null);
 let stats: any = $ref(null);
 let onlineUsersCount = $ref();
 let serverInfo: any = $ref(null);
-let topSubInstancesForPie: any = $ref(null);
-let topPubInstancesForPie: any = $ref(null);
 let usersComparedToThePrevDay: any = $ref(null);
 let notesComparedToThePrevDay: any = $ref(null);
 let federationPubActive = $ref<number | null>(null);
@@ -219,11 +169,6 @@ const queueStatsConnection = markRaw(stream.useChannel("queueStats"));
 const now = new Date();
 let chartInstance: Chart = null;
 const chartLimit = 30;
-const filesPagination = {
-    endpoint: "admin/drive/files" as const,
-    limit: 9,
-    noPaging: true,
-};
 
 const { handler: externalTooltipHandler } = useChartTooltip();
 
@@ -249,7 +194,6 @@ async function renderChart() {
 
     const raw = await os.api("charts/active-users", { limit: chartLimit, span: "day" });
 
-    const gridColor = defaultStore.state.darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
     const vLineColor = defaultStore.state.darkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)";
 
     // フォントカラー
@@ -381,10 +325,6 @@ async function renderChart() {
     });
 }
 
-function onInstanceClick(i) {
-    os.pageWindow(`/instance-info/${i.host}`);
-}
-
 onMounted(async () => {
     /*
 	const magicGrid = new MagicGrid({
@@ -419,25 +359,6 @@ onMounted(async () => {
         federationPubActiveDiff = chart.pubActive[0] - chart.pubActive[1];
         federationSubActive = chart.subActive[0];
         federationSubActiveDiff = chart.subActive[0] - chart.subActive[1];
-    });
-
-    os.apiGet("federation/stats", { limit: 10 }).then(res => {
-        topSubInstancesForPie = res.topSubInstances.map(x => ({
-            name: x.host,
-            color: x.themeColor,
-            value: x.followersCount,
-            onClick: () => {
-                os.pageWindow(`/instance-info/${x.host}`);
-            },
-        })).concat([{ name: "(other)", color: "#80808080", value: res.otherFollowersCount }]);
-        topPubInstancesForPie = res.topPubInstances.map(x => ({
-            name: x.host,
-            color: x.themeColor,
-            value: x.followingCount,
-            onClick: () => {
-                os.pageWindow(`/instance-info/${x.host}`);
-            },
-        })).concat([{ name: "(other)", color: "#80808080", value: res.otherFollowingCount }]);
     });
 
     os.api("admin/server-info").then(serverInfoResponse => {
