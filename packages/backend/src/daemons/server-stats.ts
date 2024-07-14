@@ -10,6 +10,8 @@ const interval = 2000;
 const roundCpu = (num: number) => Math.round(num * 1000) / 1000;
 const round = (num: number) => Math.round(num * 10) / 10;
 
+const totalMem = os.totalmem();
+
 /**
  * Report server stats regularly
  */
@@ -23,7 +25,7 @@ export default function() {
     async function tick(): Promise<void> {
         const cpuUsage = await getCpuUsage();
         const memUsage = (await getMemoryUsage() || 0) / 1024 / 1024;
-        const memTotal = os.totalmem() / 1024 / 1024;
+        const memTotal = totalMem / 1024 / 1024;
 
         const stats = {
             cpu: roundCpu(cpuUsage),
@@ -96,7 +98,7 @@ function getCpu(): { idle: number; total: number } {
 
 function getMemoryUsage(): Promise<number | null> {
     if (process.platform === "linux") {
-        return getAvailableMemoryFromProc();
+        return getUsedMemoryFromProc();
     } else {
         // 現在のプロセスのメモリ使用量にフォールバック
         return new Promise((resolve) => {
@@ -105,7 +107,7 @@ function getMemoryUsage(): Promise<number | null> {
     }
 }
 
-function getAvailableMemoryFromProc(): Promise<number | null> {
+function getUsedMemoryFromProc(): Promise<number | null> {
     return new Promise((resolve, reject) => {
         readFile("/proc/meminfo", (err, data) => {
             if (err) {
@@ -147,7 +149,7 @@ function getAvailableMemoryFromProc(): Promise<number | null> {
                         reject(new Error("Unknown unit: " + unit));
                         return;
                 }
-                resolve(valueInBytes);
+                resolve(totalMem - valueInBytes);
             } catch (error) {
                 reject(error);
             }
