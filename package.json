@@ -45,6 +45,6 @@
 		"cross-env": "7.0.3",
 		"cypress": "13.13.0",
 		"start-server-and-test": "2.0.4",
-		"typescript": "5.4.5"
+		"typescript": "5.5.4"
 	}
 }
