@@ -36,7 +36,7 @@
 		"execa": "9.3.0",
 		"js-yaml": "4.1.0",
 		"postcss": "^8.4.41",
-		"terser": "5.31.2"
+		"terser": "5.31.5"
 	},
 	"devDependencies": {
 		"@types/gulp": "4.0.17",
