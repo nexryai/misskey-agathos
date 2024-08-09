@@ -35,15 +35,15 @@
 		"cssnano": "7.0.4",
 		"execa": "9.3.0",
 		"js-yaml": "4.1.0",
-		"postcss": "^8.4.40",
+		"postcss": "^8.4.41",
 		"terser": "5.31.2"
 	},
 	"devDependencies": {
 		"@types/gulp": "4.0.17",
 		"@types/gulp-rename": "2.0.6",
-		"@typescript-eslint/parser": "7.16.0",
+		"@typescript-eslint/parser": "8.0.1",
 		"cross-env": "7.0.3",
-		"cypress": "13.13.0",
+		"cypress": "13.13.2",
 		"start-server-and-test": "2.0.4",
 		"typescript": "5.5.4"
 	}
