@@ -40,104 +40,104 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
-"@cropper/element-canvas@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-canvas/-/element-canvas-2.0.0-rc.1.tgz#e1c87914ff347fa075f51a2b72f7412bb3d59c30"
-  integrity sha512-jRt9OM7cls+zch8U2m7pA9wp8dNOz0EtedGKkqH+DInUYw1+UtonEJirrxyl1YHRgOme5M5DTsDmkUSrUiZN6g==
+"@cropper/element-canvas@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-canvas/-/element-canvas-2.0.0-rc.2.tgz#438ac2f52bf42872d8ea82e8de42f3ac64269922"
+  integrity sha512-0aqbJ3ycQM6/yn4T03vw8K/OeTB8C6+Z/jimuavy4UM2CENH9ucSLM4hAG0yYCgghIyv9Zd0unaBmtgW+I5+SQ==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-crosshair@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-crosshair/-/element-crosshair-2.0.0-rc.1.tgz#938ded9b24334f6b84e5ef77c72316764bce9655"
-  integrity sha512-xfLelqM8EnRZUf7xEE88RWQQx5erUv7jrzni52bAw3/Ua8HXIz3uAMnkrGKOTBj8K4Rv/mNJY8k1DVAEfHY6Lg==
+"@cropper/element-crosshair@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-crosshair/-/element-crosshair-2.0.0-rc.2.tgz#46909655a0e65c7ddd589a22ff88310869834366"
+  integrity sha512-yopINLvaZhL3E2GNienju1zeQ1Cifkn5f/0R7ZabXcAgUI0s2sLzNqL8+2XV2J3DzEzYEIYc+49KmMle04nVWQ==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-grid@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-grid/-/element-grid-2.0.0-rc.1.tgz#9e8d29cd55866dbb1a91937e78adaf79d6359881"
-  integrity sha512-U/BYPl76upd9sXT+pZTFoQzUqWyNxdGs4YR2UtaVCfTMHLDTrssPAedmqEEnHgbqVcr325sIEfVmwWVA+v+8Dg==
+"@cropper/element-grid@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-grid/-/element-grid-2.0.0-rc.2.tgz#b845235db766d9757c3476ac1d59f17e92d18b5a"
+  integrity sha512-PzAfEya6CmIc/o/lcA/NZ1rohszz42wjq2z3E2zq2jMfNDxY/EIoFnGI6+hJrxCAaoKD8UlKOEHQdRQbtnjcMg==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-handle@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-handle/-/element-handle-2.0.0-rc.1.tgz#2aac37b40b44d7763a33773927379f02129f1df3"
-  integrity sha512-GuOHbjkg5CP1+oFzWQeD7VZffUE86dp4gKv5egLxkBEwnQp1VQxjO7L1Wkgj+KsQymoDczsl+x4bF12KDyDg2g==
+"@cropper/element-handle@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-handle/-/element-handle-2.0.0-rc.2.tgz#2ebb6faf06c01fe381faa105507b9b355d2f30f5"
+  integrity sha512-wOWX4xpryxKcrhnJC2mHebqQQ622UN2oyQoDZcaMzvlwt7nnX3bInF+SFrIj9/aCxtCUYY0oD2gaJkfd6aNJ0g==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-image@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-image/-/element-image-2.0.0-rc.1.tgz#8e694e3da33f9e6a53d70b3d6ddfaca213f9b979"
-  integrity sha512-ttzawKbUkR2A9U3bc2AN/jbNdszBP/yb83PIc5jekjOs+Z7kUBVdOo1SLIewpQ0DjUzhfCRXWUowP1McVQUXZw==
+"@cropper/element-image@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-image/-/element-image-2.0.0-rc.2.tgz#ab31f5f0dc23fd636e60656e3bc9799bed592b61"
+  integrity sha512-RTKnuJrqn1K8FscS11auit2W57AG04mxRNOxBldYs3lKTkwZjzJdQFkZ/Nxu+cwVXT+c6IeEiayNKvu4B7CAQg==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/element-canvas" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/element-canvas" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-selection@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-selection/-/element-selection-2.0.0-rc.1.tgz#8d9bb0607b641aa68a820f83bd5d7f205d61597c"
-  integrity sha512-AcRHRbsyt9xRfBD1QRyNDTS+vaYg6uAeuqhk/Ra58pqxlhtoimAV3oQ7uc/edwOlK60f/DxtKCc8rSOYFQ85bQ==
+"@cropper/element-selection@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-selection/-/element-selection-2.0.0-rc.2.tgz#76e5c4eb393a5bce78f5cfe1ced62a91cb4a95e1"
+  integrity sha512-UIgIHKHz4qNKlm5YRnC/Pu9+VrInm5TSOzkmU8kPt2swUk0WHNRv3ZcOjCQZ2ccTQnAH3FVM3FYDZ8HjRwLcBg==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/element-canvas" "^2.0.0-rc.1"
-    "@cropper/element-image" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/element-canvas" "^2.0.0-rc.2"
+    "@cropper/element-image" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-shade@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-shade/-/element-shade-2.0.0-rc.1.tgz#e0af8eb9ff549dda44357e17012867a54da5f9e3"
-  integrity sha512-nHv2WujETENoIfxWQn7TYiOnXm5YUnZsoG4r6njK5cxj0gIUfPudUSbjWCQSuB2oxxpeEK8oyTdfOZtP9cxK4g==
+"@cropper/element-shade@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-shade/-/element-shade-2.0.0-rc.2.tgz#a953b6ca2a572bf290bb05ccc2daf41a26bac94f"
+  integrity sha512-vHAGFxlqgflGZWkRYNWNHUY0zsV72YZGmCgtUu4sMrnWLZL/jMGhxmm8zZCe/aB94F829XcQ6uf3BoiApB+7Ng==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/element-canvas" "^2.0.0-rc.1"
-    "@cropper/element-selection" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/element-canvas" "^2.0.0-rc.2"
+    "@cropper/element-selection" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element-viewer@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element-viewer/-/element-viewer-2.0.0-rc.1.tgz#00ad1b51b1c97a5411e97f65dc91fae49955a845"
-  integrity sha512-xTj0BObCygbVWXc7t7FYZ9k2eFyWN360it5uGeAkImXcwINRQGTFcLLOjs6i3SwedI7F1a1yNcTBfoT1B/sNAg==
+"@cropper/element-viewer@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element-viewer/-/element-viewer-2.0.0-rc.2.tgz#5694f207ab9b64ff4b29348bb16ff72f13ce1795"
+  integrity sha512-2z9mIA7ic3enNS4xvq9Gq6hnRZ1tPr0h+lCrOHP55NL4he63lE9oTVJfDx19rL95wUS4VxL2ANvr2BVLNiBM7A==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/element-canvas" "^2.0.0-rc.1"
-    "@cropper/element-image" "^2.0.0-rc.1"
-    "@cropper/element-selection" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/element-canvas" "^2.0.0-rc.2"
+    "@cropper/element-image" "^2.0.0-rc.2"
+    "@cropper/element-selection" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/element@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/element/-/element-2.0.0-rc.1.tgz#056d19a3f1dab6b856d1d0d77f4d8f51be6ea419"
-  integrity sha512-OPKgjUgYC2Xmv77vEqtAR6bdfKOW+v9FrSjr4re3u95rcVj6NJ0JidIta41Ipp8KydHTXSmLetq4XDrA+vuIJQ==
+"@cropper/element@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/element/-/element-2.0.0-rc.2.tgz#6576c1e6caf055a6ded042225b3a2005d15cfd67"
+  integrity sha512-4G6lTJblndwzpsb43YKeHiKcocOkDIWystGzbHNbqRysE0U0lYHuRyvV7FW6a9S63wtMFSYuwFxcdUdUcmkF8w==
   dependencies:
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/utils" "^2.0.0-rc.2"
 
-"@cropper/elements@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/elements/-/elements-2.0.0-rc.1.tgz#81f8d044f5e5eb0713f34f2b8418081c6c83b89e"
-  integrity sha512-6qbtCq3iL3dETVav2XA03a8iLkHXWMIqHFxViMjlLr9CSuDjjaS5wp0JDuGtPv5FHxjsjyQ8Yayt8Ak5p09Zxg==
+"@cropper/elements@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/elements/-/elements-2.0.0-rc.2.tgz#ec68b22fc4a8d0928a2f76d0191f358dce2ed602"
+  integrity sha512-NG5kdqpv7/tGvUfNjJiIHr2Ip431v5t/P5cIXTcYAgt8PRyFJmjx3fatC7NLnP/FUlv+bbzd8PMRI4LY4Gaw3Q==
   dependencies:
-    "@cropper/element" "^2.0.0-rc.1"
-    "@cropper/element-canvas" "^2.0.0-rc.1"
-    "@cropper/element-crosshair" "^2.0.0-rc.1"
-    "@cropper/element-grid" "^2.0.0-rc.1"
-    "@cropper/element-handle" "^2.0.0-rc.1"
-    "@cropper/element-image" "^2.0.0-rc.1"
-    "@cropper/element-selection" "^2.0.0-rc.1"
-    "@cropper/element-shade" "^2.0.0-rc.1"
-    "@cropper/element-viewer" "^2.0.0-rc.1"
+    "@cropper/element" "^2.0.0-rc.2"
+    "@cropper/element-canvas" "^2.0.0-rc.2"
+    "@cropper/element-crosshair" "^2.0.0-rc.2"
+    "@cropper/element-grid" "^2.0.0-rc.2"
+    "@cropper/element-handle" "^2.0.0-rc.2"
+    "@cropper/element-image" "^2.0.0-rc.2"
+    "@cropper/element-selection" "^2.0.0-rc.2"
+    "@cropper/element-shade" "^2.0.0-rc.2"
+    "@cropper/element-viewer" "^2.0.0-rc.2"
 
-"@cropper/utils@^2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cropper/utils/-/utils-2.0.0-rc.1.tgz#f78d3bb791813366cde7dbb79c222f3b50cfb28d"
-  integrity sha512-kreB3wdrAhmTEscfB8/j7ksGBgYSKN+28t37CAI0Vb5DvX/aUDPDH+3e2kyD7YE+DIZgdnuY2FsMYJAQ9sTThg==
+"@cropper/utils@^2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cropper/utils/-/utils-2.0.0-rc.2.tgz#2b8ba6cb4abd75fcc48f5efd363ff77a0bd3e25d"
+  integrity sha512-EEivNsyV6BtL496m4Q/IeAC6FGlyKjKIT1qMtwaxtkR+2ZlKnf9O7AdcGpClemIBA+TbwWAzp0UyIvYFtKUZ1Q==
 
 "@cypress/request@^3.0.1":
   version "3.0.1"
@@ -1703,13 +1703,13 @@ core-util-is@1.0.2:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-cropperjs@2.0.0-rc.1:
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-2.0.0-rc.1.tgz#2e338c1990aa7c27a84618cd41d2f83c46270e70"
-  integrity sha512-Y9ciurIuK6G1vy0ErHC8Gt6wHWvsHWJ5fgE60GL6vsuF2WzHwDpH7F1yof40XAEheeSN4v3rD09D1VZ7kiiSOA==
+cropperjs@2.0.0-rc.2:
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-2.0.0-rc.2.tgz#dc961be5f275418ce5178b7592d84ebb771e63df"
+  integrity sha512-BTuz+UeZphGOEnBCuQiNT4rk1uFfKJaKmTgoH9XU7Q8IMkLdodW7YPWINmXJXwWMt1nXiKze5qKADVbz9xtVFg==
   dependencies:
-    "@cropper/elements" "^2.0.0-rc.1"
-    "@cropper/utils" "^2.0.0-rc.1"
+    "@cropper/elements" "^2.0.0-rc.2"
+    "@cropper/utils" "^2.0.0-rc.2"
 
 cross-env@7.0.3:
   version "7.0.3"
