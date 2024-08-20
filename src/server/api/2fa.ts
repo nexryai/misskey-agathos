@@ -53,7 +53,7 @@ function getCertSubject(certificate: string) {
     return fields;
 }
 
-function verifyCertificateChain(certificates: string[]) {
+function verifyCertificateChain(certificates: string[]): boolean {
     let valid = true;
 
     for (let i = 0; i < certificates.length; i++) {
@@ -70,6 +70,11 @@ function verifyCertificateChain(certificates: string[]) {
         // Verify against CA
         const Signature = new jsrsasign.KJUR.crypto.Signature({ alg: algorithm });
         Signature.init(CACert);
+
+        if (!certStruct) {
+            return false
+        }
+
         Signature.updateHex(certStruct);
         valid = valid && !!Signature.verify(signatureHex); // true if CA signed the certificate
     }
