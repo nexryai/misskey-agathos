@@ -110,6 +110,7 @@ export interface IPost extends IObject {
 		content: string;
 		mediaType: string;
 	};
+    _misskey_content?: string;
 	_misskey_quote?: string;
 	quoteUrl?: string;
 	_misskey_talk: boolean;

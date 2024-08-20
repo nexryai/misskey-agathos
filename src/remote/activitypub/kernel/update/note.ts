@@ -64,6 +64,7 @@ export default async function(actor: IRemoteUser, note: IPost): Promise<string> 
         await Notes.update({ id: origin.id }, updates);
 
         // Publish to streaming
+        //@ts-ignore
         publishNoteStream(origin.id, "updated", updates);
 
         return "ok";
