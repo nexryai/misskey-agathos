@@ -171,12 +171,12 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@discordapp/twemoji@15.0.3":
-  version "15.0.3"
-  resolved "https://registry.yarnpkg.com/@discordapp/twemoji/-/twemoji-15.0.3.tgz#71a428080c21df5c305121bc1f0fc42cf3a3cfcc"
-  integrity sha512-5t0LLrNaSqViG0cSaomWwfR0+3fWqok+xLq40M8hJHxNX7s8gIoyNZYybQJo+s5/rGMjgdldpt8Ox8MapGvBUA==
+"@discordapp/twemoji@15.1.0":
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@discordapp/twemoji/-/twemoji-15.1.0.tgz#f98bb4d831375d63787821f13c240e000807b808"
+  integrity sha512-QdpV4ifTONAXvDjRrMohausZeGrQ1ac/Ox6togUh6Xl3XKJ/KAaMMuAEi0qsb0wDwoVTSZBll5Y6+N3hB2ktBw==
   dependencies:
-    "@twemoji/parser" "15.0.0"
+    "@twemoji/parser" "15.1.0"
     fs-extra "^8.0.1"
     jsonfile "^5.0.0"
     universalify "^0.1.2"
@@ -640,6 +640,11 @@
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@twemoji/parser/-/parser-15.0.0.tgz#8ae9749659ef524b5f0e6ee1412d0e48865e77bf"
   integrity sha512-lh9515BNsvKSNvyUqbj5yFu83iIDQ77SwVcsN/SnEGawczhsKU6qWuogewN1GweTi5Imo5ToQ9s+nNTf97IXvg==
+
+"@twemoji/parser@15.1.0":
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@twemoji/parser/-/parser-15.1.0.tgz#ad83b69fcd1fbcb705022f2b85d73e127ad5f335"
+  integrity sha512-3HTiSxPvkWUJ4kZeCvwyKlIwkpTUfBOk6igpBBRQni58ceQMv5YK4smkc8vX/eqOlMMNER/9qobv+Q6Q8LVrqA==
 
 "@types/cacheable-request@^6.0.1":
   version "6.0.3"
