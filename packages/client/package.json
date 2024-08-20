@@ -11,7 +11,7 @@
 		"lodash": "^4.17.21"
 	},
 	"dependencies": {
-		"@discordapp/twemoji": "15.0.3",
+		"@discordapp/twemoji": "15.1.0",
 		"@rollup/plugin-alias": "5.1.0",
 		"@rollup/plugin-json": "6.1.0",
 		"@rollup/pluginutils": "5.1.0",
