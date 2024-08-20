@@ -47,3 +47,5 @@ ormconfig.json
 *.blend5
 
 !packages/backend/src/db
+
+.env
