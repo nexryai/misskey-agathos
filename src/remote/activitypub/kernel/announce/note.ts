@@ -53,6 +53,7 @@ export default async function(resolver: Resolver, actor: CacheableRemoteUser, ac
             throw e;
         }
 
+        //@ts-ignore
         if (!await Notes.isVisibleForMe(renote, actor.id)) return "skip: invalid actor for this activity";
 
         logger.info(`Creating the (Re)Note: ${uri}`);
