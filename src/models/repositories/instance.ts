@@ -33,7 +33,9 @@ export const InstanceRepository = db.getRepository(Instance).extend({
             faviconUrl: sanitizeUrl(instance.faviconUrl) ?? null,
             themeColor: instance.themeColor,
             infoUpdatedAt: instance.infoUpdatedAt ? instance.infoUpdatedAt.toISOString() : null,
+            //@ts-ignore
             latestStatus: instance.latestStatus,
+            //@ts-ignore
             latestRequestReceivedAt: instance.latestRequestReceivedAt ? instance.latestRequestReceivedAt.toISOString() : null,
         };
     },
