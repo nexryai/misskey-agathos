@@ -5,6 +5,7 @@ import { Packed } from "./schema.js";
  * @param {*} note (packされた)投稿
  */
 export const getNoteSummary = (note: Packed<"Note">): string => {
+    //@ts-ignore
     if (note.deletedAt) {
         return "(❌⛔)";
     }

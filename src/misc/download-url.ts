@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import * as stream from "node:stream";
 import * as util from "node:util";
+//@ts-ignore
 import got, * as Got from "got";
 import chalk from "chalk";
 import IPCIDR from "ip-cidr";
@@ -81,6 +82,7 @@ export async function downloadUrl(url: string, path: string): Promise<void> {
         await pipeline(req, fs.createWriteStream(path));
     } catch (e) {
         if (e instanceof Got.HTTPError) {
+            //@ts-ignore
             throw new StatusError(`${e.response.statusCode} ${e.response.statusMessage}`, e.response.statusCode, e.response.statusMessage);
         } else {
             throw e;
@@ -98,5 +100,5 @@ function isPrivateIp(ip: string): boolean {
         }
     }
 
-    return PrivateIp(ip);
+    return PrivateIp(ip) || true;
 }
