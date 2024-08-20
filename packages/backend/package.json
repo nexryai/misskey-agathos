@@ -165,7 +165,6 @@
 		"eslint": "8.57.0",
 		"eslint-plugin-import": "2.29.1",
 		"execa": "8.0.1",
-		"prisma": "5.18.0",
 		"typescript": "5.4.5"
 	}
 }
