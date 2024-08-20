@@ -5,7 +5,6 @@ import { DbUserDeleteJobData } from "@/queue/types.js";
 import { Note } from "@/models/entities/note.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
 import { deleteFileSync } from "@/services/drive/delete-file.js";
-import { sendEmail } from "@/services/send-email.js";
 import { emailDeliver } from "@/queue/index.js";
 import { queueLogger } from "../../logger.js";
 
