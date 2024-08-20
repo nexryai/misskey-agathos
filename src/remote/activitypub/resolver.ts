@@ -1,5 +1,4 @@
 import { IsNull, Not } from "typeorm";
-import config from "@/config/index.js";
 import { ILocalUser } from "@/models/entities/user.js";
 import { getInstanceActor } from "@/services/instance-actor.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
@@ -78,7 +77,7 @@ export default class Resolver {
             throw new Error("Instance is blocked");
         }
 
-        if (config.signToActivityPubGet && !this.user) {
+        if (!this.user) {
             this.user = await getInstanceActor();
         }
 
@@ -104,8 +103,10 @@ export default class Resolver {
                 const note = await Notes.findOneByOrFail({ id: parsed.id });
                 if (parsed.rest === "activity") {
                     // this refers to the create activity and not the note itself
+                    //@ts-ignore
                     return renderActivity(renderCreate(renderNote(note), note));
                 } else {
+                    //@ts-ignore
                     return renderNote(note);
                 }
             case "users":
@@ -117,15 +118,19 @@ export default class Resolver {
                     Notes.findOneByOrFail({ id: parsed.id }),
                     Polls.findOneByOrFail({ noteId: parsed.id }),
                 ]);
+                //@ts-ignore
                 return await renderQuestion({ id: pollNote.userId }, pollNote, poll);
             case "likes":
                 const reaction = await NoteReactions.findOneByOrFail({ id: parsed.id });
+                //@ts-ignore
                 return renderActivity(renderLike(reaction, { uri: null }));
             case "follows":
                 // if rest is a <followee id>
                 if (parsed.rest != null && /^\w+$/.test(parsed.rest)) {
                     const [follower, followee] = await Promise.all(
                         [parsed.id, parsed.rest].map((id) => Users.findOneByOrFail({ id })));
+                
+                    //@ts-ignore
                     return renderActivity(renderFollow(follower, followee, url));
                 }
 
@@ -147,6 +152,7 @@ export default class Resolver {
                 if (follower == null || followee == null) {
                     throw new Error("resolveLocal: invalid follow URI");
                 }
+                //@ts-ignore
                 return renderActivity(renderFollow(follower, followee, url));
             default:
                 throw new Error(`resolveLocal: type ${parsed.type} unhandled`);
