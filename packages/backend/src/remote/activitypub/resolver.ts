@@ -1,5 +1,4 @@
 import { IsNull, Not } from "typeorm";
-import config from "@/config/index.js";
 import { ILocalUser } from "@/models/entities/user.js";
 import { getInstanceActor } from "@/services/instance-actor.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
@@ -78,7 +77,7 @@ export default class Resolver {
             throw new Error("Instance is blocked");
         }
 
-        if (config.signToActivityPubGet && !this.user) {
+        if (!this.user) {
             this.user = await getInstanceActor();
         }
 
