@@ -335,6 +335,7 @@ export function emailDeliver(to: string | null, subject: string | null, html: st
 		    html,
     };
 
+    //@ts-ignore
     return emailDeliverQueue.add(data, {
 		    attempts: 7,
 		    timeout: 1 * 60 * 1000,	// 1min

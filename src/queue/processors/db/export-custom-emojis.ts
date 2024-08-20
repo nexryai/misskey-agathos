@@ -1,8 +1,9 @@
 import * as fs from "node:fs";
 import Bull from "bull";
 
-import { ulid } from "ulid";
+//@ts-ignore
 import mime from "mime-types";
+//@ts-ignore
 import archiver from "archiver";
 import { format as dateFormat } from "date-fns";
 import { IsNull } from "typeorm";

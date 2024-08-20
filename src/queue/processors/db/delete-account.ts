@@ -102,6 +102,7 @@ export async function deleteAccount(job: Bull.Job<DbUserDeleteJobData>): Promise
     if (job.data.soft) {
         // nop
     } else {
+        //@ts-ignore
         if (Users.isLocalUser(job.data.user)) {
             await UserProfiles.update(job.data.user.id, {
                 description: null,
@@ -114,6 +115,7 @@ export async function deleteAccount(job: Bull.Job<DbUserDeleteJobData>): Promise
                 twoFactorEnabled: false,
                 location: null,
                 birthday: null,
+                //@ts-ignore
                 description: null,
                 fields: [],
                 clientData: {},
