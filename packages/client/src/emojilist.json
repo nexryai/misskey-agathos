@@ -31,7 +31,6 @@
 	{ "category": "face", "char": "😝", "name": "stuck_out_tongue_closed_eyes", "keywords": ["face", "prank", "playful", "mischievous", "smile", "tongue"] },
 	{ "category": "face", "char": "😛", "name": "stuck_out_tongue", "keywords": ["face", "prank", "childish", "playful", "mischievous", "smile", "tongue"] },
 	{ "category": "face", "char": "🤑", "name": "money_mouth_face", "keywords": ["face", "rich", "dollar", "money"] },
-	{ "category": "face", "char": "🤓", "name": "nerd_face", "keywords": ["face", "nerdy", "geek", "dork"] },
 	{ "category": "face", "char": "🥸", "name": "disguised_face", "keywords": ["face", "nose", "glasses", "incognito"] },
 	{ "category": "face", "char": "😎", "name": "sunglasses", "keywords": ["face", "cool", "smile", "summer", "beach", "sunglass"] },
 	{ "category": "face", "char": "🤩", "name": "star_struck", "keywords": ["face", "smile", "starry", "eyes", "grinning"] },
