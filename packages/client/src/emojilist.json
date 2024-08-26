@@ -429,7 +429,7 @@
 	{ "category": "people", "char": "👛", "name": "purse", "keywords": ["fashion", "accessories", "money", "sales", "shopping"] },
 	{ "category": "people", "char": "👜", "name": "handbag", "keywords": ["fashion", "accessory", "accessories", "shopping"] },
 	{ "category": "people", "char": "💼", "name": "briefcase", "keywords": ["business", "documents", "work", "law", "legal", "job", "career"] },
-	{ "category": "people", "char": "👓", "name": "eyeglasses", "keywords": ["fashion", "accessories", "eyesight", "nerdy", "dork", "geek"] },
+	{ "category": "people", "char": "👓", "name": "eyeglasses", "keywords": ["fashion", "accessories", "eyesight", "dork"] },
 	{ "category": "people", "char": "🕶", "name": "dark_sunglasses", "keywords": ["face", "cool", "accessories"] },
 	{ "category": "people", "char": "🥽", "name": "goggles", "keywords": ["eyes", "protection", "safety"] },
 	{ "category": "people", "char": "💍", "name": "ring", "keywords": ["wedding", "propose", "marriage", "valentines", "diamond", "fashion", "jewelry", "gem", "engagement"] },
