@@ -24,7 +24,7 @@
 		"blurhash": "2.0.5",
 		"broadcast-channel": "7.0.0",
 		"browser-image-resizer": "git+https://github.com/misskey-dev/browser-image-resizer#v2.2.1-misskey.10",
-		"chart.js": "4.4.3",
+		"chart.js": "4.4.4",
 		"chartjs-adapter-date-fns": "3.0.0",
 		"chartjs-plugin-gradient": "0.6.1",
 		"chartjs-plugin-zoom": "2.0.1",
@@ -60,7 +60,7 @@
 		"typescript": "5.5.4",
 		"uuid": "10.0.0",
 		"vanilla-tilt": "1.8.1",
-		"vite": "5.4.1",
+		"vite": "5.4.2",
 		"vue": "3.4.38",
 		"vue-prism-editor": "2.0.0-alpha.2",
 		"vuedraggable": "4.1.0"
@@ -85,6 +85,6 @@
 		"eslint-plugin-import": "2.29.1",
 		"eslint-plugin-vue": "9.27.0",
 		"rollup": "4.21.0",
-		"start-server-and-test": "2.0.4"
+		"start-server-and-test": "2.0.5"
 	}
 }
