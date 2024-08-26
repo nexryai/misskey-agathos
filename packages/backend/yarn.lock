@@ -1637,14 +1637,14 @@ arg@^4.1.0:
   resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.3.tgz#269fc7ad5b8e42cb63c896d5666017261c144089"
   integrity sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==
 
-argon2@0.40.3:
-  version "0.40.3"
-  resolved "https://registry.yarnpkg.com/argon2/-/argon2-0.40.3.tgz#7d9e9aea534ae52e0de708659a1761ab0eb77ac0"
-  integrity sha512-FrSmz4VeM91jwFvvjsQv9GYp6o/kARWoYKjbjDB2U5io1H3e5X67PYGclFDeQff6UXIhUd4aHR3mxCdBbMMuQw==
+argon2@0.41.0:
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/argon2/-/argon2-0.41.0.tgz#d7cde834dac1300a03abf8ed9a725e14f61c2508"
+  integrity sha512-3LEs/lMujSxvzMdKeF4pf41zPMVctpXLvAzrOcfi2clrULeNCNwaAIjMTKKnC8iU+g48+LnH2XbGwh1P/5pwHg==
   dependencies:
     "@phc/format" "^1.0.0"
-    node-addon-api "^8.0.0"
-    node-gyp-build "^4.8.0"
+    node-addon-api "^8.1.0"
+    node-gyp-build "^4.8.1"
 
 argparse@^2.0.1:
   version "2.0.1"
@@ -5110,7 +5110,7 @@ next-tick@^1.1.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
 
-node-addon-api@^8.0.0:
+node-addon-api@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-8.1.0.tgz#55a573685dd4bd053f189cffa4e6332d2b1f1645"
   integrity sha512-yBY+qqWSv3dWKGODD6OGE6GnTX7Q2r+4+DfpqxHSHh8x0B4EKP9+wVGLS6U/AM1vxSNNmUEuIV5EGhYwPpfOwQ==
@@ -5134,10 +5134,10 @@ node-gyp-build-optional-packages@5.0.7:
   resolved "https://registry.yarnpkg.com/node-gyp-build-optional-packages/-/node-gyp-build-optional-packages-5.0.7.tgz#5d2632bbde0ab2f6e22f1bbac2199b07244ae0b3"
   integrity sha512-YlCCc6Wffkx0kHkmam79GKvDQ6x+QZkMjFGrIMxgFNILFvGSbCp2fCBC55pGTT9gVaz8Na5CLmxt/urtzRv36w==
 
-node-gyp-build@^4.3.0, node-gyp-build@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.0.tgz#3fee9c1731df4581a3f9ead74664369ff00d26dd"
-  integrity sha512-u6fs2AEUljNho3EYTJNBfImO5QTo/J/1Etd+NVdCj7qWKUSN/bSLkZwhDv7I+w/MSC6qJ4cknepkAYykDdK8og==
+node-gyp-build@^4.3.0, node-gyp-build@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.1.tgz#976d3ad905e71b76086f4f0b0d3637fe79b6cda5"
+  integrity sha512-OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==
 
 node-gyp@^10.1.0:
   version "10.2.0"
