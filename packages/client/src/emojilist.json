@@ -1232,7 +1232,7 @@
 	{ "category": "objects", "char": "🖌", "name": "paintbrush", "keywords": ["drawing", "creativity", "art"] },
 	{ "category": "objects", "char": "🔍", "name": "mag", "keywords": ["search", "zoom", "find", "detective"] },
 	{ "category": "objects", "char": "🔎", "name": "mag_right", "keywords": ["search", "zoom", "find", "detective"] },
-	{ "category": "objects", "char": "🪦", "name": "headstone", "keywords": [] },
+	{ "category": "objects", "char": "🪦", "name": "headstone", "keywords": ["grave"] },
 	{ "category": "objects", "char": "🪧", "name": "placard", "keywords": [] },
 	{ "category": "symbols", "char": "💯", "name": "100", "keywords": ["score", "perfect", "numbers", "century", "exam", "quiz", "test", "pass", "hundred"] },
 	{ "category": "symbols", "char": "🔢", "name": "1234", "keywords": ["numbers", "blue-square"] },
