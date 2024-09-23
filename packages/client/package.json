@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"@discordapp/twemoji": "15.1.0",
-		"@rollup/plugin-alias": "5.1.0",
+		"@rollup/plugin-alias": "5.1.1",
 		"@rollup/plugin-json": "6.1.0",
 		"@rollup/pluginutils": "5.1.0",
 		"@tabler/icons-webfont": "3.14.0",
