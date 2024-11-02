@@ -5,7 +5,7 @@ import postcss from "postcss";
 import * as terser from "terser";
 
 import locales from "../locales/index.js";
-import meta from "../package.json" assert { type: "json" };
+import meta from "../package.json" with { type: "json" };
 
 async function copyClientFonts() {
     await fs.cp("./packages/client/node_modules/three/examples/fonts", "./built/_client_dist_/fonts", { dereference: true, recursive: true });
