@@ -1212,10 +1212,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/oauth@0.9.5":
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/@types/oauth/-/oauth-0.9.5.tgz#acc4209bfa1c8d7d3aaf2c9ad0b32216a29616c1"
-  integrity sha512-+oQ3C2Zx6ambINOcdIARF5Z3Tu3x//HipE889/fqo3sgpQZbe9c6ExdQFtN6qlhpR7p83lTZfPJt0tCAW29dog==
+"@types/oauth@0.9.6":
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/@types/oauth/-/oauth-0.9.6.tgz#fb5a278f6a826108a7467a01f856324e11e9ba4a"
+  integrity sha512-H9TRCVKBNOhZZmyHLqFt9drPM9l+ShWiqqJijU1B8P3DX3ub84NjxDuy+Hjrz+fEca5Kwip3qPMKNyiLgNJtIA==
   dependencies:
     "@types/node" "*"
 
@@ -3245,10 +3245,10 @@ fast-uri@^3.0.1:
   resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.1.tgz#cddd2eecfc83a71c1be2cc2ef2061331be8a7134"
   integrity sha512-MWipKbbYiYI0UC7cl8m/i/IWTqfC8YXsqjzybjddLsFjStroQzsHXkc73JutMvBiXmOvapk+axIl79ig5t55Bw==
 
-fast-xml-parser@^4.1.3:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-4.4.1.tgz#86dbf3f18edf8739326447bcaac31b4ae7f6514f"
-  integrity sha512-xkjOecfnKGkSsOwtZ5Pz7Us/T6mrbPQrq0nh+aCO5V9nk5NLWmasAHumTKjiPJPWANe+kAZ84Jc8ooJkzZ88Sw==
+fast-xml-parser@^4.4.1:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-4.5.0.tgz#2882b7d01a6825dfdf909638f2de0256351def37"
+  integrity sha512-/PlTQCI96+fZMAOLMZK4CWG1ItCbfZ/0jx7UIJFChPNrx7tcEgerUgWbeieCM9MfHInUDyK8DWYZ+YrywDJuTg==
   dependencies:
     strnum "^1.0.5"
 
@@ -4220,12 +4220,12 @@ is-string@^1.0.5, is-string@^1.0.7:
   dependencies:
     has-tostringtag "^1.0.0"
 
-is-svg@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/is-svg/-/is-svg-5.0.0.tgz#b3039213d6f4805669bb5afb043e05e5632ed206"
-  integrity sha512-sRl7J0oX9yUNamSdc8cwgzh9KBLnQXNzGmW0RVHwg/jEYjGNYHC6UvnYD8+hAeut9WwxRvhG9biK7g/wDGxcMw==
+is-svg@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/is-svg/-/is-svg-5.1.0.tgz#fdeeea1dc28b72f1cb5d36f44dfd8f6ad1e05caa"
+  integrity sha512-uVg5yifaTxHoefNf5Jcx+i9RZe2OBYd/UStp1umx+EERa4xGRa3LLGXjoEph43qUORC0qkafUgrXZ6zzK89yGA==
   dependencies:
-    fast-xml-parser "^4.1.3"
+    fast-xml-parser "^4.4.1"
 
 is-symbol@^1.0.2, is-symbol@^1.0.3:
   version "1.0.4"
