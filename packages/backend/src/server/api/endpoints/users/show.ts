@@ -91,6 +91,7 @@ export default define(meta, paramDef, async (ps, me) => {
         const users = await Users.findBy(isAdminOrModerator ? {
             id: In(ps.userIds),
             isDeleted: false,
+            host: me ? null : IsNull(),
         } : {
             id: In(ps.userIds),
             isSuspended: false,
