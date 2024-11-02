@@ -29,7 +29,7 @@
 		"chartjs-plugin-gradient": "0.6.1",
 		"chartjs-plugin-zoom": "2.0.1",
 		"cropperjs": "2.0.0-rc.2",
-		"date-fns": "3.6.0",
+		"date-fns": "4.1.0",
 		"escape-regexp": "0.0.1",
 		"eventemitter3": "5.0.1",
 		"idb-keyval": "6.2.1",
