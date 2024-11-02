@@ -83,6 +83,9 @@ export default define(meta, paramDef, async (ps, me) => {
 
     const isAdminOrModerator = me && (me.isAdmin || me.isModerator);
 
+    console.log(me);
+    const allowRemoteUsersLookup = me && me.host === null;
+
     if (ps.userIds) {
         if (ps.userIds.length === 0) {
             return [];
@@ -91,12 +94,12 @@ export default define(meta, paramDef, async (ps, me) => {
         const users = await Users.findBy(isAdminOrModerator ? {
             id: In(ps.userIds),
             isDeleted: false,
-            host: me ? undefined : IsNull(),
+            host: allowRemoteUsersLookup ? undefined : IsNull(),
         } : {
             id: In(ps.userIds),
             isSuspended: false,
             isDeleted: false,
-            host: me ? undefined : IsNull(),
+            host: allowRemoteUsersLookup ? undefined : IsNull(),
         });
 
         // リクエストされた通りに並べ替え
