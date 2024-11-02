@@ -91,12 +91,12 @@ export default define(meta, paramDef, async (ps, me) => {
         const users = await Users.findBy(isAdminOrModerator ? {
             id: In(ps.userIds),
             isDeleted: false,
-            host: me != null ? undefined : IsNull(),
+            host: me ? undefined : IsNull(),
         } : {
             id: In(ps.userIds),
             isSuspended: false,
             isDeleted: false,
-            host: me != null ? undefined : IsNull(),
+            host: me ? undefined : IsNull(),
         });
 
         // リクエストされた通りに並べ替え
@@ -112,6 +112,10 @@ export default define(meta, paramDef, async (ps, me) => {
     } else {
         // Lookup user
         if (typeof ps.host === "string" && typeof ps.username === "string") {
+            if (!me) {
+                throw new ApiError(meta.errors.noSuchUser);
+            }
+
             user = await resolveUser(ps.username, ps.host).catch(e => {
                 apiLogger.warn(`failed to resolve remote user: ${e}`);
                 throw new ApiError(meta.errors.failedToResolveRemoteUser);
