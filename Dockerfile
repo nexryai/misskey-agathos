@@ -7,7 +7,7 @@ RUN apk add --no-cache git alpine-sdk
 RUN git clone https://github.com/nexryai/npmrun.git .
 RUN cargo build --release
 
-FROM node:20-alpine3.19 AS builder
+FROM node:22-alpine3.20 AS builder
 
 ARG NODE_ENV=production
 
@@ -20,7 +20,7 @@ RUN yarn install
 RUN yarn build
 RUN rm -rf .git
 
-FROM node:20-alpine3.19 AS runner
+FROM node:22-alpine3.20 AS runner
 
 ARG UID="991"
 ARG GID="991"
