@@ -96,6 +96,7 @@ export default define(meta, paramDef, async (ps, me) => {
             id: In(ps.userIds),
             isSuspended: false,
             isDeleted: false,
+            host: me ? undefined : IsNull(),
         });
 
         // リクエストされた通りに並べ替え
