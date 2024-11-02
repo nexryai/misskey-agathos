@@ -8,7 +8,7 @@ import { makePaginationQuery } from "../../common/make-pagination-query.js";
 export const meta = {
     tags: ["users"],
 
-    requireCredential: false,
+    requireCredential: true,
 
     description: "Show everyone that this user is following.",
 
