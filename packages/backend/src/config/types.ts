@@ -75,8 +75,6 @@ export type Source = {
 	deliverJobMaxAttempts?: number;
 	inboxJobMaxAttempts?: number;
 
-	mediaProxy?: string;
-
 	disableAntenna?: boolean;
 	disableSearch?: boolean;
 

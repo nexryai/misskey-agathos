@@ -44,14 +44,6 @@ export const DriveFileRepository = db.getRepository(DriveFile).extend({
     },
 
     getPublicUrl(file: DriveFile, thumbnail = false): string | null {
-        // リモートかつメディアプロキシ
-        if (file.uri != null && file.userHost != null && config.mediaProxy != null) {
-            return appendQuery(config.mediaProxy, query({
-                url: file.uri,
-                thumbnail: thumbnail ? "1" : undefined,
-            }));
-        }
-
         // リモートかつ期限切れはローカルプロキシを試みる
         if (file.uri != null && file.isLink) {
             const key = thumbnail ? file.thumbnailAccessKey : file.webpublicAccessKey;

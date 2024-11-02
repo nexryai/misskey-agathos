@@ -167,9 +167,6 @@ id: 'aid'
 #proxySmtp: socks4://127.0.0.1:1080 # use SOCKS4
 #proxySmtp: socks5://127.0.0.1:1080 # use SOCKS5
 
-# Media Proxy
-#mediaProxy: https://example.com/proxy
-
 #allowedPrivateNetworks: [
 #  '127.0.0.1/32'
 #]
