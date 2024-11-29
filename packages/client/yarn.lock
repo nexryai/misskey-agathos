@@ -635,17 +635,17 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@tabler/icons-webfont@3.19.0":
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons-webfont/-/icons-webfont-3.19.0.tgz#d103a26aee6a0baa1c533b9e1b3955c4d83a53f5"
-  integrity sha512-c3axiLTjFFbR+LCqGD4MkWSguIb3KdFacCrwVoytVEMAgqvg12YeqJ9b6EGbpnoHcvve5ZvN5kGJtBVV7r1SQw==
+"@tabler/icons-webfont@3.23.0":
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-webfont/-/icons-webfont-3.23.0.tgz#53b60f946d08616c2d7b07d4e7c20ad8c1a222a9"
+  integrity sha512-ygAED9YoiP+/REav3sYbjxq5sO5Kyrg7ec6n+pB+Bir80W9H0yIiSV5B3+WKjk8bP6cHMyKPT2zhtb445BNC9g==
   dependencies:
-    "@tabler/icons" "3.19.0"
+    "@tabler/icons" "3.23.0"
 
-"@tabler/icons@3.19.0":
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.19.0.tgz#5998b0557ef34572e003f2d75ac95e7c04f88c81"
-  integrity sha512-A4WEWqpdbTfnpFEtwXqwAe9qf9sp1yRPvzppqAuwcoF0q5YInqB+JkJtSFToCyBpPVeLxJUxxkapLvt2qQgnag==
+"@tabler/icons@3.23.0":
+  version "3.23.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.23.0.tgz#d00b5c98c110fd0e773dff81f4776ba52e49f576"
+  integrity sha512-Cz+X58jfRm0g/KcupXXuPw5knj671lNR054AnmLXvCjudiQBWI0wZulDDSsqDoGezvBzMTNPQtNcjLkZs82ZxQ==
 
 "@tokenizer/token@^0.3.0":
   version "0.3.0"
