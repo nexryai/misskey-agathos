@@ -763,10 +763,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/matter-js@0.19.7":
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.19.7.tgz#ef0ada4033945c351e77b85042b3ff22db9ec921"
-  integrity sha512-dlh50YEh1lQS4fiCDGBnK75ocHQIq/1E371Qk6hASJImICIivdZQC2GkOqnfBm0Hac2xLk5+yrqRFDAEfj/yLA==
+"@types/matter-js@0.19.8":
+  version "0.19.8"
+  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.19.8.tgz#ce1a7f743b8520f58cda2c5b06434a46c6731fed"
+  integrity sha512-W2ZWG58Lijv/4v768NgpeyFqqiOyslmAU7qqM1Lhz4XBoUgGtZtPz4CjcOKYtqHIak14dvPldslQhltqLTWwsw==
 
 "@types/minimatch@^5.1.2":
   version "5.1.2"
