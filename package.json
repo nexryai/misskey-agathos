@@ -22,6 +22,8 @@
 		"watch": "npm run dev",
 		"dev": "node scripts/dev.mjs",
 		"lint": "node scripts/lint.mjs",
+		"cy:open": "cypress open --browser --e2e --config-file=cypress.config.ts",
+		"cy:run": "cypress run",
 		"e2e": "start-server-and-test start:test http://localhost:61812 cy:run",
 		"mocha": "cd packages/backend && cross-env NODE_ENV=test TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true TS_NODE_PROJECT=\"./test/tsconfig.json\" npx mocha",
 		"test": "npm run mocha",
@@ -37,10 +39,13 @@
 		"terser": "5.37.0"
 	},
 	"devDependencies": {
+		"@types/gulp": "4.0.17",
+		"@types/gulp-rename": "2.0.6",
 		"@typescript-eslint/parser": "8.17.0",
 		"cross-env": "7.0.3",
+		"cypress": "13.16.1",
 		"start-server-and-test": "2.0.8",
 		"typescript": "5.7.2"
 	},
-	"packageManager": "pnpm@8.15.6+sha512.77b89e9be77a2b06ad8f403a19cae5e22976f61023f98ad323d5c30194958ebc02ee0a6ae5d13ee454f6134e4e8caf29a05f0b1a0e1d2b17bca6b6a1f1159f86"
+	"packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
