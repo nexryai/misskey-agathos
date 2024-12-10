@@ -8,7 +8,7 @@ import { dirname } from "node:path";
 
     console.log("installing dependencies of packages/backend ...");
 
-    await execa("yarn", ["--force", "install"], {
+    await execa("pnpm", ["--force", "install"], {
         cwd: __dirname + "/../packages/backend",
         stdout: process.stdout,
         stderr: process.stderr,
@@ -16,7 +16,7 @@ import { dirname } from "node:path";
 
     console.log("installing dependencies of packages/client ...");
 
-    await execa("yarn", ["install"], {
+    await execa("pnpm", ["install"], {
         cwd: __dirname + "/../packages/client",
         stdout: process.stdout,
         stderr: process.stderr,
@@ -24,7 +24,7 @@ import { dirname } from "node:path";
 
     console.log("installing dependencies of packages/sw ...");
 
-    await execa("yarn", ["install"], {
+    await execa("pnpm", ["install"], {
         cwd: __dirname + "/../packages/sw",
         stdout: process.stdout,
         stderr: process.stderr,
