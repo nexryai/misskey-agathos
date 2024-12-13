@@ -2,8 +2,7 @@ process.env.NODE_ENV = "test";
 
 import * as assert from "assert";
 import rndstr from "rndstr";
-import { initDb } from "../src/db/postgre.js";
-import { initTestDb } from "./utils.js";
+import { initDb } from "@/db/postgre";
 
 describe("ActivityPub", () => {
     before(async () => {
