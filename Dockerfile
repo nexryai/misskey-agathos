@@ -9,8 +9,6 @@ RUN cargo build --release
 
 FROM node:22-alpine3.20 AS builder
 
-ARG NODE_ENV=production
-
 WORKDIR /misskey
 
 COPY . ./
