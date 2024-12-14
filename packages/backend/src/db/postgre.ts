@@ -48,8 +48,6 @@ import { UserPublickey } from "@/models/entities/user-publickey.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
 import { UserSecurityKey } from "@/models/entities/user-security-key.js";
 import { AttestationChallenge } from "@/models/entities/attestation-challenge.js";
-import { Page } from "@/models/entities/page.js";
-import { PageLike } from "@/models/entities/page-like.js";
 import { ModerationLog } from "@/models/entities/moderation-log.js";
 import { UsedUsername } from "@/models/entities/used-username.js";
 import { Announcement } from "@/models/entities/announcement.js";
@@ -138,8 +136,6 @@ export const entities = [
     NoteWatching,
     NoteThreadMuting,
     NoteUnread,
-    Page,
-    PageLike,
     DriveFile,
     DriveFolder,
     Poll,

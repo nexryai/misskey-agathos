@@ -1,4 +1,4 @@
-import { DriveFiles, Followings, NoteFavorites, NoteReactions, Notes, PageLikes, PollVotes, Users } from "@/models/index.js";
+import { DriveFiles, Followings, NoteFavorites, NoteReactions, Notes, PollVotes, Users } from "@/models/index.js";
 import { awaitAll } from "@/prelude/await-all.js";
 import define from "../../define.js";
 import { ApiError } from "../../error.js";
@@ -86,14 +86,6 @@ export const meta = {
                 type: "integer",
                 optional: false, nullable: false,
             },
-            pageLikesCount: {
-                type: "integer",
-                optional: false, nullable: false,
-            },
-            pageLikedCount: {
-                type: "integer",
-                optional: false, nullable: false,
-            },
             driveFilesCount: {
                 type: "integer",
                 optional: false, nullable: false,
@@ -172,13 +164,6 @@ export default define(meta, paramDef, async (ps, me) => {
 			.getCount(),
         noteFavoritesCount: NoteFavorites.createQueryBuilder("favorite")
 			.where("favorite.userId = :userId", { userId: user.id })
-			.getCount(),
-        pageLikesCount: PageLikes.createQueryBuilder("like")
-			.where("like.userId = :userId", { userId: user.id })
-			.getCount(),
-        pageLikedCount: PageLikes.createQueryBuilder("like")
-			.innerJoin("like.page", "page")
-			.where("page.userId = :userId", { userId: user.id })
 			.getCount(),
         driveFilesCount: DriveFiles.createQueryBuilder("file")
 			.where("file.userId = :userId", { userId: user.id })

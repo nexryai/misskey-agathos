@@ -1,12 +1,11 @@
 import RE2 from "re2";
 import * as mfm from "mfm-js";
 import { publishMainStream, publishUserEvent } from "@/services/stream.js";
-import acceptAllFollowRequests from "@/services/following/requests/accept-all.js";
 import { publishToFollowers } from "@/services/i/update.js";
 import { extractCustomEmojisFromMfm } from "@/misc/extract-custom-emojis-from-mfm.js";
 import { extractHashtags } from "@/misc/extract-hashtags.js";
 import { updateUsertags } from "@/services/update-hashtag.js";
-import { Users, DriveFiles, UserProfiles, Pages } from "@/models/index.js";
+import { Users, DriveFiles, UserProfiles } from "@/models/index.js";
 import { User } from "@/models/entities/user.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
 import { notificationTypes } from "@/types.js";
@@ -45,12 +44,6 @@ export const meta = {
             message: "The file specified as a banner is not an image.",
             code: "BANNER_NOT_AN_IMAGE",
             id: "75aedb19-2afd-4e6d-87fc-67941256fa60",
-        },
-
-        noSuchPage: {
-            message: "No such page.",
-            code: "NO_SUCH_PAGE",
-            id: "8e01b590-7eb9-431b-a239-860e086c408e",
         },
 
         invalidRegexp: {
@@ -102,9 +95,6 @@ export const paramDef = {
         injectFeaturedNote: { type: "boolean" },
         alwaysMarkNsfw: { type: "boolean" },
         ffVisibility: { type: "string", enum: ["public", "followers", "private"] },
-        pinnedPageId: { type: "array", items: {
-            type: "string", format: "misskey:id",
-        } },
         mutedWords: { type: "array" },
         mutedInstances: { type: "array", items: {
             type: "string",
@@ -176,16 +166,6 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 
         if (banner == null || banner.userId !== user.id) throw new ApiError(meta.errors.noSuchBanner);
         if (!banner.type.startsWith("image/")) throw new ApiError(meta.errors.bannerNotAnImage);
-    }
-
-    if (ps.pinnedPageId) {
-        const page = await Pages.findOneBy({ id: ps.pinnedPageId });
-
-        if (page == null || page.userId !== user.id) throw new ApiError(meta.errors.noSuchPage);
-
-        profileUpdates.pinnedPageId = page.id;
-    } else if (ps.pinnedPageId === null) {
-        profileUpdates.pinnedPageId = null;
     }
 
     if (ps.fields) {

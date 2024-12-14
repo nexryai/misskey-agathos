@@ -11,7 +11,7 @@ import { Cache } from "@/misc/cache.js";
 import { db } from "@/db/postgre.js";
 import { sanitizeUrl } from "@/misc/sanitize-url.js";
 import { Instance } from "../entities/instance.js";
-import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, RenoteMutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Pages, Announcements, AnnouncementReads, AntennaNotes, Instances, DriveFiles } from "../index.js";
+import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, RenoteMutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Announcements, AnnouncementReads, AntennaNotes, Instances, DriveFiles } from "../index.js";
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
 
@@ -338,8 +338,6 @@ export const UserRepository = db.getRepository(User).extend({
                 pinnedNotes: Notes.packMany(pins.map(pin => pin.note!), me, {
                     detail: true,
                 }),
-                pinnedPageId: profile!.pinnedPageId,
-                pinnedPage: profile!.pinnedPageId ? Pages.pack(profile!.pinnedPageId, me) : null,
                 publicReactions: profile!.publicReactions,
                 ffVisibility: profile!.ffVisibility,
                 twoFactorEnabled: profile!.twoFactorEnabled,

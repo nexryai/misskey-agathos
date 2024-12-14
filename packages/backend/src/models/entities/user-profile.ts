@@ -2,7 +2,6 @@ import { Entity, Column, Index, OneToOne, JoinColumn, PrimaryColumn } from "type
 import { ffVisibility, notificationTypes } from "@/types.js";
 import { id } from "../id.js";
 import { User } from "./user.js";
-import { Page } from "./page.js";
 
 @Entity()
 export class UserProfile {
@@ -143,18 +142,6 @@ export class UserProfile {
 	    default: true,
 	})
 	public injectFeaturedNote: boolean;
-
-	@Column({
-	    ...id(),
-	    nullable: true,
-	})
-	public pinnedPageId: Page["id"] | null;
-
-	@OneToOne(type => Page, {
-	    onDelete: "SET NULL",
-	})
-	@JoinColumn()
-	public pinnedPage: Page | null;
 
 	@Column("jsonb", {
 	    default: {},

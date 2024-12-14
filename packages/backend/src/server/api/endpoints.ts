@@ -156,8 +156,6 @@ import * as ep___i_importFollowing from "./endpoints/i/import-following.js";
 import * as ep___i_importMuting from "./endpoints/i/import-muting.js";
 import * as ep___i_importUserLists from "./endpoints/i/import-user-lists.js";
 import * as ep___i_notifications from "./endpoints/i/notifications.js";
-import * as ep___i_pageLikes from "./endpoints/i/page-likes.js";
-import * as ep___i_pages from "./endpoints/i/pages.js";
 import * as ep___i_pin from "./endpoints/i/pin.js";
 import * as ep___i_readAllMessagingMessages from "./endpoints/i/read-all-messaging-messages.js";
 import * as ep___i_readAllUnreadNotes from "./endpoints/i/read-all-unread-notes.js";
@@ -228,7 +226,6 @@ import * as ep___notes_watching_delete from "./endpoints/notes/watching/delete.j
 import * as ep___notifications_create from "./endpoints/notifications/create.js";
 import * as ep___notifications_markAllAsRead from "./endpoints/notifications/mark-all-as-read.js";
 import * as ep___notifications_read from "./endpoints/notifications/read.js";
-import * as ep___pagePush from "./endpoints/page-push.js";
 import * as ep___ping from "./endpoints/ping.js";
 import * as ep___pinnedUsers from "./endpoints/pinned-users.js";
 import * as ep___promo_read from "./endpoints/promo/read.js";
@@ -252,7 +249,6 @@ import * as ep___users_lists_push from "./endpoints/users/lists/push.js";
 import * as ep___users_lists_show from "./endpoints/users/lists/show.js";
 import * as ep___users_lists_update from "./endpoints/users/lists/update.js";
 import * as ep___users_notes from "./endpoints/users/notes.js";
-import * as ep___users_pages from "./endpoints/users/pages.js";
 import * as ep___users_reactions from "./endpoints/users/reactions.js";
 import * as ep___users_recommendation from "./endpoints/users/recommendation.js";
 import * as ep___users_relation from "./endpoints/users/relation.js";
@@ -421,8 +417,6 @@ const eps = [
     ["i/import-muting", ep___i_importMuting],
     ["i/import-user-lists", ep___i_importUserLists],
     ["i/notifications", ep___i_notifications],
-    ["i/page-likes", ep___i_pageLikes],
-    ["i/pages", ep___i_pages],
     ["i/pin", ep___i_pin],
     ["i/read-all-messaging-messages", ep___i_readAllMessagingMessages],
     ["i/read-all-unread-notes", ep___i_readAllUnreadNotes],
@@ -493,7 +487,6 @@ const eps = [
     ["notifications/create", ep___notifications_create],
     ["notifications/mark-all-as-read", ep___notifications_markAllAsRead],
     ["notifications/read", ep___notifications_read],
-    ["page-push", ep___pagePush],
     ["ping", ep___ping],
     ["pinned-users", ep___pinnedUsers],
     ["promo/read", ep___promo_read],
@@ -517,7 +510,6 @@ const eps = [
     ["users/lists/show", ep___users_lists_show],
     ["users/lists/update", ep___users_lists_update],
     ["users/notes", ep___users_notes],
-    ["users/pages", ep___users_pages],
     ["users/reactions", ep___users_reactions],
     ["users/recommendation", ep___users_recommendation],
     ["users/relation", ep___users_relation],
