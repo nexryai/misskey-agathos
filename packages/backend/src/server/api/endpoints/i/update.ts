@@ -100,7 +100,6 @@ export const paramDef = {
         isCat: { type: "boolean" },
         showTimelineReplies: { type: "boolean" },
         injectFeaturedNote: { type: "boolean" },
-        receiveAnnouncementEmail: { type: "boolean" },
         alwaysMarkNsfw: { type: "boolean" },
         ffVisibility: { type: "string", enum: ["public", "followers", "private"] },
         pinnedPageId: { type: "array", items: {
@@ -112,9 +111,6 @@ export const paramDef = {
         } },
         mutingNotificationTypes: { type: "array", items: {
             type: "string", enum: notificationTypes,
-        } },
-        emailNotificationTypes: { type: "array", items: {
-            type: "string",
         } },
     },
 } as const;
@@ -166,9 +162,7 @@ export default define(meta, paramDef, async (ps, _user, token) => {
     if (typeof ps.noCrawle === "boolean") profileUpdates.noCrawle = ps.noCrawle;
     if (typeof ps.isCat === "boolean") updates.isCat = ps.isCat;
     if (typeof ps.injectFeaturedNote === "boolean") profileUpdates.injectFeaturedNote = ps.injectFeaturedNote;
-    if (typeof ps.receiveAnnouncementEmail === "boolean") profileUpdates.receiveAnnouncementEmail = ps.receiveAnnouncementEmail;
     if (typeof ps.alwaysMarkNsfw === "boolean") profileUpdates.alwaysMarkNsfw = ps.alwaysMarkNsfw;
-    if (ps.emailNotificationTypes !== undefined) profileUpdates.emailNotificationTypes = ps.emailNotificationTypes;
 
     if (ps.avatarId) {
         const avatar = await DriveFiles.findOneBy({ id: ps.avatarId });

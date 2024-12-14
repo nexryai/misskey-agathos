@@ -13,11 +13,10 @@ import processDb from "./processors/db/index.js";
 import processObjectStorage from "./processors/object-storage/index.js";
 import processSystemQueue from "./processors/system/index.js";
 import processWebhookDeliver from "./processors/webhook-deliver.js";
-import processEmailDeliver from "./processors/email-deliver.js";
 import { endedPollNotification } from "./processors/ended-poll-notification.js";
 import { queueLogger } from "./logger.js";
 import { getJobInfo } from "./get-job-info.js";
-import { systemQueue, dbQueue, deliverQueue, inboxQueue, objectStorageQueue, endedPollNotificationQueue, webhookDeliverQueue, backgroundQueue, emailDeliverQueue } from "./queues.js";
+import { systemQueue, dbQueue, deliverQueue, inboxQueue, objectStorageQueue, endedPollNotificationQueue, webhookDeliverQueue, backgroundQueue } from "./queues.js";
 import { ThinUser } from "./types.js";
 
 function renderError(e: Error): any {
@@ -34,7 +33,6 @@ const webhookLogger = queueLogger.createSubLogger("webhook");
 const inboxLogger = queueLogger.createSubLogger("inbox");
 const dbLogger = queueLogger.createSubLogger("db");
 const objectStorageLogger = queueLogger.createSubLogger("objectStorage");
-const emailDeliverLogger = queueLogger.createSubLogger("emailDeliver");
 
 systemQueue
 		.on("waiting", (jobId) => systemLogger.debug(`waiting id=${jobId}`))
@@ -83,14 +81,6 @@ webhookDeliverQueue
 		.on("failed", (job, err) => webhookLogger.warn(`failed(${err}) ${getJobInfo(job)} to=${job.data.to}`))
 		.on("error", (job: any, err: Error) => webhookLogger.error(`error ${err}`, { job, e: renderError(err) }))
 		.on("stalled", (job) => webhookLogger.warn(`stalled ${getJobInfo(job)} to=${job.data.to}`));
-
-emailDeliverQueue
-		.on("waiting", (jobId) => emailDeliverLogger.debug(`waiting id=${jobId}`))
-		.on("active", (job) => emailDeliverLogger.debug(`active ${getJobInfo(job, true)} to=${job.data.to}`))
-		.on("completed", (job, result) => emailDeliverLogger.debug(`completed(${result}) ${getJobInfo(job, true)} to=${job.data.to}`))
-		.on("failed", (job, err) => emailDeliverLogger.warn(`failed(${err}) ${getJobInfo(job)} to=${job.data.to}`))
-		.on("error", (job: any, err: Error) => emailDeliverLogger.error(`error ${err}`, { job, e: renderError(err) }))
-		.on("stalled", (job) => emailDeliverLogger.warn(`stalled ${getJobInfo(job)} to=${job.data.to}`));
 
 export function deliver(user: ThinUser, content: unknown, to: string | null) {
     if (content == null) return null;
@@ -323,35 +313,11 @@ export function webhookDeliver(webhook: Webhook, type: typeof webhookEventTypes[
     });
 }
 
-export function emailDeliver(to: string | null, subject: string | null, html: string | null, text: string | null) {
-    if (to == null) return null;
-    if (subject == null) return null;
-    if (html == null) return null;
-    if (text == null) return null;
-
-    const data = {
-		    to,
-		    subject,
-		    html,
-    };
-
-    return emailDeliverQueue.add(data, {
-		    attempts: 7,
-		    timeout: 1 * 60 * 1000,	// 1min
-		    backoff: {
-		        type: "apBackoff",
-		    },
-		    removeOnComplete: true,
-		    removeOnFail: true,
-    });
-}
-
 export default function() {
     if (envOption.onlyServer) return;
 
     deliverQueue.process(config.deliverJobConcurrency || 128, processDeliver);
     inboxQueue.process(config.inboxJobConcurrency || 16, processInbox);
-    emailDeliverQueue.process(processEmailDeliver);
     endedPollNotificationQueue.process(endedPollNotification);
     webhookDeliverQueue.process(64, processWebhookDeliver);
     processDb(dbQueue);

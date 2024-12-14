@@ -73,11 +73,6 @@ export class Meta {
 	public blockedHosts: string[];
 
 	@Column("varchar", {
-	    length: 256, array: true, default: "{}",
-	})
-	public blockedEmailDomains: string[];
-
-	@Column("varchar", {
 	    length: 512, array: true, default: "{/featured,/channels,/explore,/pages,/about-misskey}",
 	})
 	public pinnedPages: string[];
@@ -217,17 +212,6 @@ export class Meta {
 	    nullable: true,
 	})
 	public summalyProxy: string | null;
-
-	@Column("boolean", {
-	    default: false,
-	})
-	public enableEmail: boolean;
-
-	@Column("varchar", {
-	    length: 128,
-	    nullable: true,
-	})
-	public email: string | null;
 
 	@Column("boolean", {
 	    default: false,
@@ -444,9 +428,4 @@ export class Meta {
 	    default: false,
 	})
 	public enableIpLogging: boolean;
-
-	@Column("boolean", {
-	    default: true,
-	})
-	public enableActiveEmailValidation: boolean;
 }

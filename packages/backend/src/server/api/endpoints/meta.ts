@@ -381,7 +381,7 @@ export default define(meta, paramDef, async (ps, me) => {
             ratio: ad.ratio,
             imageUrl: ad.imageUrl,
         })),
-        enableEmail: instance.enableEmail,
+        enableEmail: false,
 
         enableTwitterIntegration: instance.enableTwitterIntegration,
         enableGithubIntegration: instance.enableGithubIntegration,

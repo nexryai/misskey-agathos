@@ -6,7 +6,6 @@
             <div class="body">
                 <div v-if="!narrow || currentPage?.route.name == null" class="nav">
                     <div class="baaadecd">
-                        <MkInfo v-if="emailNotConfigured" warn class="info">{{ i18n.ts.emailNotConfiguredWarning }} <MkA to="/settings/email" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
                         <MkSuperMenu :def="menuDef" :grid="narrow"></MkSuperMenu>
                     </div>
                 </div>
@@ -22,16 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineAsyncComponent, inject, nextTick, onActivated, onMounted, onUnmounted, provide, ref, watch } from "vue";
+import { computed, onActivated, onMounted, onUnmounted, ref, watch } from "vue";
 import { i18n } from "@/i18n";
-import MkInfo from "@/components/MkInfo.vue";
 import MkSuperMenu from "@/components/MkSuperMenu.vue";
-import { scroll } from "@/scripts/scroll";
-import { signout , $i } from "@/account";
+import { signout } from "@/account";
 import { unisonReload } from "@/scripts/unison-reload";
-import { instance } from "@/instance";
 import { useRouter } from "@/router";
-import { definePageMetadata, provideMetadataReceiver, setPageMetadata } from "@/scripts/page-metadata";
+import { definePageMetadata, provideMetadataReceiver } from "@/scripts/page-metadata";
 import * as os from "@/os";
 
 const indexInfo = {
@@ -45,7 +41,7 @@ const childInfo = ref(null);
 
 const router = useRouter();
 
-let narrow = $ref(false);
+let narrow = ref(false);
 const NARROW_THRESHOLD = 600;
 
 let currentPage = $computed(() => router.currentRef.value.child);
@@ -87,11 +83,6 @@ const menuDef = computed(() => [{
         text: i18n.ts.notifications,
         to: "/settings/notifications",
         active: currentPage?.route.name === "notifications",
-    }, {
-        icon: "ti ti-mail",
-        text: i18n.ts.email,
-        to: "/settings/email",
-        active: currentPage?.route.name === "email",
     }, {
         icon: "ti ti-shield",
         text: i18n.ts.security,
@@ -211,8 +202,6 @@ watch(router.currentRef, (to) => {
     }
 });
 
-const emailNotConfigured = computed(() => instance.enableEmail && ($i.email == null || !$i.emailVerified));
-
 provideMetadataReceiver((info) => {
     if (info == null) {
         childInfo.value = null;
@@ -221,9 +210,9 @@ provideMetadataReceiver((info) => {
     }
 });
 
-const headerActions = $computed(() => []);
+const headerActions = computed(() => []);
 
-const headerTabs = $computed(() => []);
+const headerTabs = computed(() => []);
 
 definePageMetadata(INFO);
 // w 890

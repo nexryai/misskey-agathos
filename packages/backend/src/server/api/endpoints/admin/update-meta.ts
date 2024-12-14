@@ -136,10 +136,6 @@ export default define(meta, paramDef, async (ps, me) => {
         set.blockedHosts = ps.blockedHosts.filter(Boolean).map(x => x.toLowerCase());
     }
 
-    if (Array.isArray(ps.blockedEmailDomains)) {
-        set.blockedEmailDomains = ps.blockedEmailDomains.filter(Boolean).map(x => x.toLowerCase());
-    }
-
     if (ps.themeColor !== undefined) {
         set.themeColor = ps.themeColor;
     }
@@ -292,14 +288,6 @@ export default define(meta, paramDef, async (ps, me) => {
         set.discordClientSecret = ps.discordClientSecret;
     }
 
-    if (ps.enableEmail !== undefined) {
-        set.enableEmail = ps.enableEmail;
-    }
-
-    if (ps.email !== undefined) {
-        set.email = ps.email;
-    }
-
     if (ps.smtpSecure !== undefined) {
         set.smtpSecure = ps.smtpSecure;
     }
@@ -414,10 +402,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (ps.enableIpLogging !== undefined) {
         set.enableIpLogging = ps.enableIpLogging;
-    }
-
-    if (ps.enableActiveEmailValidation !== undefined) {
-        set.enableActiveEmailValidation = ps.enableActiveEmailValidation;
     }
 
     await db.transaction(async transactionalEntityManager => {

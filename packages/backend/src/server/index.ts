@@ -14,12 +14,11 @@ import * as slow from "koa-slow";
 import { IsNull } from "typeorm";
 import config from "@/config/index.js";
 import Logger from "@/services/logger.js";
-import { UserProfiles, Users } from "@/models/index.js";
+import { Users } from "@/models/index.js";
 import { genIdenticon } from "@/misc/gen-identicon.js";
 import { createTemp } from "@/misc/create-temp.js";
-import { publishMainStream } from "@/services/stream.js";
 import * as Acct from "@/misc/acct.js";
-import { envOption } from "../env.js";
+import { envOption } from "@/env.js";
 import activityPub from "./activitypub.js";
 import nodeinfo from "./nodeinfo.js";
 import wellKnown from "./well-known.js";
@@ -102,29 +101,6 @@ router.get("/identicon/:x", async ctx => {
     await genIdenticon(ctx.params.x, fs.createWriteStream(temp));
     ctx.set("Content-Type", "image/png");
     ctx.body = fs.createReadStream(temp).on("close", () => cleanup());
-});
-
-router.get("/verify-email/:code", async ctx => {
-    const profile = await UserProfiles.findOneBy({
-        emailVerifyCode: ctx.params.code,
-    });
-
-    if (profile != null) {
-        ctx.body = "Verify succeeded!";
-        ctx.status = 200;
-
-        await UserProfiles.update({ userId: profile.userId }, {
-            emailVerified: true,
-            emailVerifyCode: null,
-        });
-
-        publishMainStream(profile.userId, "meUpdated", await Users.pack(profile.userId, { id: profile.userId }, {
-            detail: true,
-            includeSecrets: true,
-        }));
-    } else {
-        ctx.status = 404;
-    }
 });
 
 // Register router

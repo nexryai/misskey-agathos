@@ -52,7 +52,6 @@ import * as ep___admin_relays_remove from "./endpoints/admin/relays/remove.js";
 import * as ep___admin_reset2fa from "./endpoints/admin/reset-2fa.js";
 import * as ep___admin_resetPassword from "./endpoints/admin/reset-password.js";
 import * as ep___admin_resolveAbuseUserReport from "./endpoints/admin/resolve-abuse-user-report.js";
-import * as ep___admin_sendEmail from "./endpoints/admin/send-email.js";
 import * as ep___admin_sendNotification from "./endpoints/admin/send-notification.js";
 import * as ep___admin_serverInfo from "./endpoints/admin/server-info.js";
 import * as ep___admin_showModerationLogs from "./endpoints/admin/show-moderation-logs.js";
@@ -117,7 +116,6 @@ import * as ep___drive_folders_find from "./endpoints/drive/folders/find.js";
 import * as ep___drive_folders_show from "./endpoints/drive/folders/show.js";
 import * as ep___drive_folders_update from "./endpoints/drive/folders/update.js";
 import * as ep___drive_stream from "./endpoints/drive/stream.js";
-import * as ep___emailAddress_available from "./endpoints/email-address/available.js";
 import * as ep___endpoint from "./endpoints/endpoint.js";
 import * as ep___endpoints from "./endpoints/endpoints.js";
 import * as ep___exportCustomEmojis from "./endpoints/export-custom-emojis.js";
@@ -183,7 +181,6 @@ import * as ep___i_registry_set from "./endpoints/i/registry/set.js";
 import * as ep___i_revokeToken from "./endpoints/i/revoke-token.js";
 import * as ep___i_signinHistory from "./endpoints/i/signin-history.js";
 import * as ep___i_unpin from "./endpoints/i/unpin.js";
-import * as ep___i_updateEmail from "./endpoints/i/update-email.js";
 import * as ep___i_update from "./endpoints/i/update.js";
 import * as ep___i_webhooks_create from "./endpoints/i/webhooks/create.js";
 import * as ep___i_webhooks_show from "./endpoints/i/webhooks/show.js";
@@ -242,9 +239,7 @@ import * as ep___pagePush from "./endpoints/page-push.js";
 import * as ep___ping from "./endpoints/ping.js";
 import * as ep___pinnedUsers from "./endpoints/pinned-users.js";
 import * as ep___promo_read from "./endpoints/promo/read.js";
-import * as ep___requestResetPassword from "./endpoints/request-reset-password.js";
 import * as ep___resetDb from "./endpoints/reset-db.js";
-import * as ep___resetPassword from "./endpoints/reset-password.js";
 import * as ep___serverInfo from "./endpoints/server-info.js";
 import * as ep___stats from "./endpoints/stats.js";
 import * as ep___sw_register from "./endpoints/sw/register.js";
@@ -329,7 +324,6 @@ const eps = [
     ["admin/reset-2fa", ep___admin_reset2fa],
     ["admin/reset-password", ep___admin_resetPassword],
     ["admin/resolve-abuse-user-report", ep___admin_resolveAbuseUserReport],
-    ["admin/send-email", ep___admin_sendEmail],
     ["admin/send-notification", ep___admin_sendNotification],
     ["admin/server-info", ep___admin_serverInfo],
     ["admin/show-moderation-logs", ep___admin_showModerationLogs],
@@ -394,7 +388,6 @@ const eps = [
     ["drive/folders/show", ep___drive_folders_show],
     ["drive/folders/update", ep___drive_folders_update],
     ["drive/stream", ep___drive_stream],
-    ["email-address/available", ep___emailAddress_available],
     ["endpoint", ep___endpoint],
     ["endpoints", ep___endpoints],
     ["export-custom-emojis", ep___exportCustomEmojis],
@@ -460,7 +453,6 @@ const eps = [
     ["i/revoke-token", ep___i_revokeToken],
     ["i/signin-history", ep___i_signinHistory],
     ["i/unpin", ep___i_unpin],
-    ["i/update-email", ep___i_updateEmail],
     ["i/update", ep___i_update],
     ["i/webhooks/create", ep___i_webhooks_create],
     ["i/webhooks/list", ep___i_webhooks_list],
@@ -519,9 +511,7 @@ const eps = [
     ["ping", ep___ping],
     ["pinned-users", ep___pinnedUsers],
     ["promo/read", ep___promo_read],
-    ["request-reset-password", ep___requestResetPassword],
     ["reset-db", ep___resetDb],
-    ["reset-password", ep___resetPassword],
     ["server-info", ep___serverInfo],
     ["stats", ep___stats],
     ["sw/register", ep___sw_register],
