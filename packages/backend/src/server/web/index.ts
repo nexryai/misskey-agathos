@@ -29,7 +29,6 @@ const _dirname = dirname(_filename);
 const staticAssets = `${_dirname}/../../../assets/`;
 const clientAssets = `${_dirname}/../../../../client/assets/`;
 const assets = `${_dirname}/../../../../../built/_client_dist_/`;
-const swAssets = `${_dirname}/../../../../../built/_sw_dist_/`;
 
 const allowedAssetsExt = [".js", ".css", ".map", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp", ".avif", ".woff", ".woff2", ".ttf", ".eot", ".otf", "LICENSE"];
 
@@ -211,18 +210,6 @@ router.get("/twemoji-badge/(.*)", async ctx => {
     ctx.set("Cache-Control", "max-age=2592000");
     ctx.set("Content-Type", "image/png");
     ctx.body = buffer;
-});
-
-// ServiceWorker
-router.get("/sw.js", async ctx => {
-    try {
-        await send(ctx as any, "/sw.js", {
-            root: swAssets,
-            maxage: ms("10 minutes"),
-        });
-    } catch (e) {
-        ctx.status = 500;
-    }
 });
 
 // Manifest

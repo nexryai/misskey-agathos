@@ -30,14 +30,6 @@ import { dirname } from "node:path";
         stderr: process.stderr,
     });
 
-    console.log("building packages/sw ...");
-
-    await execa("npm", ["run", "build"], {
-        cwd: __dirname + "/../packages/sw",
-        stdout: process.stdout,
-        stderr: process.stderr,
-    });
-
     console.log("build finishing ...");
 
     await execa("npm", ["run", "build-assets"], {
