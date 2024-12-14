@@ -10,7 +10,6 @@
                 <MkInfo v-if="thereIsUnresolvedAbuseReport" warn class="info">{{ i18n.ts.thereIsUnresolvedAbuseReportWarning }} <MkA to="/admin/abuses" class="_link">{{ i18n.ts.check }}</MkA></MkInfo>
                 <MkInfo v-if="noMaintainerInformation" warn class="info">{{ i18n.ts.noMaintainerInformationWarning }} <MkA to="/admin/settings" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
                 <MkInfo v-if="noBotProtection" warn class="info">{{ i18n.ts.noBotProtectionWarning }} <MkA to="/admin/security" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
-                <MkInfo v-if="noEmailServer" warn class="info">{{ i18n.ts.noEmailServerWarning }} <MkA to="/admin/email-settings" class="_link">{{ i18n.ts.configure }}</MkA></MkInfo>
 
                 <FormSwitch v-model="moderator" class="_formBlock" @update:model-value="toggleModerator">{{ i18n.ts.moderator }}</FormSwitch>
                 <MkSuperMenu :def="menuDef" :grid="narrow"></MkSuperMenu>
@@ -56,7 +55,6 @@ let narrow = ref(false);
 let el = ref(null);
 let noMaintainerInformation = isEmpty(instance.maintainerName) || isEmpty(instance.maintainerEmail);
 let noBotProtection = !instance.disableRegistration && !instance.enableHcaptcha && !instance.enableRecaptcha　&& !instance.enableTurnstil;
-let noEmailServer = !instance.enableEmail;
 let thereIsUnresolvedAbuseReport = ref(false);
 let currentPage = computed(() => router.currentRef.value.child);
 let moderator = ref(false);
@@ -145,11 +143,6 @@ const menuDef = computed(() => [{
         to: "/admin/settings",
         active: currentPage.value?.route.name === "settings",
     }, {
-        icon: "ti ti-mail",
-        text: i18n.ts.emailServer,
-        to: "/admin/email-settings",
-        active: currentPage.value?.route.name === "email-settings",
-    }, {
         icon: "ti ti-cloud",
         text: i18n.ts.objectStorage,
         to: "/admin/object-storage",
@@ -169,11 +162,6 @@ const menuDef = computed(() => [{
         text: i18n.ts.instanceBlocking,
         to: "/admin/instance-block",
         active: currentPage.value?.route.name === "instance-block",
-    }, {
-        icon: "ti ti-mail-cancel",
-        text: i18n.ts.emailDomainBlocking,
-        to: "/admin/email-block",
-        active: currentPage.value?.route.name === "email-block",
     }, {
         icon: "ti ti-ghost",
         text: i18n.ts.proxyAccount,

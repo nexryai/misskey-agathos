@@ -366,7 +366,6 @@ export const UserRepository = db.getRepository(User).extend({
                 avatarId: user.avatarId,
                 bannerId: user.bannerId,
                 injectFeaturedNote: profile!.injectFeaturedNote,
-                receiveAnnouncementEmail: profile!.receiveAnnouncementEmail,
                 alwaysMarkNsfw: profile!.alwaysMarkNsfw,
                 carefulBot: profile!.carefulBot,
                 autoAcceptFollowed: profile!.autoAcceptFollowed,
@@ -393,13 +392,10 @@ export const UserRepository = db.getRepository(User).extend({
                 mutedWords: profile!.mutedWords,
                 mutedInstances: profile!.mutedInstances,
                 mutingNotificationTypes: profile!.mutingNotificationTypes,
-                emailNotificationTypes: profile!.emailNotificationTypes,
                 showTimelineReplies: user.showTimelineReplies || falsy,
             } : {}),
 
             ...(opts.includeSecrets ? {
-                email: profile!.email,
-                emailVerified: profile!.emailVerified,
                 securityKeysList: profile!.twoFactorEnabled
                     ? UserSecurityKeys.find({
                         where: {

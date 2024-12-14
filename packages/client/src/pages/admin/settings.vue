@@ -40,16 +40,6 @@
                     </FormTextarea>
 
                     <FormSection>
-                        <FormSwitch v-model="enableRegistration" class="_formBlock">
-                            <template #label>{{ i18n.ts.enableRegistration }}</template>
-                        </FormSwitch>
-
-                        <FormSwitch v-model="emailRequiredForSignup" class="_formBlock">
-                            <template #label>{{ i18n.ts.emailRequiredForSignup }}</template>
-                        </FormSwitch>
-                    </FormSection>
-
-                    <FormSection>
                         <FormSwitch v-model="enableLocalTimeline" class="_formBlock">{{ i18n.ts.enableLocalTimeline }}</FormSwitch>
                         <FormSwitch v-model="enableGlobalTimeline" class="_formBlock">{{ i18n.ts.enableGlobalTimeline }}</FormSwitch>
                         <FormInfo class="_formBlock">{{ i18n.ts.disablingTimelinesInfo }}</FormInfo>
@@ -171,30 +161,28 @@ import { defaultStore } from "@/store";
 
 const streamModeEnabled = ref(defaultStore.state.streamModeEnabled);
 
-let name: string | null = $ref(null);
-let description: string | null = $ref(null);
-let tosUrl: string | null = $ref(null);
-let maintainerName: string | null = $ref(null);
-let maintainerEmail: string | null = $ref(null);
-let iconUrl: string | null = $ref(null);
-let bannerUrl: string | null = $ref(null);
-let backgroundImageUrl: string | null = $ref(null);
-let themeColor: any = $ref(null);
-let defaultLightTheme: any = $ref(null);
-let defaultDarkTheme: any = $ref(null);
-let enableLocalTimeline: boolean = $ref(false);
-let enableGlobalTimeline: boolean = $ref(false);
-let pinnedUsers: string = $ref("");
-let cacheRemoteFiles: boolean = $ref(false);
-let localDriveCapacityMb: any = $ref(0);
-let remoteDriveCapacityMb: any = $ref(0);
-let enableRegistration: boolean = $ref(false);
-let emailRequiredForSignup: boolean = $ref(false);
-let enableServiceWorker: boolean = $ref(false);
-let swPublicKey: any = $ref(null);
-let swPrivateKey: any = $ref(null);
-let deeplAuthKey: string = $ref("");
-let deeplIsPro: boolean = $ref(false);
+let name: string | null = ref(null);
+let description: string | null = ref(null);
+let tosUrl: string | null = ref(null);
+let maintainerName: string | null = ref(null);
+let maintainerEmail: string | null = ref(null);
+let iconUrl: string | null = ref(null);
+let bannerUrl: string | null = ref(null);
+let backgroundImageUrl: string | null = ref(null);
+let themeColor: any = ref(null);
+let defaultLightTheme: any = ref(null);
+let defaultDarkTheme: any = ref(null);
+let enableLocalTimeline: boolean = ref(false);
+let enableGlobalTimeline: boolean = ref(false);
+let pinnedUsers: string = ref("");
+let cacheRemoteFiles: boolean = ref(false);
+let localDriveCapacityMb: any = ref(0);
+let remoteDriveCapacityMb: any = ref(0);
+let enableServiceWorker: boolean = ref(false);
+let swPublicKey: any = ref(null);
+let swPrivateKey: any = ref(null);
+let deeplAuthKey: string = ref("");
+let deeplIsPro: boolean = ref(false);
 
 async function init() {
     const meta = await os.api("admin/meta");
@@ -215,8 +203,6 @@ async function init() {
     cacheRemoteFiles = meta.cacheRemoteFiles;
     localDriveCapacityMb = meta.driveCapacityPerLocalUserMb;
     remoteDriveCapacityMb = meta.driveCapacityPerRemoteUserMb;
-    enableRegistration = !meta.disableRegistration;
-    emailRequiredForSignup = meta.emailRequiredForSignup;
     enableServiceWorker = meta.enableServiceWorker;
     swPublicKey = meta.swPublickey;
     swPrivateKey = meta.swPrivateKey;
@@ -243,8 +229,6 @@ function save() {
         cacheRemoteFiles,
         localDriveCapacityMb: parseInt(localDriveCapacityMb, 10),
         remoteDriveCapacityMb: parseInt(remoteDriveCapacityMb, 10),
-        disableRegistration: !enableRegistration,
-        emailRequiredForSignup,
         enableServiceWorker,
         swPublicKey,
         swPrivateKey,

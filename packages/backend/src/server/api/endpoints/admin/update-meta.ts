@@ -112,10 +112,6 @@ export const paramDef = {
 export default define(meta, paramDef, async (ps, me) => {
     const set = {} as Partial<Meta>;
 
-    if (typeof ps.disableRegistration === "boolean") {
-        set.disableRegistration = ps.disableRegistration;
-    }
-
     if (typeof ps.disableLocalTimeline === "boolean") {
         set.disableLocalTimeline = ps.disableLocalTimeline;
     }
@@ -138,10 +134,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (Array.isArray(ps.blockedHosts)) {
         set.blockedHosts = ps.blockedHosts.filter(Boolean).map(x => x.toLowerCase());
-    }
-
-    if (Array.isArray(ps.blockedEmailDomains)) {
-        set.blockedEmailDomains = ps.blockedEmailDomains.filter(Boolean).map(x => x.toLowerCase());
     }
 
     if (ps.themeColor !== undefined) {
@@ -194,10 +186,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (ps.cacheRemoteFiles !== undefined) {
         set.cacheRemoteFiles = ps.cacheRemoteFiles;
-    }
-
-    if (ps.emailRequiredForSignup !== undefined) {
-        set.emailRequiredForSignup = ps.emailRequiredForSignup;
     }
 
     if (ps.enableHcaptcha !== undefined) {
@@ -298,14 +286,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (ps.discordClientSecret !== undefined) {
         set.discordClientSecret = ps.discordClientSecret;
-    }
-
-    if (ps.enableEmail !== undefined) {
-        set.enableEmail = ps.enableEmail;
-    }
-
-    if (ps.email !== undefined) {
-        set.email = ps.email;
     }
 
     if (ps.smtpSecure !== undefined) {
@@ -422,10 +402,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (ps.enableIpLogging !== undefined) {
         set.enableIpLogging = ps.enableIpLogging;
-    }
-
-    if (ps.enableActiveEmailValidation !== undefined) {
-        set.enableActiveEmailValidation = ps.enableActiveEmailValidation;
     }
 
     await db.transaction(async transactionalEntityManager => {

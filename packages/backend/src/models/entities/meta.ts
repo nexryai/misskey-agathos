@@ -40,11 +40,6 @@ export class Meta {
 	@Column("boolean", {
 	    default: false,
 	})
-	public disableRegistration: boolean;
-
-	@Column("boolean", {
-	    default: false,
-	})
 	public disableLocalTimeline: boolean;
 
 	@Column("boolean", {
@@ -76,11 +71,6 @@ export class Meta {
 	    length: 256, array: true, default: "{}",
 	})
 	public blockedHosts: string[];
-
-	@Column("varchar", {
-	    length: 256, array: true, default: "{}",
-	})
-	public blockedEmailDomains: string[];
 
 	@Column("varchar", {
 	    length: 512, array: true, default: "{/featured,/channels,/explore,/pages,/about-misskey}",
@@ -157,11 +147,6 @@ export class Meta {
 	@Column("boolean", {
 	    default: false,
 	})
-	public emailRequiredForSignup: boolean;
-
-	@Column("boolean", {
-	    default: false,
-	})
 	public enableHcaptcha: boolean;
 
 	@Column("varchar", {
@@ -227,17 +212,6 @@ export class Meta {
 	    nullable: true,
 	})
 	public summalyProxy: string | null;
-
-	@Column("boolean", {
-	    default: false,
-	})
-	public enableEmail: boolean;
-
-	@Column("varchar", {
-	    length: 128,
-	    nullable: true,
-	})
-	public email: string | null;
 
 	@Column("boolean", {
 	    default: false,
@@ -454,9 +428,4 @@ export class Meta {
 	    default: false,
 	})
 	public enableIpLogging: boolean;
-
-	@Column("boolean", {
-	    default: true,
-	})
-	public enableActiveEmailValidation: boolean;
 }

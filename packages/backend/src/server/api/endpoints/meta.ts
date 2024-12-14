@@ -348,12 +348,14 @@ export default define(meta, paramDef, async (ps, me) => {
         tosUrl: instance.ToSUrl,
         repositoryUrl: instance.repositoryUrl,
         feedbackUrl: instance.feedbackUrl,
-        disableRegistration: instance.disableRegistration,
+        // 本来は招待コードが必要であればtrueに設定される値だが、Nexkeyでは常に招待コードが必要なためtrueに設定。
+        // APIの互換性をある程度保つために項目自体は残しておく。
+        disableRegistration: true,
         disableLocalTimeline: instance.disableLocalTimeline,
         disableGlobalTimeline: instance.disableGlobalTimeline,
         driveCapacityPerLocalUserMb: instance.localDriveCapacityMb,
         driveCapacityPerRemoteUserMb: instance.remoteDriveCapacityMb,
-        emailRequiredForSignup: instance.emailRequiredForSignup,
+        emailRequiredForSignup: false,
         enableHcaptcha: instance.enableHcaptcha,
         hcaptchaSiteKey: instance.hcaptchaSiteKey,
         enableRecaptcha: instance.enableRecaptcha,
@@ -379,7 +381,7 @@ export default define(meta, paramDef, async (ps, me) => {
             ratio: ad.ratio,
             imageUrl: ad.imageUrl,
         })),
-        enableEmail: instance.enableEmail,
+        enableEmail: false,
 
         enableTwitterIntegration: instance.enableTwitterIntegration,
         enableGithubIntegration: instance.enableGithubIntegration,
@@ -404,10 +406,10 @@ export default define(meta, paramDef, async (ps, me) => {
 
         response.proxyAccountName = proxyAccount ? proxyAccount.username : null;
         response.features = {
-            registration: !instance.disableRegistration,
+            registration: false,
             localTimeLine: !instance.disableLocalTimeline,
             globalTimeLine: !instance.disableGlobalTimeline,
-            emailRequiredForSignup: instance.emailRequiredForSignup,
+            emailRequiredForSignup: false,
             elasticsearch: config.elasticsearch ? true : false,
             hcaptcha: instance.enableHcaptcha,
             recaptcha: instance.enableRecaptcha,

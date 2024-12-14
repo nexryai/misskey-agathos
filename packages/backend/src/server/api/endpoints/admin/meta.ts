@@ -195,14 +195,6 @@ export const meta = {
                     optional: false, nullable: false,
                 },
             },
-            blockedEmailDomains: {
-                type: "array",
-                optional: true, nullable: false,
-                items: {
-                    type: "string",
-                    optional: false, nullable: false,
-                },
-            },
             hcaptchaSecretKey: {
                 type: "string",
                 optional: true, nullable: true,
@@ -245,30 +237,6 @@ export const meta = {
                 optional: true, nullable: true,
             },
             summaryProxy: {
-                type: "string",
-                optional: true, nullable: true,
-            },
-            email: {
-                type: "string",
-                optional: true, nullable: true,
-            },
-            smtpSecure: {
-                type: "boolean",
-                optional: true, nullable: false,
-            },
-            smtpHost: {
-                type: "string",
-                optional: true, nullable: true,
-            },
-            smtpPort: {
-                type: "string",
-                optional: true, nullable: true,
-            },
-            smtpUser: {
-                type: "string",
-                optional: true, nullable: true,
-            },
-            smtpPass: {
                 type: "string",
                 optional: true, nullable: true,
             },
@@ -328,10 +296,6 @@ export const meta = {
                 type: "boolean",
                 optional: true, nullable: false,
             },
-            enableActiveEmailValidation: {
-                type: "boolean",
-                optional: true, nullable: false,
-            },
         },
     },
 } as const;
@@ -358,12 +322,12 @@ export default define(meta, paramDef, async (ps, me) => {
         tosUrl: instance.ToSUrl,
         repositoryUrl: instance.repositoryUrl,
         feedbackUrl: instance.feedbackUrl,
-        disableRegistration: instance.disableRegistration,
+        disableRegistration: true,
         disableLocalTimeline: instance.disableLocalTimeline,
         disableGlobalTimeline: instance.disableGlobalTimeline,
         driveCapacityPerLocalUserMb: instance.localDriveCapacityMb,
         driveCapacityPerRemoteUserMb: instance.remoteDriveCapacityMb,
-        emailRequiredForSignup: instance.emailRequiredForSignup,
+        emailRequiredForSignup: false,
         enableHcaptcha: instance.enableHcaptcha,
         hcaptchaSiteKey: instance.hcaptchaSiteKey,
         enableRecaptcha: instance.enableRecaptcha,
@@ -381,7 +345,7 @@ export default define(meta, paramDef, async (ps, me) => {
         maxNoteTextLength: MAX_NOTE_TEXT_LENGTH, // 後方互換性のため
         defaultLightTheme: instance.defaultLightTheme,
         defaultDarkTheme: instance.defaultDarkTheme,
-        enableEmail: instance.enableEmail,
+        enableEmail: false,
         enableTwitterIntegration: instance.enableTwitterIntegration,
         enableGithubIntegration: instance.enableGithubIntegration,
         enableDiscordIntegration: instance.enableDiscordIntegration,
@@ -394,7 +358,6 @@ export default define(meta, paramDef, async (ps, me) => {
         pinnedUsers: instance.pinnedUsers,
         hiddenTags: instance.hiddenTags,
         blockedHosts: instance.blockedHosts,
-        blockedEmailDomains: instance.blockedEmailDomains,
         hcaptchaSecretKey: instance.hcaptchaSecretKey,
         recaptchaSecretKey: instance.recaptchaSecretKey,
         turnstileSecretKey: instance.turnstileSecretKey,
@@ -406,12 +369,6 @@ export default define(meta, paramDef, async (ps, me) => {
         discordClientId: instance.discordClientId,
         discordClientSecret: instance.discordClientSecret,
         summalyProxy: instance.summalyProxy,
-        email: instance.email,
-        smtpSecure: instance.smtpSecure,
-        smtpHost: instance.smtpHost,
-        smtpPort: instance.smtpPort,
-        smtpUser: instance.smtpUser,
-        smtpPass: instance.smtpPass,
         swPrivateKey: instance.swPrivateKey,
         useObjectStorage: instance.useObjectStorage,
         objectStorageBaseUrl: instance.objectStorageBaseUrl,
@@ -429,6 +386,5 @@ export default define(meta, paramDef, async (ps, me) => {
         deeplAuthKey: instance.deeplAuthKey,
         deeplIsPro: instance.deeplIsPro,
         enableIpLogging: instance.enableIpLogging,
-        enableActiveEmailValidation: instance.enableActiveEmailValidation,
     };
 });

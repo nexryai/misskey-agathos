@@ -59,10 +59,6 @@ export const routes = [{
         name: "notifications",
         component: page(() => import("./pages/settings/notifications.vue")),
     }, {
-        path: "/email",
-        name: "email",
-        component: page(() => import("./pages/settings/email.vue")),
-    }, {
         path: "/security",
         name: "security",
         component: page(() => import("./pages/settings/security.vue")),
@@ -287,10 +283,6 @@ export const routes = [{
         name: "settings",
         component: iAmAdmin ? page(() => import("./pages/admin/settings.vue")) : page(() => import("./pages/not-found.vue")),
     }, {
-        path: "/email-settings",
-        name: "email-settings",
-        component: iAmAdmin ? page(() => import("./pages/admin/email-settings.vue")) : page(() => import("./pages/not-found.vue")),
-    }, {
         path: "/object-storage",
         name: "object-storage",
         component: iAmAdmin ? page(() => import("./pages/admin/object-storage.vue")) : page(() => import("./pages/not-found.vue")),
@@ -306,10 +298,6 @@ export const routes = [{
         path: "/instance-block",
         name: "instance-block",
         component: iAmAdmin ? page(() => import("./pages/admin/instance-block.vue")) : page(() => import("./pages/not-found.vue")),
-    }, {
-        path: "/email-block",
-        name: "email-block",
-        component: iAmAdmin ? page(() => import("./pages/admin/email-block.vue")) : page(() => import("./pages/not-found.vue")),
     }, {
         path: "/proxy-account",
         name: "proxy-account",

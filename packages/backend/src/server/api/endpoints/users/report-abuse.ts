@@ -1,9 +1,5 @@
-import * as sanitizeHtml from "sanitize-html";
-import { AbuseUserReports, Users } from "@/models/index.js";
+import { AbuseUserReports } from "@/models/index.js";
 import { genId } from "@/misc/gen-id.js";
-import { sendEmail } from "@/services/send-email.js";
-import { emailDeliver } from "@/queue/index.js";
-import { fetchMeta } from "@/misc/fetch-meta.js";
 import { getUser } from "../../common/getters.js";
 import { ApiError } from "../../error.js";
 import define from "../../define.js";
@@ -70,14 +66,4 @@ export default define(meta, paramDef, async (ps, me) => {
         reporterHost: null,
         comment: ps.comment,
     }).then(x => AbuseUserReports.findOneByOrFail(x.identifiers[0]));
-
-    // Publish event to moderators
-    setImmediate(async () => {
-        const meta = await fetchMeta();
-        if (meta.email) {
-            emailDeliver(meta.email, "New abuse report",
-                sanitizeHtml(ps.comment),
-                sanitizeHtml(ps.comment));
-        }
-    });
 });
