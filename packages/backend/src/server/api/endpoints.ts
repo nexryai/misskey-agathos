@@ -83,13 +83,6 @@ import * as ep___auth_session_userkey from "./endpoints/auth/session/userkey.js"
 import * as ep___blocking_create from "./endpoints/blocking/create.js";
 import * as ep___blocking_delete from "./endpoints/blocking/delete.js";
 import * as ep___blocking_list from "./endpoints/blocking/list.js";
-import * as ep___charts_activeUsers from "./endpoints/charts/active-users.js";
-import * as ep___charts_apRequest from "./endpoints/charts/ap-request.js";
-import * as ep___charts_federation from "./endpoints/charts/federation.js";
-import * as ep___charts_instance from "./endpoints/charts/instance.js";
-import * as ep___charts_notes from "./endpoints/charts/notes.js";
-import * as ep___charts_user_notes from "./endpoints/charts/user/notes.js";
-import * as ep___charts_users from "./endpoints/charts/users.js";
 import * as ep___clips_addNote from "./endpoints/clips/add-note.js";
 import * as ep___clips_removeNote from "./endpoints/clips/remove-note.js";
 import * as ep___clips_create from "./endpoints/clips/create.js";
@@ -355,13 +348,6 @@ const eps = [
     ["blocking/create", ep___blocking_create],
     ["blocking/delete", ep___blocking_delete],
     ["blocking/list", ep___blocking_list],
-    ["charts/active-users", ep___charts_activeUsers],
-    ["charts/ap-request", ep___charts_apRequest],
-    ["charts/federation", ep___charts_federation],
-    ["charts/instance", ep___charts_instance],
-    ["charts/notes", ep___charts_notes],
-    ["charts/user/notes", ep___charts_user_notes],
-    ["charts/users", ep___charts_users],
     ["clips/add-note", ep___clips_addNote],
     ["clips/remove-note", ep___clips_removeNote],
     ["clips/create", ep___clips_create],

@@ -1,6 +1,5 @@
 import { Brackets } from "typeorm";
 import { Notes, Followings } from "@/models/index.js";
-import { activeUsersChart } from "@/services/chart/index.js";
 import { genId } from "@/misc/gen-id.js";
 import define from "../../define.js";
 import { makePaginationQuery } from "../../common/make-pagination-query.js";
@@ -122,10 +121,5 @@ export default define(meta, paramDef, async (ps, user) => {
     //#endregion
 
     const timeline = await query.take(ps.limit).getMany();
-
-    process.nextTick(() => {
-        activeUsersChart.read(user);
-    });
-
     return await Notes.packMany(timeline, user);
 });

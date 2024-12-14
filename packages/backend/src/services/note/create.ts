@@ -4,7 +4,7 @@ import { extractMentions } from "@/misc/extract-mentions.js";
 import { extractCustomEmojisFromMfm } from "@/misc/extract-custom-emojis-from-mfm.js";
 import { extractHashtags } from "@/misc/extract-hashtags.js";
 import { Note, IMentionedRemoteUsers } from "@/models/entities/note.js";
-import { Mutings, Users, NoteWatchings, Notes, Instances, UserProfiles, Antennas, Followings, MutedNotes, Blockings, NoteThreadMutings } from "@/models/index.js";
+import { Mutings, Users, NoteWatchings, Notes, Instances, UserProfiles, Followings, MutedNotes, Blockings, NoteThreadMutings } from "@/models/index.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
 import { App } from "@/models/entities/app.js";
 import { insertNoteUnread } from "@/services/note/unread.js";
@@ -19,7 +19,6 @@ import DeliverManager from "@/remote/activitypub/deliver-manager.js";
 import { publishMainStream, publishNotesStream } from "@/services/stream.js";
 import { User, ILocalUser, IRemoteUser } from "@/models/entities/user.js";
 import { genId } from "@/misc/gen-id.js";
-import { notesChart, perUserNotesChart, activeUsersChart, instanceChart } from "@/services/chart/index.js";
 import { Poll, IPoll } from "@/models/entities/poll.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
 import { checkHitAntenna } from "@/misc/check-hit-antenna.js";
@@ -244,21 +243,6 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
 
     res(note);
 
-    // 統計を更新
-    notesChart.update(note, true);
-
-    if (user.host == null) {
-        perUserNotesChart.update(user, note, true);
-    }
-
-    // Register host
-    if (Users.isRemoteUser(user)) {
-        registerOrFetchInstanceDoc(user.host).then(i => {
-            Instances.increment({ id: i.id }, "notesCount", 1);
-            instanceChart.updateNote(i.host, note, true);
-        });
-    }
-
     // ハッシュタグ更新
     if (data.visibility === "public" || data.visibility === "home") {
         updateHashtags(user, tags);
@@ -328,8 +312,6 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
     }
 
     if (!silent) {
-        if (Users.isLocalUser(user)) activeUsersChart.write(user);
-
         // 未読通知を作成
         if (data.visibility === "specified") {
             if (data.visibleUsers == null) throw new Error("invalid param");

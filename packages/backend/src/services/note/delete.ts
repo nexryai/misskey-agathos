@@ -8,11 +8,9 @@ import renderTombstone from "@/remote/activitypub/renderer/tombstone.js";
 import config from "@/config/index.js";
 import { User, ILocalUser, IRemoteUser } from "@/models/entities/user.js";
 import { Note, IMentionedRemoteUsers } from "@/models/entities/note.js";
-import { Notes, Users, Instances } from "@/models/index.js";
-import { notesChart, perUserNotesChart, instanceChart } from "@/services/chart/index.js";
+import { Notes, Users } from "@/models/index.js";
 import { deliverToFollowers, deliverToUser } from "@/remote/activitypub/deliver-manager.js";
 import { countSameRenotes } from "@/misc/count-same-renotes.js";
-import { registerOrFetchInstanceDoc } from "../register-or-fetch-instance-doc.js";
 import { deliverToRelays } from "../relay.js";
 
 /**
@@ -73,20 +71,6 @@ export default async function(user: { id: User["id"]; uri: User["uri"]; host: Us
             deliverToConcerned(cascadingNote.user, cascadingNote, content);
         }
         //#endregion
-
-        // 統計を更新
-        notesChart.update(note, false);
-
-        if (user.host == null) {
-            perUserNotesChart.update(user, note, false);
-        }
-
-        if (Users.isRemoteUser(user)) {
-            registerOrFetchInstanceDoc(user.host).then(i => {
-                Instances.decrement({ id: i.id }, "notesCount", 1);
-                instanceChart.updateNote(i.host, note, false);
-            });
-        }
     }
 
     await Notes.delete({

@@ -5,12 +5,11 @@ import config from "@/config/index.js";
 import { registerOrFetchInstanceDoc } from "@/services/register-or-fetch-instance-doc.js";
 import { Note } from "@/models/entities/note.js";
 import { updateUsertags } from "@/services/update-hashtag.js";
-import { Users, Instances, DriveFiles, Followings, UserProfiles, UserPublickeys } from "@/models/index.js";
+import { Users, Instances, Followings, UserProfiles, UserPublickeys } from "@/models/index.js";
 import { User, IRemoteUser, CacheableUser } from "@/models/entities/user.js";
 import { Emoji } from "@/models/entities/emoji.js";
 import { UserNotePining } from "@/models/entities/user-note-pining.js";
 import { genId } from "@/misc/gen-id.js";
-import { instanceChart, usersChart } from "@/services/chart/index.js";
 import { UserPublickey } from "@/models/entities/user-publickey.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
 import { toPuny } from "@/misc/convert-host.js";
@@ -227,11 +226,8 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
     // Register host
     registerOrFetchInstanceDoc(host).then(i => {
         Instances.increment({ id: i.id }, "usersCount", 1);
-        instanceChart.newUser(i.host);
         fetchInstanceMetadata(i);
     });
-
-    usersChart.update(user!, true);
 
     // ハッシュタグ更新
     updateUsertags(user!, tags);

@@ -1,7 +1,6 @@
 import { Brackets } from "typeorm";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import { Followings, Notes } from "@/models/index.js";
-import { activeUsersChart } from "@/services/chart/index.js";
 import { genId } from "@/misc/gen-id.js";
 import define from "../../define.js";
 import { ApiError } from "../../error.js";
@@ -134,10 +133,5 @@ export default define(meta, paramDef, async (ps, user) => {
     //#endregion
 
     const timeline = await query.take(ps.limit).getMany();
-
-    process.nextTick(() => {
-        activeUsersChart.read(user);
-    });
-
     return await Notes.packMany(timeline, user);
 });

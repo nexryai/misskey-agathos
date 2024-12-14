@@ -323,24 +323,6 @@ export default function() {
     processDb(dbQueue);
     processObjectStorage(objectStorageQueue);
 
-    systemQueue.add("tickCharts", {
-    }, {
-        repeat: { cron: "55 * * * *" },
-        removeOnComplete: true,
-    });
-
-    systemQueue.add("resyncCharts", {
-    }, {
-        repeat: { cron: "0 0 * * *" },
-        removeOnComplete: true,
-    });
-
-    systemQueue.add("cleanCharts", {
-    }, {
-        repeat: { cron: "0 0 * * *" },
-        removeOnComplete: true,
-    });
-
     systemQueue.add("clean", {
     }, {
         repeat: { cron: "0 0 * * *" },
