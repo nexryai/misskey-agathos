@@ -27,6 +27,7 @@ export default defineConfig(({ command, mode }) => {
                 "@/": __dirname + "/src/",
                 "/client-assets/": __dirname + "/assets/",
                 "/static-assets/": __dirname + "/../backend/assets/",
+                "misskey-js": __dirname + "/../misskey-js/"
             },
         },
 
