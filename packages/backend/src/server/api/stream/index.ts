@@ -56,7 +56,6 @@ export default class Connection {
             this.updateMuting();
             this.updateRenoteMuting();
             this.updateBlocking();
-            this.updateFollowingChannels();
             this.updateUserProfile();
 
             this.subscriber.on(`user:${this.user.id}`, this.onUserEvent);
@@ -87,14 +86,6 @@ export default class Connection {
 
             case "unblock":
                 this.blocking.delete(data.body.id);
-                break;
-
-            case "followChannel":
-                this.followingChannels.add(data.body.id);
-                break;
-
-            case "unfollowChannel":
-                this.followingChannels.delete(data.body.id);
                 break;
 
             case "updateUserProfile":
