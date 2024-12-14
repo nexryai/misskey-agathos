@@ -25,9 +25,9 @@
 		"rootDir": "./src",
 		"baseUrl": "./",
 		"paths": {
-			"@/*": [
-				"./src/*"
-			]
+			"@/*": ["./src/*"],
+            "misskey-js": ["../misskey-js"],
+            "misskey-js/*": ["../misskey-js/*"]
 		},
 		"outDir": "./built",
 		"types": [
