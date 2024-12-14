@@ -24,7 +24,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
-		},
+            "misskey-js": ["../misskey-js"],
+            "misskey-js/*": ["../misskey-js/*"]
+        },
 		"typeRoots": [
 			"node_modules/@types",
 			"@types",

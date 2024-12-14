@@ -6,7 +6,6 @@ import { dirname } from "node:path";
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
 
-    /* ToDo
     console.log(`building packages/misskey-js ...`);
 
     await execa("npm", ["run", "build"], {
@@ -14,7 +13,6 @@ import { dirname } from "node:path";
         stdout: process.stdout,
         stderr: process.stderr,
     });
-    */
 
     console.log(`building packages/backend ...`);
 
