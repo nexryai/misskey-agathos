@@ -8,7 +8,7 @@ import { dirname } from "node:path";
 
     console.log("installing dependencies of packages/misskey-js ...");
 
-    await execa("yarn", ["install"], {
+    await execa("yarn", ["--force", "install"], {
         cwd: __dirname + "/../packages/misskey-js",
         stdout: process.stdout,
         stderr: process.stderr,
