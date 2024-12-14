@@ -1,4 +1,4 @@
-import * as fs from "node:fs";
+import { readFile, writeFile } from "fs/promises";
 import Bull from "bull";
 
 import { ZipReader } from "slacc";
@@ -32,7 +32,7 @@ export async function importCustomEmojis(job: Bull.Job<DbUserImportJobData>, don
     const destPath = path + "/emojis.zip";
 
     try {
-        fs.writeFileSync(destPath, "", "binary");
+        await writeFile(destPath, "", "binary");
         await downloadUrl(file.url, destPath);
     } catch (e) { // TODO: 何度か再試行
         if (e instanceof Error || typeof e === "string") {
@@ -44,8 +44,8 @@ export async function importCustomEmojis(job: Bull.Job<DbUserImportJobData>, don
     const outputPath = path + "/emojis";
     try {
         logger.succ(`Unzipping to ${outputPath}`);
-        ZipReader.withDestinationPath(outputPath).viaBuffer(await fs.promises.readFile(destPath));
-        const metaRaw = fs.readFileSync(outputPath + "/meta.json", "utf-8");
+        ZipReader.withDestinationPath(outputPath).viaBuffer(await readFile(destPath));
+        const metaRaw = await readFile(outputPath + "/meta.json", "utf-8");
         const meta = JSON.parse(metaRaw);
 
         for (const record of meta.emojis) {
@@ -76,7 +76,7 @@ export async function importCustomEmojis(job: Bull.Job<DbUserImportJobData>, don
         await db.queryResultCache?.remove(["meta_emojis"]);
 
         cleanup();
-	
+
         logger.succ("Imported");
         done();
     } catch (e) {

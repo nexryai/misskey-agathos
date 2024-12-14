@@ -1,4 +1,4 @@
-import * as fs from "node:fs";
+import { readFile } from "fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import Koa from "koa";
@@ -77,7 +77,7 @@ export default async function(ctx: Koa.Context) {
                     }
 
                     return {
-                        data: fs.readFileSync(path),
+                        data: await readFile(path),
                         ext,
                         type: mime,
                     };

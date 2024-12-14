@@ -1,7 +1,5 @@
-import * as fs from "node:fs";
-import * as querystring from "querystring";
+import { readFile } from "fs/promises";
 import Koa from "koa";
-import config from "@/config/index.js";
 import { IImage, convertToWebp } from "@/services/drive/image-processor.js";
 import { createTemp } from "@/misc/create-temp.js";
 import { downloadUrl } from "@/misc/download-url.js";
@@ -49,7 +47,7 @@ export async function proxyMedia(ctx: Koa.Context) {
             throw new StatusError("Rejected type", 403, "Rejected type");
         } else {
             image = {
-                data: fs.readFileSync(path),
+                data: await readFile(path),
                 ext,
                 type: mime,
             };
