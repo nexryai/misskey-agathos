@@ -35,21 +35,23 @@ export default async (ctx: Koa.Context) => {
     const host: string | null = process.env.NODE_ENV === "test" ? (body["host"] || null) : null;
     const invitationCode = body["invitationCode"];
 
-    if (invitationCode == null || typeof invitationCode !== "string") {
-        ctx.status = 400;
-        return;
+    if (process.env.NODE_ENV !== "test") {
+        if (invitationCode == null || typeof invitationCode !== "string") {
+            ctx.status = 400;
+            return;
+        }
+
+        const ticket = await RegistrationTickets.findOneBy({
+            code: invitationCode,
+        });
+
+        if (ticket == null) {
+            ctx.status = 400;
+            return;
+        }
+
+        RegistrationTickets.delete(ticket.id);
     }
-
-    const ticket = await RegistrationTickets.findOneBy({
-        code: invitationCode,
-    });
-
-    if (ticket == null) {
-        ctx.status = 400;
-        return;
-    }
-
-    RegistrationTickets.delete(ticket.id);
 
     try {
         const { account, secret } = await signup({
