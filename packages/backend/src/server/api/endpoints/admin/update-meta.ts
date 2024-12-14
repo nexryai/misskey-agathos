@@ -112,10 +112,6 @@ export const paramDef = {
 export default define(meta, paramDef, async (ps, me) => {
     const set = {} as Partial<Meta>;
 
-    if (typeof ps.disableRegistration === "boolean") {
-        set.disableRegistration = ps.disableRegistration;
-    }
-
     if (typeof ps.disableLocalTimeline === "boolean") {
         set.disableLocalTimeline = ps.disableLocalTimeline;
     }
@@ -194,10 +190,6 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (ps.cacheRemoteFiles !== undefined) {
         set.cacheRemoteFiles = ps.cacheRemoteFiles;
-    }
-
-    if (ps.emailRequiredForSignup !== undefined) {
-        set.emailRequiredForSignup = ps.emailRequiredForSignup;
     }
 
     if (ps.enableHcaptcha !== undefined) {

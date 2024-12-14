@@ -40,11 +40,6 @@ export class Meta {
 	@Column("boolean", {
 	    default: false,
 	})
-	public disableRegistration: boolean;
-
-	@Column("boolean", {
-	    default: false,
-	})
 	public disableLocalTimeline: boolean;
 
 	@Column("boolean", {
@@ -153,11 +148,6 @@ export class Meta {
 	})
 	@JoinColumn()
 	public proxyAccount: User | null;
-
-	@Column("boolean", {
-	    default: false,
-	})
-	public emailRequiredForSignup: boolean;
 
 	@Column("boolean", {
 	    default: false,
