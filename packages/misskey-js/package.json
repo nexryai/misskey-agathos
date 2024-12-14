@@ -5,8 +5,7 @@
 	"main": "./built/index.js",
 	"types": "./built/index.d.ts",
 	"scripts": {
-		"build": "npm run tsc",
-		"tsc": "tsc",
+		"build": "tsc",
 		"tsd": "tsd",
 		"api": "npx api-extractor run --local --verbose",
 		"api-prod": "npx api-extractor run --verbose",
