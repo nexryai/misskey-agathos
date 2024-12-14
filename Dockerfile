@@ -16,7 +16,15 @@ COPY . ./
 RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang libressl-dev vips-dev python3
 RUN yarn install
 RUN yarn build
-RUN rm -rf .git
+
+FROM node:22-alpine3.20 AS deps_installer
+
+WORKDIR /misskey
+
+COPY . ./
+
+RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang libressl-dev vips-dev python3
+RUN cd packages/backend && yarn install --production
 
 FROM node:22-alpine3.20 AS runner
 
@@ -31,7 +39,7 @@ USER misskey
 WORKDIR /misskey
 
 COPY --chown=misskey:misskey --from=builder /misskey/built ./built
-COPY --chown=misskey:misskey --from=builder /misskey/packages/backend/node_modules ./packages/backend/node_modules
+COPY --chown=misskey:misskey --from=deps_installer /misskey/packages/backend/node_modules ./packages/backend/node_modules
 COPY --chown=misskey:misskey --from=builder /misskey/packages/backend/built ./packages/backend/built
 COPY --chown=misskey:misskey package.json ./
 COPY --chown=misskey:misskey packages/backend/assets packages/backend/assets
