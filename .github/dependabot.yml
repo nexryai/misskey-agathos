@@ -15,3 +15,8 @@ updates:
   target-branch: "nightly"
   schedule:
     interval: daily
+- package-ecosystem: npm
+  directory: "/packages/misskey-js"
+  target-branch: "nightly"
+  schedule:
+      interval: daily
