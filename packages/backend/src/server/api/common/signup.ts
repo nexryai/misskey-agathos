@@ -6,7 +6,6 @@ import { UserProfile } from "@/models/entities/user-profile.js";
 import { genId } from "@/misc/gen-id.js";
 import { toPunyNullable } from "@/misc/convert-host.js";
 import { UserKeypair } from "@/models/entities/user-keypair.js";
-import { usersChart } from "@/services/chart/index.js";
 import { UsedUsername } from "@/models/entities/used-username.js";
 import { db } from "@/db/postgre.js";
 import { hashPassword } from "@/misc/password.js";
@@ -111,8 +110,6 @@ export async function signup(opts: {
             username: username.toLowerCase(),
         }));
     });
-
-    usersChart.update(account, true);
 
     return { account, secret };
 }

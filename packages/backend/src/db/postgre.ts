@@ -50,8 +50,6 @@ import { UserSecurityKey } from "@/models/entities/user-security-key.js";
 import { AttestationChallenge } from "@/models/entities/attestation-challenge.js";
 import { Page } from "@/models/entities/page.js";
 import { PageLike } from "@/models/entities/page-like.js";
-import { GalleryPost } from "@/models/entities/gallery-post.js";
-import { GalleryLike } from "@/models/entities/gallery-like.js";
 import { ModerationLog } from "@/models/entities/moderation-log.js";
 import { UsedUsername } from "@/models/entities/used-username.js";
 import { Announcement } from "@/models/entities/announcement.js";
@@ -64,9 +62,6 @@ import { PromoNote } from "@/models/entities/promo-note.js";
 import { PromoRead } from "@/models/entities/promo-read.js";
 import { Relay } from "@/models/entities/relay.js";
 import { MutedNote } from "@/models/entities/muted-note.js";
-import { Channel } from "@/models/entities/channel.js";
-import { ChannelFollowing } from "@/models/entities/channel-following.js";
-import { ChannelNotePining } from "@/models/entities/channel-note-pining.js";
 import { RegistryItem } from "@/models/entities/registry-item.js";
 import { Ad } from "@/models/entities/ad.js";
 import { PasswordResetRequest } from "@/models/entities/password-reset-request.js";
@@ -74,7 +69,6 @@ import { UserPending } from "@/models/entities/user-pending.js";
 import { Webhook } from "@/models/entities/webhook.js";
 import { UserIp } from "@/models/entities/user-ip.js";
 
-import { entities as charts } from "@/services/chart/entities.js";
 import { dbLogger } from "./logger.js";
 import { redisClient } from "./redis.js";
 
@@ -146,8 +140,6 @@ export const entities = [
     NoteUnread,
     Page,
     PageLike,
-    GalleryPost,
-    GalleryLike,
     DriveFile,
     DriveFolder,
     Poll,
@@ -169,16 +161,12 @@ export const entities = [
     PromoRead,
     Relay,
     MutedNote,
-    Channel,
-    ChannelFollowing,
-    ChannelNotePining,
     RegistryItem,
     Ad,
     PasswordResetRequest,
     UserPending,
     Webhook,
     UserIp,
-    ...charts,
 ];
 
 const log = process.env.NODE_ENV !== "production";

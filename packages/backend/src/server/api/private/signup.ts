@@ -3,6 +3,7 @@ import { fetchMeta } from "@/misc/fetch-meta.js";
 import { verifyHcaptcha, verifyRecaptcha, verifyTurnstile } from "@/misc/captcha.js";
 import { Users, RegistrationTickets } from "@/models/index.js";
 import { signup } from "../common/signup.js";
+
 export default async (ctx: Koa.Context) => {
     const body = ctx.request.body;
 

@@ -7,7 +7,6 @@ import { deliver , webhookDeliver } from "@/queue/index.js";
 import { IdentifiableError } from "@/misc/identifiable-error.js";
 import { User } from "@/models/entities/user.js";
 import { Followings, Users, FollowRequests, Blockings, Instances, UserProfiles } from "@/models/index.js";
-import { instanceChart } from "@/services/chart/index.js";
 import { genId } from "@/misc/gen-id.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
 import { Packed } from "@/misc/schema.js";
@@ -76,12 +75,10 @@ export async function insertFollowingDoc(followee: { id: User["id"]; host: User[
     if (Users.isRemoteUser(follower) && Users.isLocalUser(followee)) {
         registerOrFetchInstanceDoc(follower.host).then(i => {
             Instances.increment({ id: i.id }, "followingCount", 1);
-            instanceChart.updateFollowing(i.host, true);
         });
     } else if (Users.isLocalUser(follower) && Users.isRemoteUser(followee)) {
         registerOrFetchInstanceDoc(followee.host).then(i => {
             Instances.increment({ id: i.id }, "followersCount", 1);
-            instanceChart.updateFollowers(i.host, true);
         });
     }
     //#endregion
@@ -156,7 +153,7 @@ export default async function(_follower: { id: User["id"] }, _followee: { id: Us
     }
 
     if (Users.isRemoteUser(follower) && ((follower.isSuspended) || (follower.isDeleted))) {
-        //　リモートフォローを受けてすでに凍結済みか削除済みなら、Rejectを送り返しておしまい。
+        // リモートフォローを受けてすでに凍結済みか削除済みなら、Rejectを送り返しておしまい。
         const content = renderActivity(renderReject(renderFollow(follower, followee, requestId), followee));
         deliver(followee , content, follower.inbox);
         return;
