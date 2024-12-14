@@ -2,11 +2,10 @@ import { EventEmitter } from "events";
 import * as websocket from "websocket";
 import readNote from "@/services/note/read.js";
 import { User } from "@/models/entities/user.js";
-import { Channel as ChannelModel } from "@/models/entities/channel.js";
-import { Followings, Mutings, RenoteMutings, UserProfiles, ChannelFollowings, Blockings } from "@/models/index.js";
+import { Followings, Mutings, RenoteMutings, UserProfiles, Blockings } from "@/models/index.js";
 import { AccessToken } from "@/models/entities/access-token.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
-import { publishChannelStream, publishGroupMessagingStream, publishMessagingStream } from "@/services/stream.js";
+import { publishGroupMessagingStream, publishMessagingStream } from "@/services/stream.js";
 import { UserGroup } from "@/models/entities/user-group.js";
 import { Packed } from "@/misc/schema.js";
 import { readNotification } from "../common/read-notification.js";
@@ -23,7 +22,6 @@ export default class Connection {
     public following: Set<User["id"]> = new Set();
     public muting: Set<User["id"]> = new Set();
     public blocking: Set<User["id"]> = new Set(); // "被"blocking
-    public followingChannels: Set<ChannelModel["id"]> = new Set();
     public token?: AccessToken;
     private wsConnection: websocket.connection;
     public subscriber: StreamEventEmitter;
@@ -145,7 +143,6 @@ export default class Connection {
                 // 個々のチャンネルではなくルートレベルでこれらのメッセージを受け取る理由は、
                 // クライアントの事情を考慮したとき、入力フォームはノートチャンネルやメッセージのメインコンポーネントとは別
                 // なこともあるため、それらのコンポーネントがそれぞれ各チャンネルに接続するようにするのは面倒なため。
-            case "typingOnChannel": this.typingOnChannel(body.channel); break;
             case "typingOnMessaging": this.typingOnMessaging(body); break;
         }
     }
@@ -182,7 +179,6 @@ export default class Connection {
         if (this.user && (note.userId !== this.user.id)) {
             readNote(this.user.id, [note], {
                 following: this.following,
-                followingChannels: this.followingChannels,
             });
         }
     }
@@ -304,12 +300,6 @@ export default class Connection {
         }
     }
 
-    private typingOnChannel(channel: ChannelModel["id"]) {
-        if (this.user) {
-            publishChannelStream(channel, "typing", this.user.id);
-        }
-    }
-
     private typingOnMessaging(param: { partner?: User["id"]; group?: UserGroup["id"]; }) {
         if (this.user) {
             if (param.partner) {
@@ -362,17 +352,6 @@ export default class Connection {
         });
 
         this.blocking = new Set<string>(blockings.map(x => x.blockerId));
-    }
-
-    private async updateFollowingChannels() {
-        const followings = await ChannelFollowings.find({
-            where: {
-                followerId: this.user!.id,
-            },
-            select: ["followeeId"],
-        });
-
-        this.followingChannels = new Set<string>(followings.map(x => x.followeeId));
     }
 
     private async updateUserProfile() {

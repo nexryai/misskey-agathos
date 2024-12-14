@@ -3,7 +3,6 @@ import { id } from "../id.js";
 import { noteVisibilities } from "../../types.js";
 import { User } from "./user.js";
 import { DriveFile } from "./drive-file.js";
-import { Channel } from "./channel.js";
 
 @Entity()
 @Index("IDX_NOTE_TAGS", { synchronize: false })
@@ -182,20 +181,6 @@ export class Note {
 	    default: false,
 	})
 	public hasPoll: boolean;
-
-	@Index()
-	@Column({
-	    ...id(),
-	    nullable: true,
-	    comment: "The ID of source channel.",
-	})
-	public channelId: Channel["id"] | null;
-
-	@ManyToOne(type => Channel, {
-	    onDelete: "CASCADE",
-	})
-	@JoinColumn()
-	public channel: Channel | null;
 
 	//#region Denormalized fields
 	@Index()

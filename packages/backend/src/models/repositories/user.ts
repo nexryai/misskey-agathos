@@ -11,7 +11,7 @@ import { Cache } from "@/misc/cache.js";
 import { db } from "@/db/postgre.js";
 import { sanitizeUrl } from "@/misc/sanitize-url.js";
 import { Instance } from "../entities/instance.js";
-import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, RenoteMutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Pages, Announcements, AnnouncementReads, Antennas, AntennaNotes, ChannelFollowings, Instances, DriveFiles } from "../index.js";
+import { Notes, NoteUnreads, FollowRequests, Notifications, MessagingMessages, UserNotePinings, Followings, Blockings, Mutings, RenoteMutings, UserProfiles, UserSecurityKeys, UserGroupJoinings, Pages, Announcements, AnnouncementReads, AntennaNotes, Instances, DriveFiles } from "../index.js";
 
 const userInstanceCache = new Cache<Instance | null>(1000 * 60 * 60 * 3);
 
@@ -170,17 +170,6 @@ export const UserRepository = db.getRepository(User).extend({
         const unread = myAntennas.length > 0 ? await AntennaNotes.findOneBy({
             antennaId: In(myAntennas.map(x => x.id)),
             read: false,
-        }) : null;
-
-        return unread != null;
-    },
-
-    async getHasUnreadChannel(userId: User["id"]): Promise<boolean> {
-        const channels = await ChannelFollowings.findBy({ followerId: userId });
-
-        const unread = channels.length > 0 ? await NoteUnreads.findOneBy({
-            userId: userId,
-            noteChannelId: In(channels.map(x => x.followeeId)),
         }) : null;
 
         return unread != null;
@@ -384,7 +373,6 @@ export const UserRepository = db.getRepository(User).extend({
                 }).then(count => count > 0),
                 hasUnreadAnnouncement: this.getHasUnreadAnnouncement(user.id),
                 hasUnreadAntenna: this.getHasUnreadAntenna(user.id),
-                hasUnreadChannel: this.getHasUnreadChannel(user.id),
                 hasUnreadMessagingMessage: this.getHasUnreadMessagingMessage(user.id),
                 hasUnreadNotification: this.getHasUnreadNotification(user.id),
                 hasPendingReceivedFollowRequest: this.getHasPendingReceivedFollowRequest(user.id),

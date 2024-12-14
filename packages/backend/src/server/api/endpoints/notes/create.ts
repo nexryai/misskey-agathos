@@ -2,12 +2,10 @@ import ms from "ms";
 import { In } from "typeorm";
 import create from "@/services/note/create.js";
 import { User } from "@/models/entities/user.js";
-import { Users, DriveFiles, Notes, Channels, Blockings } from "@/models/index.js";
+import { Users, DriveFiles, Notes, Blockings } from "@/models/index.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
 import { Note } from "@/models/entities/note.js";
-import { Channel } from "@/models/entities/channel.js";
 import { MAX_NOTE_TEXT_LENGTH } from "@/const.js";
-import { noteVisibilities } from "../../../../types.js";
 import { ApiError } from "../../error.js";
 import define from "../../define.js";
 
@@ -66,12 +64,6 @@ export const meta = {
             id: "04da457d-b083-4055-9082-955525eda5a5",
         },
 
-        noSuchChannel: {
-            message: "No such channel.",
-            code: "NO_SUCH_CHANNEL",
-            id: "b1653923-5453-4edc-b786-7c4f39bb0bbb",
-        },
-
         youHaveBeenBlocked: {
             message: "You have been blocked by this user.",
             code: "YOU_HAVE_BEEN_BLOCKED",
@@ -117,7 +109,6 @@ export const paramDef = {
         },
         replyId: { type: "string", format: "misskey:id", nullable: true },
         renoteId: { type: "string", format: "misskey:id", nullable: true },
-        channelId: { type: "string", format: "misskey:id", nullable: true },
         poll: {
             type: "object",
             nullable: true,
@@ -253,15 +244,6 @@ export default define(meta, paramDef, async (ps, user) => {
         }
     }
 
-    let channel: Channel | null = null;
-    if (ps.channelId != null) {
-        channel = await Channels.findOneBy({ id: ps.channelId });
-
-        if (channel == null) {
-            throw new ApiError(meta.errors.noSuchChannel);
-        }
-    }
-
     // 投稿を作成
     const note = await create(user, {
         createdAt: new Date(),
@@ -278,7 +260,6 @@ export default define(meta, paramDef, async (ps, user) => {
         localOnly: ps.localOnly,
         visibility: ps.visibility,
         visibleUsers,
-        channel,
         apMentions: ps.noExtractMentions ? [] : undefined,
         apHashtags: ps.noExtractHashtags ? [] : undefined,
         apEmojis: ps.noExtractEmojis ? [] : undefined,

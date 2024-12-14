@@ -10,7 +10,7 @@ import { NoteReaction } from "@/models/entities/note-reaction.js";
 import { aggregateNoteEmojis, populateEmojis, prefetchEmojis } from "@/misc/populate-emojis.js";
 import { db } from "@/db/postgre.js";
 import { sanitizeUrl } from "@/misc/sanitize-url.js";
-import { Users, PollVotes, DriveFiles, NoteReactions, Followings, Polls, Channels } from "../index.js";
+import { Users, PollVotes, DriveFiles, NoteReactions, Followings, Polls } from "../index.js";
 
 async function hideNote(packedNote: Packed<"Note">, meId: User["id"] | null) {
     // TODO: isVisibleForMe を使うようにしても良さそう(型違うけど)
@@ -215,12 +215,6 @@ export const NoteRepository = db.getRepository(Note).extend({
             text = `【${note.name}】\n${(note.text || "").trim()}\n\n${note.url ?? note.uri}`;
         }
 
-        const channel = note.channelId
-            ? note.channel
-                ? note.channel
-                : await Channels.findOneBy({ id: note.channelId })
-            : null;
-
         const reactionEmojiNames = Object.keys(note.reactions).filter(x => x.startsWith(":")).map(x => decodeReaction(x).reaction).map(x => x.replace(/:/g, ""));
 
         const packed: Packed<"Note"> = await awaitAll({
@@ -245,11 +239,6 @@ export const NoteRepository = db.getRepository(Note).extend({
             files: DriveFiles.packMany(note.fileIds),
             replyId: note.replyId,
             renoteId: note.renoteId,
-            channelId: note.channelId || undefined,
-            channel: channel ? {
-                id: channel.id,
-                name: channel.name,
-            } : undefined,
             mentions: note.mentions.length > 0 ? note.mentions : undefined,
             uri: sanitizeUrl(note.uri) || undefined,
             url: sanitizeUrl(note.url) || undefined,

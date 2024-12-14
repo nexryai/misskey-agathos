@@ -4,7 +4,6 @@ import { UserList } from "@/models/entities/user-list.js";
 import { UserGroup } from "@/models/entities/user-group.js";
 import config from "@/config/index.js";
 import { Antenna } from "@/models/entities/antenna.js";
-import { Channel } from "@/models/entities/channel.js";
 import {
     StreamChannels,
     AntennaStreamTypes,
@@ -62,10 +61,6 @@ class Publisher {
         });
     };
 
-    public publishChannelStream = <K extends keyof ChannelStreamTypes>(channelId: Channel["id"], type: K, value?: ChannelStreamTypes[K]): void => {
-        this.publish(`channelStream:${channelId}`, type, typeof value === "undefined" ? null : value);
-    };
-
     public publishUserListStream = <K extends keyof UserListStreamTypes>(listId: UserList["id"], type: K, value?: UserListStreamTypes[K]): void => {
         this.publish(`userListStream:${listId}`, type, typeof value === "undefined" ? null : value);
     };
@@ -102,7 +97,6 @@ export const publishMainStream = publisher.publishMainStream;
 export const publishDriveStream = publisher.publishDriveStream;
 export const publishNoteStream = publisher.publishNoteStream;
 export const publishNotesStream = publisher.publishNotesStream;
-export const publishChannelStream = publisher.publishChannelStream;
 export const publishUserListStream = publisher.publishUserListStream;
 export const publishAntennaStream = publisher.publishAntennaStream;
 export const publishMessagingStream = publisher.publishMessagingStream;

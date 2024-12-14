@@ -4,7 +4,7 @@ import { extractMentions } from "@/misc/extract-mentions.js";
 import { extractCustomEmojisFromMfm } from "@/misc/extract-custom-emojis-from-mfm.js";
 import { extractHashtags } from "@/misc/extract-hashtags.js";
 import { Note, IMentionedRemoteUsers } from "@/models/entities/note.js";
-import { Mutings, Users, NoteWatchings, Notes, Instances, UserProfiles, Followings, MutedNotes, Blockings, NoteThreadMutings } from "@/models/index.js";
+import { Mutings, Users, NoteWatchings, Notes, UserProfiles, Followings, MutedNotes, Blockings, NoteThreadMutings } from "@/models/index.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
 import { App } from "@/models/entities/app.js";
 import { insertNoteUnread } from "@/services/note/unread.js";
@@ -24,7 +24,6 @@ import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js
 import { checkHitAntenna } from "@/misc/check-hit-antenna.js";
 import { checkWordMute } from "@/misc/check-word-mute.js";
 import { countSameRenotes } from "@/misc/count-same-renotes.js";
-import { Channel } from "@/models/entities/channel.js";
 import { normalizeForSearch } from "@/misc/normalize-for-search.js";
 import { getAntennas } from "@/misc/antenna-cache.js";
 import { endedPollNotificationQueue } from "@/queue/queues.js";
@@ -33,7 +32,6 @@ import { Cache } from "@/misc/cache.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
 import { db } from "@/db/postgre.js";
 import { getActiveWebhooks } from "@/misc/webhook-cache.js";
-import { registerOrFetchInstanceDoc } from "../register-or-fetch-instance-doc.js";
 import { updateHashtags } from "../update-hashtag.js";
 import { deliverToRelays } from "../relay.js";
 import { addNoteToAntenna } from "../add-note-to-antenna.js";
@@ -119,7 +117,6 @@ type Option = {
 	cw?: string | null;
 	visibility?: string;
 	visibleUsers?: MinimumUser[] | null;
-	channel?: Channel | null;
 	apMentions?: MinimumUser[] | null;
 	apHashtags?: string[] | null;
 	apEmojis?: string[] | null;
@@ -484,7 +481,6 @@ async function insertNote(user: { id: User["id"]; host: User["host"]; }, data: O
         fileIds: data.files ? data.files.map(file => file.id) : [],
         replyId: data.reply ? data.reply.id : null,
         renoteId: data.renote ? data.renote.id : null,
-        channelId: data.channel ? data.channel.id : null,
         threadId: data.reply
             ? data.reply.threadId
                 ? data.reply.threadId

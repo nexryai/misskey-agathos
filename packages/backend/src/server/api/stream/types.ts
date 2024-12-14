@@ -1,6 +1,5 @@
 import { EventEmitter } from "events";
 import Emitter from "strict-event-emitter-types";
-import { Channel } from "@/models/entities/channel.js";
 import { User } from "@/models/entities/user.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
 import { Note } from "@/models/entities/note.js";
@@ -10,7 +9,6 @@ import { DriveFolder } from "@/models/entities/drive-folder.js";
 import { UserList } from "@/models/entities/user-list.js";
 import { MessagingMessage } from "@/models/entities/messaging-message.js";
 import { UserGroup } from "@/models/entities/user-group.js";
-import { AbuseUserReport } from "@/models/entities/abuse-user-report.js";
 import { Signin } from "@/models/entities/signin.js";
 import { Page } from "@/models/entities/page.js";
 import { Packed } from "@/misc/schema.js";
@@ -39,8 +37,6 @@ export interface BroadcastTypes {
 
 export interface UserStreamTypes {
 	terminate: Record<string, unknown>;
-	followChannel: Channel;
-	unfollowChannel: Channel;
 	updateUserProfile: UserProfile;
 	mute: User;
 	unmute: User;
@@ -205,10 +201,6 @@ export type StreamMessages = {
 	note: {
 		name: `noteStream:${Note["id"]}`;
 		payload: EventUnionFromDictionary<NoteStreamEventTypes>;
-	};
-	channel: {
-		name: `channelStream:${Channel["id"]}`;
-		payload: EventUnionFromDictionary<ChannelStreamTypes>;
 	};
 	userList: {
 		name: `userListStream:${UserList["id"]}`;
