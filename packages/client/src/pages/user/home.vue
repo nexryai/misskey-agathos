@@ -1,13 +1,13 @@
 <template>
-<MkSpacer :content-max="narrow ? 800 : 1100">
-    <div ref="rootEl" v-size="{ max: [500] }" class="ftskorzw" :class="{ wide: !narrow }">
+<MkSpacer :content-max="800">
+    <div ref="rootEl" v-size="{ max: [500] }" class="ftskorzw">
         <div class="main">
             <!-- TODO -->
             <!-- <div class="punished" v-if="user.isSuspended"><i class="ti ti-alert-triangle" style="margin-right: 8px;"></i> {{ i18n.ts.userSuspended }}</div> -->
             <!-- <div class="punished" v-if="user.isSilenced"><i class="ti ti-alert-triangle" style="margin-right: 8px;"></i> {{ i18n.ts.userSilenced }}</div> -->
 
             <div class="profile">
-                <MkRemoteCaution v-if="user.host != null" :href="user.url" class="warn"/>
+                <MkRemoteCaution v-if="user.host != null" :href="user.url ? user.url: '#'" class="warn"/>
 
                 <div :key="user.id" class="_block main">
                     <div class="banner-container" :style="style">
@@ -89,46 +89,35 @@
                 <div v-if="user.pinnedNotes.length > 0" class="_gap">
                     <XNote v-for="note in user.pinnedNotes" :key="note.id" class="note _block" :note="note" :pinned="true"/>
                 </div>
-                <template v-if="narrow">
-                    <XPhotos :key="user.id" :user="user" style="margin-top: var(--margin);"/>
-                    <XActivity v-if="user.host == null" :key="user.id" :user="user" style="margin-top: var(--margin);"/>
-                </template>
+                <XPhotos :key="user.id" :user="user" style="margin-top: var(--margin);"/>
+                <XActivity v-if="user.host == null" :key="user.id" :user="user" style="margin-top: var(--margin);"/>
             </div>
             <div>
                 <XUserTimeline :user="user"/>
             </div>
-        </div>
-        <div v-if="!narrow" class="sub">
-            <XPhotos :key="user.id" :user="user" style="margin-top: var(--margin);"/>
-            <XActivity :key="user.id" :user="user" style="margin-top: var(--margin);"/>
         </div>
     </div>
 </MkSpacer>
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, computed, inject, onMounted, onUnmounted, watch } from "vue";
+import { ref, computed, defineAsyncComponent, onMounted, onUnmounted } from "vue";
 import calcAge from "s-age";
 import * as misskey from "misskey-js";
 import XUserTimeline from "./index.timeline.vue";
 import XNote from "@/components/MkNote.vue";
 import MkFollowButton from "@/components/MkFollowButton.vue";
-import MkContainer from "@/components/MkContainer.vue";
-import MkFolder from "@/components/MkFolder.vue";
 import MkRemoteCaution from "@/components/MkRemoteCaution.vue";
-import MkTab from "@/components/MkTab.vue";
-import MkInfo from "@/components/MkInfo.vue";
 import { getScrollPosition } from "@/scripts/scroll";
 import { getUserMenu } from "@/scripts/get-user-menu";
 import number from "@/filters/number";
-import { userPage, acct as getAcct } from "@/filters/user";
+import { userPage } from "@/filters/user";
 import * as os from "@/os";
 import { useRouter } from "@/router";
 import { i18n } from "@/i18n";
 import { $i } from "@/account";
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
-const XActivity = defineAsyncComponent(() => import("./index.activity.vue"));
 
 const props = withDefaults(defineProps<{
 	user: misskey.entities.UserDetailed;
@@ -137,36 +126,35 @@ const props = withDefaults(defineProps<{
 
 const router = useRouter();
 
-let parallaxAnimationId = $ref<null | number>(null);
-let narrow = $ref<null | boolean>(null);
-let rootEl = $ref<null | HTMLElement>(null);
-let bannerEl = $ref<null | HTMLElement>(null);
+let parallaxAnimationId = ref<null | number>(null);
+let rootEl = ref<null | HTMLElement>(null);
+let bannerEl = ref<null | HTMLElement>(null);
 
-const style = $computed(() => {
+const style = computed(() => {
     if (props.user.bannerUrl == null) return {};
     return {
         backgroundImage: `url(${ props.user.bannerUrl })`,
     };
 });
 
-const age = $computed(() => {
+const age = computed(() => {
     return calcAge(props.user.birthday);
 });
 
-function menu(ev) {
+function menu(ev): void {
     os.popupMenu(getUserMenu(props.user, router), ev.currentTarget ?? ev.target);
 }
 
-function parallaxLoop() {
-    parallaxAnimationId = window.requestAnimationFrame(parallaxLoop);
+function parallaxLoop(): void {
+    parallaxAnimationId.value = window.requestAnimationFrame(parallaxLoop);
     parallax();
 }
 
-function parallax() {
+function parallax(): void {
     const banner = bannerEl as any;
     if (banner == null) return;
 
-    const top = getScrollPosition(rootEl);
+    const top = getScrollPosition(rootEl.value);
 
     if (top < 0) return;
 
@@ -177,12 +165,11 @@ function parallax() {
 
 onMounted(() => {
     window.requestAnimationFrame(parallaxLoop);
-    narrow = rootEl!.clientWidth < 1000;
 });
 
 onUnmounted(() => {
-    if (parallaxAnimationId) {
-        window.cancelAnimationFrame(parallaxAnimationId);
+    if (parallaxAnimationId.value) {
+        window.cancelAnimationFrame(parallaxAnimationId.value);
     }
 });
 </script>
@@ -365,9 +352,6 @@ onUnmounted(() => {
 							text-overflow: ellipsis;
 							margin: 0;
 						}
-					}
-
-					&.system > .field > .name {
 					}
 				}
 
