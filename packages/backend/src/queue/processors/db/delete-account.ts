@@ -1,5 +1,5 @@
 import Bull from "bull";
-import { AccessTokens, DriveFiles, Notes, UserProfiles, Users, UserNotePinings, MessagingMessages, Followings, Mutings, Blockings, Notifications, FollowRequests, Antennas, NoteReactions, Clips } from "@/models/index.js";
+import { AccessTokens, DriveFiles, Notes, UserProfiles, Users, UserNotePinings, Followings, Mutings, Blockings, Notifications, FollowRequests, Antennas, NoteReactions, Clips } from "@/models/index.js";
 import { DbUserDeleteJobData } from "@/queue/types.js";
 import { Note } from "@/models/entities/note.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
@@ -156,9 +156,6 @@ export async function deleteAccount(job: Bull.Job<DbUserDeleteJobData>): Promise
     // soft指定されている場合は物理削除しない
     if (job.data.soft) {
         // nop
-        await MessagingMessages.delete({
-            userId: job.data.user.id,
-        });
     } else {
         if (Users.isLocalUser(job.data.user)) {
             await UserProfiles.update(job.data.user.id, {
@@ -188,9 +185,6 @@ export async function deleteAccount(job: Bull.Job<DbUserDeleteJobData>): Promise
                 userId: job.data.user.id,
             });
             await AccessTokens.delete({
-                userId: job.data.user.id,
-            });
-            await MessagingMessages.delete({
                 userId: job.data.user.id,
             });
             await Followings.delete({

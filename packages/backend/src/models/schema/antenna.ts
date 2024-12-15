@@ -49,11 +49,6 @@ export const packedAntennaSchema = {
             optional: false, nullable: true,
             format: "id",
         },
-        userGroupId: {
-            type: "string",
-            optional: false, nullable: true,
-            format: "id",
-        },
         users: {
             type: "array",
             optional: false, nullable: false,

@@ -29,14 +29,10 @@ import { SwSubscription } from "@/models/entities/sw-subscription.js";
 import { Blocking } from "@/models/entities/blocking.js";
 import { UserList } from "@/models/entities/user-list.js";
 import { UserListJoining } from "@/models/entities/user-list-joining.js";
-import { UserGroup } from "@/models/entities/user-group.js";
-import { UserGroupJoining } from "@/models/entities/user-group-joining.js";
-import { UserGroupInvitation } from "@/models/entities/user-group-invitation.js";
 import { Hashtag } from "@/models/entities/hashtag.js";
 import { NoteFavorite } from "@/models/entities/note-favorite.js";
 import { AbuseUserReport } from "@/models/entities/abuse-user-report.js";
 import { RegistrationTicket } from "@/models/entities/registration-tickets.js";
-import { MessagingMessage } from "@/models/entities/messaging-message.js";
 import { Signin } from "@/models/entities/signin.js";
 import { AuthSession } from "@/models/entities/auth-session.js";
 import { FollowRequest } from "@/models/entities/follow-request.js";
@@ -118,9 +114,6 @@ export const entities = [
     UserPublickey,
     UserList,
     UserListJoining,
-    UserGroup,
-    UserGroupJoining,
-    UserGroupInvitation,
     UserNotePining,
     UserSecurityKey,
     UsedUsername,
@@ -146,7 +139,6 @@ export const entities = [
     SwSubscription,
     AbuseUserReport,
     RegistrationTicket,
-    MessagingMessage,
     Signin,
     ModerationLog,
     Clip,

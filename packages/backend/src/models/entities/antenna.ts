@@ -2,7 +2,6 @@ import { PrimaryColumn, Entity, Index, JoinColumn, Column, ManyToOne } from "typ
 import { id } from "../id.js";
 import { User } from "./user.js";
 import { UserList } from "./user-list.js";
-import { UserGroupJoining } from "./user-group-joining.js";
 
 @Entity()
 export class Antenna {
@@ -47,18 +46,6 @@ export class Antenna {
 	})
 	@JoinColumn()
 	public userList: UserList | null;
-
-	@Column({
-	    ...id(),
-	    nullable: true,
-	})
-	public userGroupJoiningId: UserGroupJoining["id"] | null;
-
-	@ManyToOne(type => UserGroupJoining, {
-	    onDelete: "CASCADE",
-	})
-	@JoinColumn()
-	public userGroupJoining: UserGroupJoining | null;
 
 	@Column("varchar", {
 	    length: 1024, array: true,

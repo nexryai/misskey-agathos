@@ -8,11 +8,8 @@ import { getNoteSummary } from "@/misc/get-note-summary.js";
 // Defined also packages/sw/types.ts#L14-L21
 type pushNotificationsTypes = {
 	"notification": Packed<"Notification">;
-	"unreadMessagingMessage": Packed<"MessagingMessage">;
 	"readNotifications": { notificationIds: string[] };
 	"readAllNotifications": undefined;
-	"readAllMessagingMessages": undefined;
-	"readAllMessagingMessagesOfARoom": { userId: string } | { groupId: string };
 };
 
 // プッシュメッセージサーバーには文字数制限があるため、内容を削減します

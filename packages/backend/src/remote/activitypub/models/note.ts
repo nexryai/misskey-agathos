@@ -8,13 +8,12 @@ import vote from "@/services/note/polls/vote.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
 import { deliverQuestionUpdate } from "@/services/note/polls/update.js";
 import { extractDbHost, toPuny } from "@/misc/convert-host.js";
-import { Emojis, Polls, MessagingMessages } from "@/models/index.js";
+import { Emojis, Polls } from "@/models/index.js";
 import { Note } from "@/models/entities/note.js";
 import { Emoji } from "@/models/entities/emoji.js";
 import { genId } from "@/misc/gen-id.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
 import { getApLock } from "@/misc/app-lock.js";
-import { createMessage } from "@/services/messages/create.js";
 import { StatusError } from "@/misc/fetch.js";
 import DbResolver from "../db-resolver.js";
 import { parseAudience } from "../audience.js";
@@ -109,8 +108,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
         }
     }
 
-    let isTalk = note._misskey_talk && visibility === "specified";
-
     const apMentions = await extractApMentions(note.tag, resolver);
     const apHashtags = await extractApHashtags(note.tag);
 
@@ -137,17 +134,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
                 return x;
             }
         }).catch(async e => {
-            // トークだったらinReplyToのエラーは無視
-            const uri = getApId(note.inReplyTo);
-            if (uri.startsWith(config.url + "/")) {
-                const id = uri.split("/").pop();
-                const talk = await MessagingMessages.findOneBy({ id });
-                if (talk) {
-                    isTalk = true;
-                    return null;
-                }
-            }
-
             logger.warn(`Error in inReplyTo ${note.inReplyTo} - ${e.statusCode || e}`);
             throw e;
         })
@@ -236,13 +222,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
     const apEmojis = emojis.map(emoji => emoji.name);
 
     const poll = await extractPollFromQuestion(note, resolver).catch(() => undefined);
-
-    if (isTalk) {
-        for (const recipient of visibleUsers) {
-            await createMessage(actor, recipient, undefined, text || undefined, (files && files.length > 0) ? files[0] : null, object.id);
-            return null;
-        }
-    }
 
     return await post(actor, {
         createdAt: note.published ? new Date(note.published) : null,
