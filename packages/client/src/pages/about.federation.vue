@@ -38,7 +38,7 @@
 
     <MkPagination v-slot="{items}" ref="instances" :key="host + state" :pagination="pagination">
         <div class="dqokceoi">
-            <MkA v-for="instance in items" :key="instance.id" v-tooltip.mfm="`Last communicated: ${new Date(instance.lastCommunicatedAt).toLocaleString()}\nStatus: ${getStatus(instance)}`" class="instance" :to="`/instance-info/${instance.host}`">
+            <MkA v-for="instance in items" :key="instance.id" v-tooltip.mfm="`Status: ${getStatus(instance)}`" class="instance" :to="`/instance-info/${instance.host}`">
                 <MkInstanceCardMini :instance="instance"/>
             </MkA>
         </div>
@@ -47,38 +47,36 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
-import MkButton from "@/components/MkButton.vue";
+import { computed, ref } from "vue";
 import MkInput from "@/components/form/input.vue";
 import MkSelect from "@/components/form/select.vue";
 import MkPagination from "@/components/MkPagination.vue";
 import MkInstanceCardMini from "@/components/MkInstanceCardMini.vue";
 import FormSplit from "@/components/form/split.vue";
-import * as os from "@/os";
 import { i18n } from "@/i18n";
 
-let host = $ref("");
-let state = $ref("federating");
-let sort = $ref("+pubSub");
+let host = ref("");
+let state = ref("federating");
+let sort = ref("+pubSub");
 const pagination = {
     endpoint: "federation/instances" as const,
     limit: 10,
     offsetMode: true,
     params: computed(() => ({
-        sort: sort,
-        host: host !== "" ? host : null,
+        sort: sort.value,
+        host: host.value !== "" ? host : null,
         ...(
-            state === "federating" ? { federating: true } :
-            state === "subscribing" ? { subscribing: true } :
-            state === "publishing" ? { publishing: true } :
-            state === "suspended" ? { suspended: true } :
-            state === "blocked" ? { blocked: true } :
-            state === "notResponding" ? { notResponding: true } :
+            state.value === "federating" ? { federating: true } :
+            state.value === "subscribing" ? { subscribing: true } :
+            state.value === "publishing" ? { publishing: true } :
+            state.value === "suspended" ? { suspended: true } :
+            state.value === "blocked" ? { blocked: true } :
+            state.value === "notResponding" ? { notResponding: true } :
             {}),
     })),
 };
 
-function getStatus(instance) {
+function getStatus(instance): string {
     if (instance.isSuspended) return "Suspended";
     if (instance.isBlocked) return "Blocked";
     if (instance.isNotResponding) return "Error";
