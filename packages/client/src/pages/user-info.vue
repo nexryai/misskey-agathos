@@ -150,21 +150,6 @@
                     </FormSplit>
                 </FormSection>
             </div>
-            <div v-else-if="tab === 'chart'" class="_formRoot">
-                <div class="cmhjzshm">
-                    <div class="selects">
-                        <MkSelect v-model="chartSrc" style="margin: 0 10px 0 0; flex: 1;">
-                            <option value="per-user-notes">{{ i18n.ts.notes }}</option>
-                        </MkSelect>
-                    </div>
-                    <div class="charts">
-                        <div class="label">{{ i18n.t('recentNHours', { n: 90 }) }}</div>
-                        <MkChart class="chart" :src="chartSrc" span="hour" :limit="90" :args="{ user, withoutAll: true }" :detailed="true"></MkChart>
-                        <div class="label">{{ i18n.t('recentNDays', { n: 90 }) }}</div>
-                        <MkChart class="chart" :src="chartSrc" span="day" :limit="90" :args="{ user, withoutAll: true }" :detailed="true"></MkChart>
-                    </div>
-                </div>
-            </div>
             <div v-else-if="tab === 'raw'" class="_formRoot">
                 <MkObjectView v-if="info && $i.isAdmin" tall :value="info">
                 </MkObjectView>
@@ -181,7 +166,6 @@
 import { computed, watch, ref } from "vue";
 import * as misskey from "misskey-js";
 import tinycolor from "tinycolor2";
-import MkChart from "@/components/MkChart.vue";
 import MkObjectView from "@/components/MkObjectView.vue";
 import FormTextarea from "@/components/form/textarea.vue";
 import FormSwitch from "@/components/form/switch.vue";
@@ -192,7 +176,6 @@ import FormInput from "@/components/form/input.vue";
 import FormSplit from "@/components/form/split.vue";
 import FormFolder from "@/components/form/folder.vue";
 import MkKeyValue from "@/components/MkKeyValue.vue";
-import MkSelect from "@/components/form/select.vue";
 import FormSuspense from "@/components/form/suspense.vue";
 import MkFileListForAdmin from "@/components/MkFileListForAdmin.vue";
 import MkInfo from "@/components/MkInfo.vue";
@@ -211,7 +194,6 @@ const props = defineProps<{
 }>();
 
 let tab = $ref("overview");
-let chartSrc = $ref("per-user-notes");
 let user = $ref<null | misskey.entities.UserDetailed>();
 let init = $ref<ReturnType<typeof createFetcher>>();
 let info = $ref();
@@ -461,10 +443,6 @@ const headerTabs = $computed(() => [{
     title: i18n.ts.moderation,
     icon: "ti ti-user-exclamation",
 } : null, {
-    key: "chart",
-    title: i18n.ts.charts,
-    icon: "ti ti-chart-line",
-}, {
     key: "raw",
     title: "Raw",
     icon: "ti ti-code",
