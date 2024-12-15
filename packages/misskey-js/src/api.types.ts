@@ -43,6 +43,7 @@ export type Endpoints = {
 	'admin/announcements/delete': { req: { id: Announcement['id'] }; res: null; };
 	'admin/announcements/list': { req: TODO; res: TODO; };
 	'admin/announcements/update': { req: TODO; res: TODO; };
+    'admin/delete-instance-users': { req: TODO; res: TODO; };
 	'admin/drive/clean-remote-files': { req: TODO; res: TODO; };
 	'admin/drive/cleanup': { req: TODO; res: TODO; };
 	'admin/drive/files': { req: TODO; res: TODO; };
@@ -57,6 +58,7 @@ export type Endpoints = {
 	'admin/federation/refresh-remote-instance-metadata': { req: TODO; res: TODO; };
 	'admin/federation/remove-all-following': { req: TODO; res: TODO; };
 	'admin/federation/update-instance': { req: TODO; res: TODO; };
+    'admin/meta': { req: TODO; res: DetailedInstanceMetadata; };
 	'admin/moderators/add': { req: TODO; res: TODO; };
 	'admin/moderators/remove': { req: TODO; res: TODO; };
 	'admin/promo/create': { req: TODO; res: TODO; };

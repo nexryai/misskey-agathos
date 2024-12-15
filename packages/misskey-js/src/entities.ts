@@ -323,6 +323,7 @@ export type DetailedInstanceMetadata = LiteInstanceMetadata & {
 	requireSetup: boolean;
 	proxyAccountName: string | null;
 	features: Record<string, any>;
+    blockedHosts: string[];
 };
 
 export type InstanceMetadata = LiteInstanceMetadata | DetailedInstanceMetadata;

@@ -76,31 +76,6 @@
                 <FormLink :to="`https://${host}/manifest.json`" external style="margin-bottom: 8px;">manifest.json</FormLink>
             </FormSection>
         </div>
-        <div v-else-if="tab === 'chart'" class="_formRoot">
-            <div class="cmhjzshl">
-                <div class="selects">
-                    <MkSelect v-model="chartSrc" style="margin: 0 10px 0 0; flex: 1;">
-                        <option value="instance-requests">{{ i18n.ts._instanceCharts.requests }}</option>
-                        <option value="instance-users">{{ i18n.ts._instanceCharts.users }}</option>
-                        <option value="instance-users-total">{{ i18n.ts._instanceCharts.usersTotal }}</option>
-                        <option value="instance-notes">{{ i18n.ts._instanceCharts.notes }}</option>
-                        <option value="instance-notes-total">{{ i18n.ts._instanceCharts.notesTotal }}</option>
-                        <option value="instance-ff">{{ i18n.ts._instanceCharts.ff }}</option>
-                        <option value="instance-ff-total">{{ i18n.ts._instanceCharts.ffTotal }}</option>
-                        <option value="instance-drive-usage">{{ i18n.ts._instanceCharts.cacheSize }}</option>
-                        <option value="instance-drive-usage-total">{{ i18n.ts._instanceCharts.cacheSizeTotal }}</option>
-                        <option value="instance-drive-files">{{ i18n.ts._instanceCharts.files }}</option>
-                        <option value="instance-drive-files-total">{{ i18n.ts._instanceCharts.filesTotal }}</option>
-                    </MkSelect>
-                </div>
-                <div class="charts">
-                    <div class="label">{{ i18n.t('recentNHours', { n: 90 }) }}</div>
-                    <MkChart class="chart" :src="chartSrc" span="hour" :limit="90" :args="{ host: host }" :detailed="true"></MkChart>
-                    <div class="label">{{ i18n.t('recentNDays', { n: 90 }) }}</div>
-                    <MkChart class="chart" :src="chartSrc" span="day" :limit="90" :args="{ host: host }" :detailed="true"></MkChart>
-                </div>
-            </div>
-        </div>
         <div v-else-if="tab === 'users'" class="_formRoot">
             <MkPagination v-slot="{items}" :pagination="usersPagination" style="display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); grid-gap: 12px;">
                 <MkA v-for="user in items" :key="user.id" v-tooltip.mfm="`Last posted: ${new Date(user.updatedAt).toLocaleString()}`" class="user" :to="`/user-info/${user.id}`">
@@ -117,20 +92,17 @@
 </template>
 
 <script lang="ts" setup>
-import { } from "vue";
+import { ref, computed } from "vue";
 import * as misskey from "misskey-js";
-import MkChart from "@/components/MkChart.vue";
 import MkObjectView from "@/components/MkObjectView.vue";
 import FormLink from "@/components/form/link.vue";
 import MkLink from "@/components/MkLink.vue";
 import MkButton from "@/components/MkButton.vue";
 import FormSection from "@/components/form/section.vue";
 import MkKeyValue from "@/components/MkKeyValue.vue";
-import MkSelect from "@/components/form/select.vue";
 import FormSwitch from "@/components/form/switch.vue";
 import * as os from "@/os";
 import number from "@/filters/number";
-import bytes from "@/filters/bytes";
 import { iAmModerator, iAmAdmin } from "@/account";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import { i18n } from "@/i18n";
@@ -142,13 +114,12 @@ const props = defineProps<{
 	host: string;
 }>();
 
-let tab = $ref("overview");
-let chartSrc = $ref("instance-requests");
-let meta = $ref<misskey.entities.DetailedInstanceMetadata | null>(null);
-let instance = $ref<misskey.entities.Instance | null>(null);
-let suspended = $ref(false);
-let isBlocked = $ref(false);
-let isExactlyBlocked = $ref(false);
+let tab = ref("overview");
+let meta = ref<misskey.entities.DetailedInstanceMetadata | null>(null);
+let instance = ref<misskey.entities.Instance | null>(null);
+let suspended = ref(false);
+let isBlocked = ref(false);
+let isExactlyBlocked = ref(false);
 const enableSudo = defaultStore.state.enableSudo;
 
 const usersPagination = {
@@ -162,72 +133,72 @@ const usersPagination = {
     offsetMode: true,
 };
 
-async function fetch() {
+async function fetch(): Promise<void> {
     if (iAmAdmin) {
-        meta = await os.api("admin/meta");
+        meta.value = await os.api("admin/meta");
     }
-    instance = await os.api("federation/show-instance", {
+    instance.value = await os.api("federation/show-instance", {
         host: props.host,
     });
-    suspended = instance.isSuspended;
-    isBlocked = instance.isBlocked;
-    isExactlyBlocked = meta.blockedHosts.includes(instance.host);
+    suspended.value = instance.value.isSuspended;
+    isBlocked.value = instance.value.isBlocked;
+    isExactlyBlocked.value = meta.value ? meta.value.blockedHosts.includes(instance.value.host) : false;
 }
 
-async function toggleBlock(ev) {
-    if (!meta) {
+async function toggleBlock(): Promise<void> {
+    if (!meta.value) {
         fetch();
         throw new Error("No meta?");
     }
-    if (!instance) {
+    if (!instance.value) {
         fetch();
         throw new Error("No instance?");
     }
-    if (!isBlocked && !isExactlyBlocked) {
-        isBlocked = true;
+    if (!isBlocked.value && !isExactlyBlocked.value) {
+        isBlocked.value = true;
         return;
     }
-    const { host } = instance;
+    const { host } = instance.value;
     await os.api("admin/update-meta", {
-        blockedHosts: isBlocked ? meta.blockedHosts.concat([host]) : meta.blockedHosts.filter(x => x !== host),
+        blockedHosts: isBlocked.value ? meta.value.blockedHosts.concat([host]) : meta.value.blockedHosts.filter(x => x !== host),
     });
     fetch();
 }
 
-async function toggleSuspend(v) {
-    if (!instance) {
+async function toggleSuspend(): Promise<void> {
+    if (!instance.value) {
         fetch();
         throw new Error("No instance?");
     }
     await os.api("admin/federation/update-instance", {
-        host: instance.host,
+        host: instance.value.host,
         isSuspended: suspended,
     });
     fetch();
 }
 
-function refreshMetadata() {
+function refreshMetadata(): void {
     os.api("admin/federation/refresh-remote-instance-metadata", {
-        host: instance.host,
+        host: instance.value!.host,
     });
     os.alert({
         text: "Refresh requested",
     });
 }
 
-async function deleteInstanceUsers() {
+async function deleteInstanceUsers(): Promise<void> {
     const { canceled } = await os.confirm({
         type: "warning",
-        text: i18n.t("removeAreYouSure", { x: instance.host }),
+        text: i18n.t("removeAreYouSure", { x: instance.value!.host }),
     });
     if (canceled) return;
     const typed = await os.inputText({
-        text: i18n.t("typeToConfirm", { x: instance?.host }),
+        text: i18n.t("typeToConfirm", { x: instance.value!.host }),
     });
     if (typed.canceled) return;
-    if (typed.result === instance?.host) {
+    if (typed.result === instance.value?.host) {
         await os.api("admin/delete-instance-users", {
-            host: instance.host,
+            host: instance.value.host,
         });
         await os.alert({
             text: "Account Deletion is in progress",
@@ -240,19 +211,19 @@ async function deleteInstanceUsers() {
     }
 }
 
-async function deleteFollowing() {
+async function deleteFollowing(): Promise<void> {
     const { canceled } = await os.confirm({
         type: "warning",
-        text: i18n.t("unfollowConfirm", { name: instance.host }),
+        text: i18n.t("unfollowConfirm", { name: instance.value!.host }),
     });
     if (canceled) return;
     const typed = await os.inputText({
-        text: i18n.t("typeToConfirm", { x: instance?.host }),
+        text: i18n.t("typeToConfirm", { x: instance.value!.host }),
     });
     if (typed.canceled) return;
-    if (typed.result === instance?.host) {
+    if (typed.result === instance.value?.host) {
         await os.api("admin/federation/remove-all-following", {
-            host: instance.host,
+            host: instance.value.host,
         });
         await os.alert({
             text: "Unfollowing is in progress",
@@ -267,7 +238,7 @@ async function deleteFollowing() {
 
 fetch();
 
-const headerActions = $computed(() => [{
+const headerActions = computed(() => [{
     text: `https://${props.host}`,
     icon: "ti ti-external-link",
     handler: () => {
@@ -275,7 +246,7 @@ const headerActions = $computed(() => [{
     },
 }]);
 
-const headerTabs = $computed(() => [{
+const headerTabs = computed(() => [{
     key: "overview",
     title: i18n.ts.overview,
     icon: "ti ti-info-circle",
