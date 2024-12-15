@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, onMounted, onUnmounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import {
     Chart,
     ArcElement,
@@ -21,8 +21,6 @@ import {
     SubTitle,
     Filler,
 } from "chart.js";
-import number from "@/filters/number";
-import * as os from "@/os";
 import { defaultStore } from "@/store";
 import { useChartTooltip } from "@/scripts/use-chart-tooltip";
 
@@ -55,7 +53,7 @@ const alpha = (hex, a) => {
     return `rgba(${r}, ${g}, ${b}, ${a})`;
 };
 
-const chartEl = ref<HTMLCanvasElement>(null);
+const chartEl = ref<HTMLCanvasElement | null>(null);
 
 const gridColor = defaultStore.state.darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
 
@@ -69,10 +67,10 @@ let chartInstance: Chart;
 function setData(values) {
     if (chartInstance == null) return;
     for (const value of values) {
-        chartInstance.data.labels.push("");
+        chartInstance.data.labels?.push("");
         chartInstance.data.datasets[0].data.push(value);
         if (chartInstance.data.datasets[0].data.length > 200) {
-            chartInstance.data.labels.shift();
+            chartInstance.data.labels?.shift();
             chartInstance.data.datasets[0].data.shift();
         }
     }
@@ -81,10 +79,10 @@ function setData(values) {
 
 function pushData(value) {
     if (chartInstance == null) return;
-    chartInstance.data.labels.push("");
+    chartInstance.data.labels?.push("");
     chartInstance.data.datasets[0].data.push(value);
     if (chartInstance.data.datasets[0].data.length > 200) {
-        chartInstance.data.labels.shift();
+        chartInstance.data.labels?.shift();
         chartInstance.data.datasets[0].data.shift();
     }
     chartInstance.update();
@@ -105,7 +103,7 @@ const color =
 	"?" as never;
 
 onMounted(() => {
-    chartInstance = new Chart(chartEl.value, {
+    chartEl.value ? chartInstance = new Chart(chartEl.value, {
         type: "line",
         data: {
             labels: [],
@@ -167,7 +165,7 @@ onMounted(() => {
                 },
             },
         },
-    });
+    }) : null;
 });
 
 defineExpose({
