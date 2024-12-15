@@ -147,11 +147,11 @@ async function fetch(): Promise<void> {
 
 async function toggleBlock(): Promise<void> {
     if (!meta.value) {
-        fetch();
+        await fetch();
         throw new Error("No meta?");
     }
     if (!instance.value) {
-        fetch();
+        await fetch();
         throw new Error("No instance?");
     }
     if (!isBlocked.value && !isExactlyBlocked.value) {
@@ -162,19 +162,19 @@ async function toggleBlock(): Promise<void> {
     await os.api("admin/update-meta", {
         blockedHosts: isBlocked.value ? meta.value.blockedHosts.concat([host]) : meta.value.blockedHosts.filter(x => x !== host),
     });
-    fetch();
+    await fetch();
 }
 
 async function toggleSuspend(): Promise<void> {
     if (!instance.value) {
-        fetch();
+        await fetch();
         throw new Error("No instance?");
     }
     await os.api("admin/federation/update-instance", {
         host: instance.value.host,
         isSuspended: suspended,
     });
-    fetch();
+    await fetch();
 }
 
 function refreshMetadata(): void {
@@ -250,10 +250,6 @@ const headerTabs = computed(() => [{
     key: "overview",
     title: i18n.ts.overview,
     icon: "ti ti-info-circle",
-}, {
-    key: "chart",
-    title: i18n.ts.charts,
-    icon: "ti ti-chart-line",
 }, {
     key: "users",
     title: i18n.ts.users,
