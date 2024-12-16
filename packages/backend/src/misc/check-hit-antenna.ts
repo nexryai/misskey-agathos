@@ -1,7 +1,7 @@
 import { Antenna } from "@/models/entities/antenna.js";
 import { Note } from "@/models/entities/note.js";
 import { User } from "@/models/entities/user.js";
-import { UserListJoinings, UserGroupJoinings } from "@/models/index.js";
+import { UserListJoinings } from "@/models/index.js";
 import * as Acct from "@/misc/acct.js";
 import { getFullApAccount } from "./convert-host.js";
 import { Packed } from "./schema.js";
@@ -28,14 +28,6 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<"No
         })).map(x => x.userId);
 
         if (!listUsers.includes(note.userId)) return false;
-    } else if (antenna.src === "group") {
-        const joining = await UserGroupJoinings.findOneByOrFail({ id: antenna.userGroupJoiningId! });
-
-        const groupUsers = (await UserGroupJoinings.findBy({
-            userGroupId: joining.userGroupId,
-        })).map(x => x.userId);
-
-        if (!groupUsers.includes(note.userId)) return false;
     } else if (antenna.src === "users") {
         const accts = antenna.users.map(x => {
             const { username, host } = Acct.parse(x);

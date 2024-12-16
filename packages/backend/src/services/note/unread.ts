@@ -30,7 +30,6 @@ export async function insertNoteUnread(userId: User["id"], note: Note, params: {
         userId: userId,
         isSpecified: params.isSpecified,
         isMentioned: params.isMentioned,
-        noteChannelId: note.channelId,
         noteUserId: note.userId,
     };
 
@@ -47,9 +46,6 @@ export async function insertNoteUnread(userId: User["id"], note: Note, params: {
         }
         if (params.isSpecified) {
             publishMainStream(userId, "unreadSpecifiedNote", note.id);
-        }
-        if (note.channelId) {
-            publishMainStream(userId, "unreadChannel", note.id);
         }
     }, 2000);
 }

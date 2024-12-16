@@ -1,8 +1,5 @@
 import { Users, Instances, Emojis } from "@/models/index.js";
-import { doPostSuspend } from "@/services/suspend-user.js";
-import { publishUserEvent } from "@/services/stream.js";
 import { createDeleteAccountJob } from "@/queue/index.js";
-import { insertModerationLog } from "@/services/insert-moderation-log.js";
 import { toPuny } from "@/misc/convert-host.js";
 import define from "../../define.js";
 

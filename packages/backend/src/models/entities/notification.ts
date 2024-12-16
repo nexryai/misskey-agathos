@@ -4,7 +4,6 @@ import { id } from "../id.js";
 import { User } from "./user.js";
 import { Note } from "./note.js";
 import { FollowRequest } from "./follow-request.js";
-import { UserGroupInvitation } from "./user-group-invitation.js";
 import { AccessToken } from "./access-token.js";
 
 @Entity()
@@ -106,18 +105,6 @@ export class Notification {
 	})
 	@JoinColumn()
 	public followRequest: FollowRequest | null;
-
-	@Column({
-	    ...id(),
-	    nullable: true,
-	})
-	public userGroupInvitationId: UserGroupInvitation["id"] | null;
-
-	@ManyToOne(type => UserGroupInvitation, {
-	    onDelete: "CASCADE",
-	})
-	@JoinColumn()
-	public userGroupInvitation: UserGroupInvitation | null;
 
 	@Column("varchar", {
 	    length: 128, nullable: true,
