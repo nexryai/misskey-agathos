@@ -48,7 +48,7 @@ const nodeinfo2 = async () => {
             inbound: [] as string[],
             outbound: ["atom1.0", "rss2.0"],
         },
-        openRegistrations: !meta.disableRegistration,
+        openRegistrations: false,
         usage: {
             users: { total, activeHalfyear, activeMonth },
             localPosts,
@@ -75,7 +75,7 @@ const nodeinfo2 = async () => {
             enableTwitterIntegration: meta.enableTwitterIntegration,
             enableGithubIntegration: meta.enableGithubIntegration,
             enableDiscordIntegration: meta.enableDiscordIntegration,
-            enableEmail: meta.enableEmail,
+            enableEmail: false,
             enableServiceWorker: meta.enableServiceWorker,
             proxyAccountName: proxyAccount ? proxyAccount.username : null,
             themeColor: meta.themeColor || "#86b300",
@@ -95,6 +95,7 @@ router.get(nodeinfo2_1path, async ctx => {
 router.get(nodeinfo2_0path, async ctx => {
     const base = await cache.fetch(null, () => nodeinfo2());
 
+    // @ts-ignore
     delete base.software.repository;
 
     ctx.body = { version: "2.0", ...base };

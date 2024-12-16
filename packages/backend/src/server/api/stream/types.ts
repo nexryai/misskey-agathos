@@ -7,10 +7,7 @@ import { Antenna } from "@/models/entities/antenna.js";
 import { DriveFile } from "@/models/entities/drive-file.js";
 import { DriveFolder } from "@/models/entities/drive-folder.js";
 import { UserList } from "@/models/entities/user-list.js";
-import { MessagingMessage } from "@/models/entities/messaging-message.js";
-import { UserGroup } from "@/models/entities/user-group.js";
 import { Signin } from "@/models/entities/signin.js";
-import { Page } from "@/models/entities/page.js";
 import { Packed } from "@/misc/schema.js";
 import { Webhook } from "@/models/entities/webhook";
 
@@ -56,13 +53,6 @@ export interface MainStreamTypes {
 	followed: Packed<"User">;
 	unfollow: Packed<"User">;
 	meUpdated: Packed<"User">;
-	pageEvent: {
-		pageId: Page["id"];
-		event: string;
-		var: any;
-		userId: User["id"];
-		user: Packed<"User">;
-	};
 	urlUploadFinished: {
 		marker?: string | null;
 		file: Packed<"DriveFile">;
@@ -74,8 +64,6 @@ export interface MainStreamTypes {
 	unreadSpecifiedNote: Note["id"];
 	readAllUnreadSpecifiedNotes: undefined;
 	readAllMessagingMessages: undefined;
-	messagingMessage: Packed<"MessagingMessage">;
-	unreadMessagingMessage: Packed<"MessagingMessage">;
 	readAllAntennas: undefined;
 	unreadAntenna: Antenna;
 	readAllAnnouncements: undefined;
@@ -142,29 +130,6 @@ export interface UserListStreamTypes {
 export interface AntennaStreamTypes {
 	note: Note;
 }
-
-export interface MessagingStreamTypes {
-	read: MessagingMessage["id"][];
-	typing: User["id"];
-	message: Packed<"MessagingMessage">;
-	deleted: MessagingMessage["id"];
-}
-
-export interface GroupMessagingStreamTypes {
-	read: {
-		ids: MessagingMessage["id"][];
-		userId: User["id"];
-	};
-	typing: User["id"];
-	message: Packed<"MessagingMessage">;
-	deleted: MessagingMessage["id"];
-}
-
-export interface MessagingIndexStreamTypes {
-	read: MessagingMessage["id"][];
-	message: Packed<"MessagingMessage">;
-}
-
 //#endregion
 
 // 辞書(interface or type)から{ type, body }ユニオンを定義
@@ -209,18 +174,6 @@ export type StreamMessages = {
 	antenna: {
 		name: `antennaStream:${Antenna["id"]}`;
 		payload: EventUnionFromDictionary<AntennaStreamTypes>;
-	};
-	messaging: {
-		name: `messagingStream:${User["id"]}-${User["id"]}`;
-		payload: EventUnionFromDictionary<MessagingStreamTypes>;
-	};
-	groupMessaging: {
-		name: `messagingStream:${UserGroup["id"]}`;
-		payload: EventUnionFromDictionary<GroupMessagingStreamTypes>;
-	};
-	messagingIndex: {
-		name: `messagingIndexStream:${User["id"]}`;
-		payload: EventUnionFromDictionary<MessagingIndexStreamTypes>;
 	};
 	notes: {
 		name: "notesStream";

@@ -1,5 +1,5 @@
 import { genId } from "@/misc/gen-id.js";
-import { Antennas, UserLists, UserGroupJoinings } from "@/models/index.js";
+import { Antennas, UserLists } from "@/models/index.js";
 import { publishInternalEvent } from "@/services/stream.js";
 import { ApiError } from "../../error.js";
 import define from "../../define.js";
@@ -18,18 +18,12 @@ export const meta = {
             id: "95063e93-a283-4b8b-9aa5-bcdb8df69a7f",
         },
 
-        noSuchUserGroup: {
-            message: "No such user group.",
-            code: "NO_SUCH_USER_GROUP",
-            id: "aa3c0b9a-8cae-47c0-92ac-202ce5906682",
-        },
-
         tooManyAntennas: {
             message: "You cannot create antenna any more.",
             code: "TOO_MANY_ANTENNAS",
             id: "faf47050-e8b5-438c-913c-db2b1576fde4",
         },
-			
+
         noKeywords: {
             message: "No keywords",
             code: "NO_KEYWORDS",
@@ -48,7 +42,7 @@ export const paramDef = {
     type: "object",
     properties: {
         name: { type: "string", minLength: 1, maxLength: 100 },
-        src: { type: "string", enum: ["home", "all", "users", "list", "group"] },
+        src: { type: "string", enum: ["home", "all", "users", "list"] },
         userListId: { type: "string", format: "misskey:id", nullable: true },
         userGroupId: { type: "string", format: "misskey:id", nullable: true },
         keywords: { type: "array", items: {
@@ -83,7 +77,6 @@ export default define(meta, paramDef, async (ps, user) => {
     }
 
     let userList;
-    let userGroupJoining;
 
     if ((ps.keywords.length === 0) || ps.keywords[0].every(x => x === "")) throw new ApiError(meta.errors.noKeywords);
 
@@ -96,15 +89,6 @@ export default define(meta, paramDef, async (ps, user) => {
         if (userList == null) {
             throw new ApiError(meta.errors.noSuchUserList);
         }
-    } else if (ps.src === "group" && ps.userGroupId) {
-        userGroupJoining = await UserGroupJoinings.findOneBy({
-            userGroupId: ps.userGroupId,
-            userId: user.id,
-        });
-
-        if (userGroupJoining == null) {
-            throw new ApiError(meta.errors.noSuchUserGroup);
-        }
     }
 
     const antenna = await Antennas.insert({
@@ -114,7 +98,6 @@ export default define(meta, paramDef, async (ps, user) => {
         name: ps.name,
         src: ps.src,
         userListId: userList ? userList.id : null,
-        userGroupJoiningId: userGroupJoining ? userGroupJoining.id : null,
         keywords: ps.keywords,
         excludeKeywords: ps.excludeKeywords,
         users: ps.users,

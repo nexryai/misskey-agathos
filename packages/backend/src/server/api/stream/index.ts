@@ -5,7 +5,6 @@ import { User } from "@/models/entities/user.js";
 import { Followings, Mutings, RenoteMutings, UserProfiles, Blockings } from "@/models/index.js";
 import { AccessToken } from "@/models/entities/access-token.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
-import { publishGroupMessagingStream, publishMessagingStream } from "@/services/stream.js";
 import { UserGroup } from "@/models/entities/user-group.js";
 import { Packed } from "@/misc/schema.js";
 import { readNotification } from "../common/read-notification.js";

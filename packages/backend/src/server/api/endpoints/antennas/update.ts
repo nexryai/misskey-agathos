@@ -1,4 +1,4 @@
-import { Antennas, UserLists, UserGroupJoinings } from "@/models/index.js";
+import { Antennas, UserLists } from "@/models/index.js";
 import { publishInternalEvent } from "@/services/stream.js";
 import define from "../../define.js";
 import { ApiError } from "../../error.js";
@@ -23,12 +23,6 @@ export const meta = {
             id: "1c6b35c9-943e-48c2-81e4-2844989407f7",
         },
 
-        noSuchUserGroup: {
-            message: "No such user group.",
-            code: "NO_SUCH_USER_GROUP",
-            id: "109ed789-b6eb-456e-b8a9-6059d567d385",
-        },
-
         noKeywords: {
             message: "No keywords",
             code: "NO_KEYWORDS",
@@ -48,7 +42,7 @@ export const paramDef = {
     properties: {
         antennaId: { type: "string", format: "misskey:id" },
         name: { type: "string", minLength: 1, maxLength: 100 },
-        src: { type: "string", enum: ["home", "all", "users", "list", "group"] },
+        src: { type: "string", enum: ["home", "all", "users", "list"] },
         userListId: { type: "string", format: "misskey:id", nullable: true },
         userGroupId: { type: "string", format: "misskey:id", nullable: true },
         keywords: { type: "array", items: {
@@ -98,22 +92,12 @@ export default define(meta, paramDef, async (ps, user) => {
         if (userList == null) {
             throw new ApiError(meta.errors.noSuchUserList);
         }
-    } else if (ps.src === "group" && ps.userGroupId) {
-        userGroupJoining = await UserGroupJoinings.findOneBy({
-            userGroupId: ps.userGroupId,
-            userId: user.id,
-        });
-
-        if (userGroupJoining == null) {
-            throw new ApiError(meta.errors.noSuchUserGroup);
-        }
     }
 
     await Antennas.update(antenna.id, {
         name: ps.name,
         src: ps.src,
         userListId: userList ? userList.id : null,
-        userGroupJoiningId: userGroupJoining ? userGroupJoining.id : null,
         keywords: ps.keywords,
         excludeKeywords: ps.excludeKeywords,
         users: ps.users,

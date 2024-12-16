@@ -3,8 +3,7 @@ import config from "@/config/index.js";
 import { Note } from "@/models/entities/note.js";
 import { CacheableRemoteUser, CacheableUser } from "@/models/entities/user.js";
 import { UserPublickey } from "@/models/entities/user-publickey.js";
-import { MessagingMessage } from "@/models/entities/messaging-message.js";
-import { Notes, Users, UserPublickeys, MessagingMessages } from "@/models/index.js";
+import { Notes, Users, UserPublickeys } from "@/models/index.js";
 import { Cache } from "@/misc/cache.js";
 import { uriPersonCache, userByIdCache } from "@/services/user-cache.js";
 import { IObject, getApId } from "./type.js";
@@ -74,22 +73,6 @@ export default class DbResolver {
         }
     }
 
-    public async getMessageFromApId(value: string | IObject): Promise<MessagingMessage | null> {
-        const parsed = parseUri(value);
-
-        if (parsed.local) {
-            if (parsed.type !== "notes") return null;
-
-            return await MessagingMessages.findOneBy({
-                id: parsed.id,
-            });
-        } else {
-            return await MessagingMessages.findOneBy({
-                uri: parsed.uri,
-            });
-        }
-    }
-
     /**
 	 * AP Person => Misskey User in DB
 	 */
@@ -120,7 +103,7 @@ export default class DbResolver {
             const key = await UserPublickeys.findOneBy({
                 keyId,
             });
-	
+
             if (key == null) return null;
 
             return key;
@@ -145,7 +128,7 @@ export default class DbResolver {
 
         if (user == null) return null;
 
-        const key = await publicKeyByUserIdCache.fetch(user.id, () => UserPublickeys.findOneBy({ userId: user.id }), v => v != null); 
+        const key = await publicKeyByUserIdCache.fetch(user.id, () => UserPublickeys.findOneBy({ userId: user.id }), v => v != null);
 
         return {
             user,

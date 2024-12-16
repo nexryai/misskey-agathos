@@ -6,11 +6,8 @@ import serverStats from "./server-stats.js";
 import queueStats from "./queue-stats.js";
 import userList from "./user-list.js";
 import antenna from "./antenna.js";
-import messaging from "./messaging.js";
-import messagingIndex from "./messaging-index.js";
 import drive from "./drive.js";
 import hashtag from "./hashtag.js";
-import channel from "./channel.js";
 
 export default {
     main,
@@ -21,9 +18,6 @@ export default {
     queueStats,
     userList,
     antenna,
-    messaging,
-    messagingIndex,
     drive,
     hashtag,
-    channel,
 };
