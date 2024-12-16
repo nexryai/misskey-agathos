@@ -51,23 +51,6 @@ db:
   #extra:
   #  ssl: true
 
-dbReplications: false
-
-# You can configure any number of replicas here
-#dbSlaves:
-#  -
-#    host:
-#    port:
-#    db:
-#    user:
-#    pass:
-#  -
-#    host:
-#    port:
-#    db:
-#    user:
-#    pass:
-
 #   ┌─────────────────────┐
 #───┘ Redis configuration └─────────────────────────────────────
 

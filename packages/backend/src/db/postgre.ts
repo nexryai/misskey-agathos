@@ -170,22 +170,6 @@ export const db = new DataSource({
         statement_timeout: 30000 * 10,
         ...config.db.extra,
     },
-    replication: config.dbReplications ? {
-        master: {
-            host: config.db.host,
-            port: config.db.port,
-            username: config.db.user,
-            password: config.db.pass,
-            database: config.db.db,
-        },
-        slaves: config.dbSlaves!.map(rep => ({
-            host: rep.host,
-            port: rep.port,
-            username: rep.user,
-            password: rep.pass,
-            database: rep.db,
-        })),
-    } : undefined,
     synchronize: process.env.NODE_ENV === "test",
     dropSchema: process.env.NODE_ENV === "test",
     cache: !config.db.disableCache ? {
