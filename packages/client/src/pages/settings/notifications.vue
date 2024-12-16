@@ -4,15 +4,13 @@
     <FormSection>
         <FormLink class="_formBlock" @click="readAllNotifications">{{ i18n.ts.markAsReadAllNotifications }}</FormLink>
         <FormLink class="_formBlock" @click="readAllUnreadNotes">{{ i18n.ts.markAsReadAllUnreadNotes }}</FormLink>
-        <FormLink class="_formBlock" @click="readAllMessagingMessages">{{ i18n.ts.markAsReadAllTalkMessages }}</FormLink>
     </FormSection>
 </div>
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { notificationTypes } from "@/const";
-import FormButton from "@/components/MkButton.vue";
 import FormLink from "@/components/form/link.vue";
 import FormSection from "@/components/form/section.vue";
 import * as os from "@/os";
@@ -22,10 +20,6 @@ import { definePageMetadata } from "@/scripts/page-metadata";
 
 async function readAllUnreadNotes() {
     await os.api("i/read-all-unread-notes");
-}
-
-async function readAllMessagingMessages() {
-    await os.api("i/read-all-messaging-messages");
 }
 
 async function readAllNotifications() {
@@ -49,9 +43,9 @@ function configure() {
     }, "closed");
 }
 
-const headerActions = $computed(() => []);
+const headerActions = computed(() => []);
 
-const headerTabs = $computed(() => []);
+const headerTabs = computed(() => []);
 
 definePageMetadata({
     title: i18n.ts.notifications,

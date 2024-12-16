@@ -1,4 +1,3 @@
-import * as Acct from "misskey-js/built/acct";
 import { defineAsyncComponent } from "vue";
 import { i18n } from "@/i18n";
 import copyToClipboard from "@/scripts/copy-to-clipboard";
@@ -182,12 +181,7 @@ export function getUserMenu(user, router: Router = mainRouter) {
         action: () => {
             os.post({ specified: user });
         },
-    }, meId !== user.id ? {
-        type: "link",
-        icon: "ti ti-messages",
-        text: i18n.ts.startMessaging,
-        to: "/my/messaging/" + Acct.toString(user),
-    } : undefined, null, {
+    }, null, {
         icon: "ti ti-list",
         text: i18n.ts.addToList,
         action: pushList,
