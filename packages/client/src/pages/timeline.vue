@@ -3,7 +3,6 @@
     <template #header><MkPageHeader v-model:tab="src" :actions="headerActions" :tabs="headerTabs" :display-my-avatar="true"/></template>
     <MkSpacer :content-max="800">
         <div ref="rootEl" v-hotkey.global="keymap" class="cmuxhskf">
-            <XTutorial v-if="$store.reactiveState.tutorial.value != -1" class="tutorial _block"/>
             <XPostForm v-if="$store.reactiveState.showFixedPostForm.value" class="post-form _block" fixed/>
 
             <div v-if="queue > 0" class="new"><button class="_buttonPrimary" @click="top()">{{ i18n.ts.newNoteRecived }}</button></div>
@@ -31,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, computed, watch, provide, ref } from "vue";
+import { computed, watch, provide, ref } from "vue";
 import XTimeline from "@/components/MkTimeline.vue";
 import XPostForm from "@/components/MkPostForm.vue";
 import { scroll } from "@/scripts/scroll";
@@ -43,8 +42,6 @@ import { $i } from "@/account";
 import { definePageMetadata } from "@/scripts/page-metadata";
 
 provide("shouldOmitHeaderTitle", true);
-
-const XTutorial = defineAsyncComponent(() => import("./timeline.tutorial.vue"));
 
 const isMediaTimelineAvailable = (!instance.disableLocalTimeline || ($i != null && ($i.isModerator || $i.isAdmin))) && defaultStore.state.enableMTL && defaultStore.state.enableLTL;
 const isLocalTimelineAvailable = (!instance.disableLocalTimeline || ($i != null && ($i.isModerator || $i.isAdmin))) && defaultStore.state.enableLTL;

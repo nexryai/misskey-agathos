@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, inject } from "vue";
+import { onMounted, onUnmounted, ref, inject, shallowRef, computed } from "vue";
 import tinycolor from "tinycolor2";
 import XTabs, { Tab } from "./MkPageHeader.tabs.vue";
 import { scrollToTop } from "@/scripts/scroll";
@@ -67,12 +67,12 @@ const metadata = injectPageMetadata();
 const hideTitle = inject("shouldOmitHeaderTitle", false);
 const thin_ = props.thin || inject("shouldHeaderThin", false);
 
-let el = $shallowRef<HTMLElement | undefined>(undefined);
+let el = shallowRef<HTMLElement | undefined>(undefined);
 const bg = ref<string | undefined>(undefined);
-let narrow = $ref(false);
-const hasTabs = $computed(() => props.tabs.length > 0);
-const hasActions = $computed(() => props.actions && props.actions.length > 0);
-const show = $computed(() => {
+let narrow = ref(false);
+const hasTabs = computed(() => props.tabs.length > 0);
+const hasActions = computed(() => props.actions && props.actions.length > 0);
+const show = computed(() => {
     return !hideTitle || hasTabs || hasActions;
 });
 const enableBlur = ref(defaultStore.state.useBlurEffect);
@@ -82,8 +82,8 @@ const preventDrag = (ev: TouchEvent) => {
 };
 
 const top = () => {
-    if (el) {
-        scrollToTop(el as HTMLElement, { behavior: "smooth" });
+    if (el.value) {
+        scrollToTop(el.value as HTMLElement, { behavior: "smooth" });
     }
 };
 
@@ -112,14 +112,14 @@ onMounted(() => {
     calcBg();
     globalEvents.on("themeChanged", calcBg);
 
-    if (el && el.parentElement) {
-        narrow = el.parentElement.offsetWidth < 500;
-        ro = new ResizeObserver((entries, observer) => {
-            if (el && el.parentElement && document.body.contains(el as HTMLElement)) {
-                narrow = el.parentElement.offsetWidth < 500;
+    if (el.value && el.value.parentElement) {
+        narrow.value = el.value.parentElement.offsetWidth < 500;
+        ro = new ResizeObserver(() => {
+            if (el.value && el.value.parentElement && document.body.contains(el.value as HTMLElement)) {
+                narrow.value = el.value.parentElement.offsetWidth < 500;
             }
         });
-        ro.observe(el.parentElement as HTMLElement);
+        ro.observe(el.value.parentElement as HTMLElement);
     }
 });
 
@@ -133,7 +133,7 @@ onUnmounted(() => {
 .fdidabkb {
 	-webkit-backdrop-filter: var(--blur, blur(15px));
 	backdrop-filter: var(--blur, blur(15px));
-	border-bottom: solid 0.5px var(--divider);
+	/*border-bottom: solid 0.5px var(--divider);*/
 	width: 100%;
 
 	> .upper {

@@ -97,18 +97,18 @@
             <footer class="footer">
                 <XReactionsViewer ref="reactionsViewer" :note="appearNote"/>
                 <button class="button _button" @click="reply()">
-                    <i class="ti ti-arrow-back-up"></i>
+                    <i class="ti ti-message-circle"></i>
                     <p v-if="appearNote.repliesCount > 0" class="count">{{ appearNote.repliesCount }}</p>
                 </button>
                 <XRenoteButton ref="renoteButton" class="button" :note="appearNote" :count="appearNote.renoteCount"/>
                 <button v-if="appearNote.myReaction == null" ref="reactButton" class="button _button" @click="react()">
-                    <i class="ti ti-plus"></i>
+                    <i class="ti ti-mood-plus"></i>
                 </button>
                 <button
                     v-if="appearNote.myReaction != null" ref="reactButton" class="button _button reacted"
                     @click="undoReact(appearNote)"
                 >
-                    <i class="ti ti-minus"></i>
+                    <i class="ti ti-mood-minus"></i>
                 </button>
                 <button ref="menuButton" class="button _button" @click="menu()">
                     <i class="ti ti-dots"></i>
