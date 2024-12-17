@@ -19,32 +19,6 @@
                             <MkNumberDiff v-if="notesComparedToThePrevDay != null" v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="notesComparedToThePrevDay"><template #before>(</template><template #after>)</template></MkNumberDiff>
                         </div>
                     </div>
-                    <div class="number _panel">
-                        <div class="label">Current Online Users</div>
-                        <div class="value _monospace">
-                            {{ number(onlineUsersCount) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div v-if="stats" class="container federationStats">
-                <div class="title">Federation</div>
-                <div class="body">
-                    <div class="number _panel">
-                        <div class="label">Sub</div>
-                        <div class="value _monospace">
-                            {{ number(federationSubActive) }}
-                            <MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationSubActiveDiff"><template #before>(</template><template #after>)</template></MkNumberDiff>
-                        </div>
-                    </div>
-                    <div class="number _panel">
-                        <div class="label">Pub</div>
-                        <div class="value _monospace">
-                            {{ number(federationPubActive) }}
-                            <MkNumberDiff v-tooltip="i18n.ts.dayOverDayChanges" class="diff" :value="federationPubActiveDiff"><template #before>(</template><template #after>)</template></MkNumberDiff>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -88,20 +62,13 @@
                     </div>
                 </div>
             </div>
-
-            <div class="container federation">
-                <div class="title">Active instances</div>
-                <div class="body">
-                    <XFederation/>
-                </div>
-            </div>
         </div>
     </div>
 </MkSpacer>
 </template>
 
 <script lang="ts" setup>
-import { markRaw, version as vueVersion, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, markRaw, version as vueVersion, onMounted, onBeforeUnmount, nextTick, computed } from "vue";
 import {
     Chart,
     ArcElement,
@@ -119,9 +86,6 @@ import {
     SubTitle,
     Filler,
 } from "chart.js";
-import { enUS } from "date-fns/locale";
-import tinycolor from "tinycolor2";
-import XFederation from "./overview.federation.vue";
 import XQueueChart from "./overview.queue-chart.vue";
 import MkNumberDiff from "@/components/MkNumberDiff.vue";
 import { version } from "@/config";
@@ -131,8 +95,6 @@ import { stream } from "@/stream";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
 import "chartjs-adapter-date-fns";
-import { defaultStore } from "@/store";
-import { useChartTooltip } from "@/scripts/use-chart-tooltip";
 
 Chart.register(
     ArcElement,
@@ -152,178 +114,12 @@ Chart.register(
     //gradient,
 );
 
-const rootEl = $ref<HTMLElement>();
-const chartEl = $ref<HTMLCanvasElement>(null);
-let stats: any = $ref(null);
-let onlineUsersCount = $ref();
-let serverInfo: any = $ref(null);
-let usersComparedToThePrevDay: any = $ref(null);
-let notesComparedToThePrevDay: any = $ref(null);
-let federationPubActive = $ref<number | null>(null);
-let federationPubActiveDiff = $ref<number | null>(null);
-let federationSubActive = $ref<number | null>(null);
-let federationSubActiveDiff = $ref<number | null>(null);
-let newUsers = $ref(null);
-let activeInstances = $shallowRef(null);
+const rootEl = ref<HTMLElement>();
+let stats: any = ref(null);
+let serverInfo: any = ref(null);
+let usersComparedToThePrevDay: any = ref(null);
+let notesComparedToThePrevDay: any = ref(null);
 const queueStatsConnection = markRaw(stream.useChannel("queueStats"));
-const now = new Date();
-let chartInstance: Chart = null;
-const chartLimit = 30;
-
-const { handler: externalTooltipHandler } = useChartTooltip();
-
-async function renderChart() {
-    if (chartInstance) {
-        chartInstance.destroy();
-    }
-
-    const getDate = (ago: number) => {
-        const y = now.getFullYear();
-        const m = now.getMonth();
-        const d = now.getDate();
-
-        return new Date(y, m, d - ago);
-    };
-
-    const format = (arr) => {
-        return arr.map((v, i) => ({
-            x: getDate(i).getTime(),
-            y: v,
-        }));
-    };
-
-    const raw = await os.api("charts/active-users", { limit: chartLimit, span: "day" });
-
-    const vLineColor = defaultStore.state.darkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.2)";
-
-    // フォントカラー
-    Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue("--fg");
-
-    const color = tinycolor(getComputedStyle(document.documentElement).getPropertyValue("--accent"));
-
-    chartInstance = new Chart(chartEl, {
-        type: "bar",
-        data: {
-            //labels: new Array(props.limit).fill(0).map((_, i) => getDate(i).toLocaleString()).slice().reverse(),
-            datasets: [{
-                parsing: false,
-                label: "a",
-                data: format(raw.readWrite).slice().reverse(),
-                tension: 0.3,
-                pointRadius: 0,
-                borderWidth: 0,
-                borderJoinStyle: "round",
-                borderRadius: 3,
-                backgroundColor: color,
-                /*gradient: props.bar ? undefined : {
-					backgroundColor: {
-						axis: 'y',
-						colors: {
-							0: alpha(x.color ? x.color : getColor(i), 0),
-							[maxes[i]]: alpha(x.color ? x.color : getColor(i), 0.2),
-						},
-					},
-				},*/
-                barPercentage: 0.9,
-                categoryPercentage: 0.9,
-                clip: 8,
-            }],
-        },
-        options: {
-            aspectRatio: 2.5,
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                },
-            },
-            scales: {
-                x: {
-                    type: "time",
-                    display: false,
-                    stacked: true,
-                    offset: false,
-                    time: {
-                        stepSize: 1,
-                        unit: "month",
-                    },
-                    grid: {
-                        display: false,
-                    },
-                    ticks: {
-                        display: false,
-                    },
-                    adapters: {
-                        date: {
-                            locale: enUS,
-                        },
-                    },
-                    min: getDate(chartLimit).getTime(),
-                },
-                y: {
-                    display: false,
-                    position: "left",
-                    stacked: true,
-                    grid: {
-                        display: false,
-                    },
-                    ticks: {
-                        display: false,
-                        //mirror: true,
-                    },
-                },
-            },
-            interaction: {
-                intersect: false,
-                mode: "index",
-            },
-            elements: {
-                point: {
-                    hoverRadius: 5,
-                    hoverBorderWidth: 2,
-                },
-            },
-            animation: false,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                tooltip: {
-                    enabled: false,
-                    mode: "index",
-                    animation: {
-                        duration: 0,
-                    },
-                    external: externalTooltipHandler,
-                },
-                //gradient,
-            },
-        },
-        plugins: [{
-            id: "vLine",
-            beforeDraw(chart, args, options) {
-                if (chart.tooltip?._active?.length) {
-                    const activePoint = chart.tooltip._active[0];
-                    const ctx = chart.ctx;
-                    const x = activePoint.element.x;
-                    const topY = chart.scales.y.top;
-                    const bottomY = chart.scales.y.bottom;
-
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.moveTo(x, bottomY);
-                    ctx.lineTo(x, topY);
-                    ctx.lineWidth = 1;
-                    ctx.strokeStyle = vLineColor;
-                    ctx.stroke();
-                    ctx.restore();
-                }
-            },
-        }],
-    });
-}
 
 onMounted(async () => {
     /*
@@ -336,47 +132,12 @@ onMounted(async () => {
 	magicGrid.listen();
 	*/
 
-    renderChart();
-
     os.api("stats", {}).then(statsResponse => {
-        stats = statsResponse;
-
-        os.apiGet("charts/users", { limit: 2, span: "day" }).then(chart => {
-            usersComparedToThePrevDay = stats.originalUsersCount - chart.local.total[1];
-        });
-
-        os.apiGet("charts/notes", { limit: 2, span: "day" }).then(chart => {
-            notesComparedToThePrevDay = stats.originalNotesCount - chart.local.total[1];
-        });
-    });
-
-    os.api("get-online-users-count").then(res => {
-        onlineUsersCount = res.count;
-    });
-
-    os.apiGet("charts/federation", { limit: 2, span: "day" }).then(chart => {
-        federationPubActive = chart.pubActive[0];
-        federationPubActiveDiff = chart.pubActive[0] - chart.pubActive[1];
-        federationSubActive = chart.subActive[0];
-        federationSubActiveDiff = chart.subActive[0] - chart.subActive[1];
+        stats.value = statsResponse;
     });
 
     os.api("admin/server-info").then(serverInfoResponse => {
-        serverInfo = serverInfoResponse;
-    });
-
-    os.api("admin/show-users", {
-        limit: 5,
-        sort: "+createdAt",
-    }).then(res => {
-        newUsers = res;
-    });
-
-    os.api("federation/instances", {
-        sort: "+lastCommunicatedAt",
-        limit: 25,
-    }).then(res => {
-        activeInstances = res;
+        serverInfo.value = serverInfoResponse;
     });
 
     nextTick(() => {
@@ -390,10 +151,6 @@ onMounted(async () => {
 onBeforeUnmount(() => {
     queueStatsConnection.dispose();
 });
-
-const headerActions = $computed(() => []);
-
-const headerTabs = $computed(() => []);
 
 definePageMetadata({
     title: i18n.ts.dashboard,
