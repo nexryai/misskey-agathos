@@ -12,11 +12,7 @@
         </main>
     </MkStickyContainer>
 
-    <div v-if="isDesktop" ref="widgetsEl" class="widgets">
-        <XWidgets @mounted="attachSticky"/>
-    </div>
-
-    <button v-if="!isDesktop && !isMobile" class="widgetButton _button" @click="widgetsShowing = true"><i class="ti ti-apps"></i></button>
+    <button v-if="!isMobile" class="widgetButton _button" @click="widgetsShowing = true"><i class="ti ti-apps"></i></button>
 
     <div v-if="isMobile" class="buttons" :style="{ background: bg }">
         <button class="button nav _button" @click="drawerMenuShowing = true"><i class="icon ti ti-menu-2"></i><span v-if="menuIndicated" class="indicator"><i class="_indicatorCircle"></i></span></button>
@@ -36,7 +32,7 @@
     </transition>
 
     <transition :name="$store.state.animation ? 'menuDrawer' : ''">
-        <XDrawerMenu v-if="drawerMenuShowing" class="menuDrawer"/>
+        <XSidebar v-if="drawerMenuShowing" class="menuDrawer"/>
     </transition>
 
     <transition :name="$store.state.animation ? 'widgetsDrawer-back' : ''">
@@ -62,7 +58,7 @@ import tinycolor from "tinycolor2";
 import XCommon from "./_common_/common.vue";
 import { instanceName } from "@/config";
 import { StickySidebar } from "@/scripts/sticky-sidebar";
-import XDrawerMenu from "@/ui/_common_/navbar-for-mobile.vue";
+import XSidebar from "@/ui/_common_/navbar.vue";
 import * as os from "@/os";
 import { defaultStore } from "@/store";
 import { navbarItemDef } from "@/navbar";
@@ -72,7 +68,6 @@ import { mainRouter } from "@/router";
 import { PageMetadata, provideMetadataReceiver } from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
 const XWidgets = defineAsyncComponent(() => import("./universal.widgets.vue"));
-const XSidebar = defineAsyncComponent(() => import("@/ui/_common_/navbar.vue"));
 const XStatusBars = defineAsyncComponent(() => import("@/ui/_common_/statusbars.vue"));
 
 const DESKTOP_THRESHOLD = 1100;
@@ -327,7 +322,7 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 			&:active {
 				background: var(--X2);
 			}
-			
+
 			&.post {
 				background: linear-gradient(90deg, var(--buttonGradateA), var(--buttonGradateB));
 				color: var(--fgOnAccent);
