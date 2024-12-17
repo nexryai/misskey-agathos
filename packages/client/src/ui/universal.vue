@@ -3,7 +3,7 @@
     <XSidebar v-if="!isMobile" class="sidebar"/>
 
     <MkStickyContainer class="contents">
-        <template #header><XStatusBars :class="$style.statusbars"/></template>
+        <template #header></template>
         <main style="min-width: 0;" :style="{ background: pageMetadata?.value?.bg }" @contextmenu.stop="onContextmenu">
             <div :class="$style.content">
                 <RouterView/>
@@ -39,19 +39,6 @@
         </button>
     </div>
 
-    <transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
-        <div
-            v-if="drawerMenuShowing"
-            class="menuDrawer-back _modalBg"
-            @click="drawerMenuShowing = false"
-            @touchstart.passive="drawerMenuShowing = false"
-        ></div>
-    </transition>
-
-    <transition :name="$store.state.animation ? 'menuDrawer' : ''">
-        <XSidebar v-if="drawerMenuShowing" class="menuDrawer"/>
-    </transition>
-
     <transition :name="$store.state.animation ? 'widgetsDrawer-back' : ''">
         <div
             v-if="widgetsShowing"
@@ -84,7 +71,6 @@ import { mainRouter } from "@/router";
 import { PageMetadata, provideMetadataReceiver } from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
 const XWidgets = defineAsyncComponent(() => import("./universal.widgets.vue"));
-const XStatusBars = defineAsyncComponent(() => import("@/ui/_common_/statusbars.vue"));
 
 const DESKTOP_THRESHOLD = 1100;
 const MOBILE_THRESHOLD = 500;
@@ -116,7 +102,6 @@ const menuIndicated = computed(() => {
     return false;
 });
 
-const drawerMenuShowing = ref(false);
 const enableBlur = ref(defaultStore.state.useBlurEffect);
 
 const calcBg = () => {
@@ -128,9 +113,6 @@ const calcBg = () => {
     bg.value = tinyBg.toRgbString();
 };
 
-mainRouter.on("change", () => {
-    drawerMenuShowing.value = false;
-});
 
 document.documentElement.style.overflowY = "scroll";
 

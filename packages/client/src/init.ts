@@ -8,7 +8,7 @@ import "@/style.scss";
 import { set } from "@/scripts/idb-proxy";
 
 if (localStorage.getItem("accounts") != null) {
-    set("accounts", JSON.parse(localStorage.getItem("accounts")));
+    set("accounts", JSON.parse(localStorage.getItem("accounts")!));
     localStorage.removeItem("accounts");
 }
 //#endregion
@@ -19,11 +19,11 @@ import JSON5 from "json5";
 import widgets from "@/widgets";
 import directives from "@/directives";
 import components from "@/components";
-import { version, ui, lang } from "@/config";
+import { version, lang } from "@/config";
 import { applyTheme } from "@/scripts/theme";
 import { isDeviceDarkmode } from "@/scripts/is-device-darkmode";
 import { i18n } from "@/i18n";
-import { confirm, alert, post, popup, toast } from "@/os";
+import { confirm, alert, post, toast } from "@/os";
 import { stream } from "@/stream";
 import * as sound from "@/scripts/sound";
 import { $i, refreshAccount, login, updateAccount, signout } from "@/account";
@@ -32,7 +32,6 @@ import { fetchInstance, instance } from "@/instance";
 import { makeHotkey } from "@/scripts/hotkey";
 import { search } from "@/scripts/search";
 import { deviceKind } from "@/scripts/device-kind";
-import { initializeSw } from "@/scripts/initialize-sw";
 import { reloadChannel } from "@/scripts/unison-reload";
 import { reactionPicker } from "@/scripts/reaction-picker";
 import { getUrlWithoutLoginId } from "@/scripts/login-id";
@@ -162,9 +161,6 @@ import { getAccountFromId } from "@/scripts/get-account-from-id";
 
     fetchInstanceMetaPromise.then(() => {
         localStorage.setItem("v", instance.version);
-
-        // Init service worker
-        initializeSw();
     });
 
     const app = createApp(
