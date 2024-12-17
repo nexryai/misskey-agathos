@@ -83,10 +83,6 @@ export const routes = [{
         name: "navbar",
         component: page(() => import("./pages/settings/navbar.vue")),
     }, {
-        path: "/statusbar",
-        name: "statusbar",
-        component: page(() => import("./pages/settings/statusbar.vue")),
-    }, {
         path: "/sounds",
         name: "sounds",
         component: page(() => import("./pages/settings/sounds.vue")),
@@ -118,10 +114,6 @@ export const routes = [{
         path: "/webhook",
         name: "webhook",
         component: page(() => import("./pages/settings/webhook.vue")),
-    }, {
-        path: "/deck",
-        name: "deck",
-        component: page(() => import("./pages/settings/deck.vue")),
     }, {
         path: "/preferences-backups",
         name: "preferences-backups",
