@@ -310,7 +310,7 @@ export const defaultStore = markRaw(new Storage("base", {
     },
     showOnlineUsersOnNavbar: {
         where: "account",
-        default: true,
+        default: false,
     },
     searchEngine: {
         where: "device",

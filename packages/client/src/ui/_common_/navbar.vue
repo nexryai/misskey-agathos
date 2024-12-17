@@ -161,9 +161,20 @@ useInterval(tick, 1000 * 15, {
 
 <style lang="scss" scoped>
 .kmwsukvl {
+    flex: 0 0 250px;
+    box-sizing: border-box;
+
 	> .body {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1001;
         width: 250px;
-		display: flex;
+        box-sizing: border-box;
+        overflow: auto;
+        overflow-x: clip;
+        contain: strict;
+        display: flex;
 		flex-direction: column;
 		height: calc(var(--vh, 1vh) * 100);
 

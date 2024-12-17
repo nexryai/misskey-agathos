@@ -13,13 +13,30 @@
     </MkStickyContainer>
 
     <button v-if="!isMobile" class="widgetButton _button" @click="widgetsShowing = true"><i class="ti ti-apps"></i></button>
+    <button v-if="isMobile" class="postButton _button" @click="os.post()"><i class="ti ti-pencil"></i></button>
 
     <div v-if="isMobile" class="buttons" :style="{ background: bg }">
-        <button class="button nav _button" @click="drawerMenuShowing = true"><i class="icon ti ti-menu-2"></i><span v-if="menuIndicated" class="indicator"><i class="_indicatorCircle"></i></span></button>
-        <button class="button home _button" @click="mainRouter.currentRoute.value.name === 'index' ? top() : mainRouter.push('/')"><i class="icon ti ti-home"></i></button>
-        <button class="button notifications _button" @click="mainRouter.push('/my/notifications')"><i class="icon ti ti-bell"></i><span v-if="$i?.hasUnreadNotification" class="indicator"><i class="_indicatorCircle"></i></span></button>
-        <button class="button widget _button" @click="widgetsShowing = true"><i class="icon ti ti-apps"></i></button>
-        <button class="button post _button" @click="os.post()"><i class="icon ti ti-pencil"></i></button>
+        <button class="button home _button" @click="mainRouter.currentRoute.value.name === 'index' ? top() : mainRouter.push('/')">
+            <i class="icon ti ti-home"></i>
+        </button>
+        <button class="button notifications _button" @click="mainRouter.push('/my/notifications')">
+            <i class="icon ti ti-bell"></i>
+            <span v-if="$i?.hasUnreadNotification" class="indicator">
+                <i class="_indicatorCircle"></i>
+            </span>
+        </button>
+        <button class="button home _button" @click="mainRouter.currentRoute.value.name === 'explore' ? top() : mainRouter.push('/explore')">
+            <i class="icon ti ti-hash"></i>
+        </button>
+        <button class="button widget _button" @click="widgetsShowing = true">
+            <i class="icon ti ti-apps"></i>
+        </button>
+        <button class="button nav _button" @click="more();">
+            <i class="icon ti ti-menu-2"></i>
+            <span v-if="menuIndicated" class="indicator">
+                <i class="_indicatorCircle"></i>
+            </span>
+        </button>
     </div>
 
     <transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
@@ -57,7 +74,6 @@ import { defineAsyncComponent, provide, onMounted, computed, ref, ComputedRef } 
 import tinycolor from "tinycolor2";
 import XCommon from "./_common_/common.vue";
 import { instanceName } from "@/config";
-import { StickySidebar } from "@/scripts/sticky-sidebar";
 import XSidebar from "@/ui/_common_/navbar.vue";
 import * as os from "@/os";
 import { defaultStore } from "@/store";
@@ -82,7 +98,6 @@ window.addEventListener("resize", () => {
 });
 
 const pageMetadata = ref<null | ComputedRef<PageMetadata>>();
-const widgetsEl = ref<HTMLElement>();
 const widgetsShowing = ref(false);
 
 provide("router", mainRouter);
@@ -164,15 +179,13 @@ const onContextmenu = (ev) => {
     }], ev);
 };
 
-const attachSticky = (el) => {
-    const sticky = new StickySidebar(widgetsEl);
-    window.addEventListener("scroll", () => {
-        sticky.calc(window.scrollY);
-    }, { passive: true });
-};
-
-function top() {
+function top(): void {
     window.scroll({ top: 0, behavior: "smooth" });
+}
+
+function more(): void {
+    os.popup(defineAsyncComponent(() => import("@/components/MkLaunchPad.vue")), {isMobileMode: true}, {
+    }, "closed");
 }
 
 const wallpaper = localStorage.getItem("wallpaper") != null;
@@ -237,10 +250,6 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 		//backdrop-filter: var(--blur, blur(4px));
 	}
 
-	> .sidebar {
-		border-right: solid 0.5px var(--divider);
-	}
-
 	> .contents {
 		width: 100%;
 		min-width: 0;
@@ -271,6 +280,20 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 		background: var(--panel);
 	}
 
+    > .postButton {
+        display: block;
+        position: fixed;
+        z-index: 1000;
+        bottom: 92px;
+        right: 32px;
+        width: 64px;
+        height: 64px;
+        border-radius: 100%;
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+        font-size: 22px;
+        background: var(--panel);
+    }
+
 	> .widgetsDrawer-back {
 		z-index: 1001;
 	}
@@ -286,7 +309,7 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 		box-sizing: border-box;
 		overflow: auto;
 		overscroll-behavior: contain;
-		background: var(--bg);
+		/*background: var(--bg);*/
 	}
 
 	> .buttons {
@@ -299,6 +322,7 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 		grid-gap: 8px;
 		width: 100%;
+        height: 52px;
 		box-sizing: border-box;
 		-webkit-backdrop-filter: var(--blur, blur(32px));
 		backdrop-filter: var(--blur, blur(32px));
@@ -310,9 +334,10 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 			padding: 0;
 			aspect-ratio: 1;
 			width: 100%;
+            height: 32px;
 			max-width: 60px;
 			margin: auto;
-			border-radius: 100%;
+			border-radius: 10px;
 			background: var(--panel);
 			color: var(--fg);
 
@@ -321,19 +346,6 @@ const wallpaper = localStorage.getItem("wallpaper") != null;
 			}
 			&:active {
 				background: var(--X2);
-			}
-
-			&.post {
-				background: linear-gradient(90deg, var(--buttonGradateA), var(--buttonGradateB));
-				color: var(--fgOnAccent);
-
-				&:hover {
-					background: linear-gradient(90deg, var(--X8), var(--X8));
-				}
-
-				&:active {
-					background: linear-gradient(90deg, var(--X8), var(--X8));
-				}
 			}
 
 			> .indicator {
