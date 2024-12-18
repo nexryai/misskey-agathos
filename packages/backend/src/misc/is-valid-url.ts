@@ -1,3 +1,5 @@
+import PrivateIp from "private-ip";
+
 export function isValidUrl(url: string | URL | undefined): boolean {
     if (process.env.NODE_ENV !== "production") return true;
 
@@ -10,6 +12,18 @@ export function isValidUrl(url: string | URL | undefined): boolean {
         }
 
         if (u.port !== "" && !["80", "443"].includes(u.port)) {
+            return false;
+        }
+
+        if (!u.hostname.includes(".")) {
+            return false;
+        }
+
+        if (PrivateIp(u.hostname)) {
+            return false;
+        }
+
+        if (u.username || u.password) {
             return false;
         }
 
