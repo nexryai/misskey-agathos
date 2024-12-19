@@ -110,6 +110,11 @@ export interface NoteStreamTypes {
 		reaction: string;
 		userId: User["id"];
 	};
+    updated: {
+        updatedAt: Date;
+        text?: string | null;
+        cw?: string | null;
+    }
 }
 type NoteStreamEventTypes = {
 	[key in keyof NoteStreamTypes]: {
