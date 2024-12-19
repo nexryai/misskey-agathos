@@ -1,5 +1,5 @@
 import { CacheableRemoteUser } from "@/models/entities/user.js";
-import { getApType, IUpdate, isActor, isPost } from "../../type.js";
+import { getApId, getApType, IUpdate, isActor, isPost } from "../../type.js";
 import { apLogger } from "../../logger.js";
 import { updateQuestion } from "../../models/question.js";
 import Resolver from "../../resolver.js";
@@ -10,7 +10,7 @@ import updateNote from "./note.js";
  * Updateアクティビティを捌きます
  */
 export default async (actor: CacheableRemoteUser, activity: IUpdate): Promise<string> => {
-    if ("actor" in activity && actor.uri !== activity.actor) {
+    if (actor.uri == null || actor.uri !== getApId(activity.actor)) {
         return "skip: invalid actor";
     }
 
@@ -24,6 +24,10 @@ export default async (actor: CacheableRemoteUser, activity: IUpdate): Promise<st
     });
 
     if (isActor(object)) {
+        if (actor.uri !== object.id) {
+            return "skip: actor id mismatch";
+        }
+
         await updatePerson(actor.uri!, resolver, object);
         return "ok: Person updated";
     } else if (getApType(object) === "Question") {

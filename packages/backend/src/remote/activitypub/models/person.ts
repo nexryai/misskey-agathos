@@ -12,7 +12,7 @@ import { UserNotePining } from "@/models/entities/user-note-pining.js";
 import { genId } from "@/misc/gen-id.js";
 import { UserPublickey } from "@/models/entities/user-publickey.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
-import { toPuny } from "@/misc/convert-host.js";
+import { extractDbHost, toPuny } from "@/misc/convert-host.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
 import { toArray } from "@/prelude/array.js";
 import { fetchInstanceMetadata } from "@/services/fetch-instance-metadata.js";
@@ -42,7 +42,7 @@ const summaryLength = 2048;
  * @param uri Fetch target URI
  */
 function validateActor(x: IObject, uri: string): IActor {
-    const expectHost = toPuny(new URL(uri).hostname);
+    const expectHost = extractDbHost(uri);
 
     if (x == null) {
         throw new Error("invalid Actor: object is null");
@@ -56,8 +56,46 @@ function validateActor(x: IObject, uri: string): IActor {
         throw new Error("invalid Actor: wrong id");
     }
 
-    if (!(typeof x.inbox === "string" && x.inbox.length > 0)) {
+    if (!( typeof x.inbox === "string" && x.inbox.length > 0 && extractDbHost(x.inbox) === expectHost)) {
         throw new Error("invalid Actor: wrong inbox");
+    }
+
+    if (!(typeof x.outbox === "string" && x.outbox.length > 0 && extractDbHost(getApId(x.outbox)) === expectHost)) {
+        throw new Error("invalid Actor: wrong outbox");
+    }
+
+    const sharedInboxObject = x.sharedInbox ?? (x.endpoints ? x.endpoints.sharedInbox : undefined);
+    if (sharedInboxObject != null) {
+        const sharedInbox = getApId(sharedInboxObject);
+        if (!(typeof sharedInbox === "string" && sharedInbox.length > 0 && extractDbHost(sharedInbox) === expectHost)) {
+            throw new Error("invalid Actor: wrong shared inbox");
+        }
+    }
+
+    if (x.followers != null) {
+        x.followers = getApId(x.followers);
+        if (
+            !(
+                typeof x.followers === "string" &&
+                x.followers.length > 0 &&
+                extractDbHost(x.followers) === expectHost
+            )
+        ) {
+            throw new Error("invalid Actor: wrong followers");
+        }
+    }
+
+    if (x.following != null) {
+        x.following = getApId(x.following);
+        if (
+            !(
+                typeof x.following === "string" &&
+                x.following.length > 0 &&
+                extractDbHost(x.following) === expectHost
+            )
+        ) {
+            throw new Error("invalid Actor: wrong following");
+        }
     }
 
     if (!(typeof x.preferredUsername === "string" && x.preferredUsername.length > 0 && x.preferredUsername.length <= 128 && /^\w([\w-.]*\w)?$/.test(x.preferredUsername))) {
@@ -80,7 +118,7 @@ function validateActor(x: IObject, uri: string): IActor {
         x.summary = truncate(x.summary, summaryLength);
     }
 
-    const idHost = toPuny(new URL(x.id!).hostname);
+    const idHost = toPuny(new URL(x.id!).host);
     if (idHost !== expectHost) {
         throw new Error("invalid Actor: id has different host");
     }
@@ -90,7 +128,7 @@ function validateActor(x: IObject, uri: string): IActor {
             throw new Error("invalid Actor: publicKey.id is not a string");
         }
 
-        const publicKeyIdHost = toPuny(new URL(x.publicKey.id).hostname);
+        const publicKeyIdHost = toPuny(new URL(x.publicKey.id).host);
         if (publicKeyIdHost !== expectHost) {
             throw new Error("invalid Actor: publicKey.id has different host");
         }
@@ -142,9 +180,23 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
 
     if (resolver == null) resolver = new Resolver();
 
-    const object = await resolver.resolve(uri) as any;
+    let object = await resolver.resolve(uri) as any;
 
-    const person = validateActor(object, uri);
+    let person: IActor;
+    try {
+        person = validateActor(object, uri);
+    } catch (e) {
+        // Work around GoToSocial issue #1186 (ref: https://github.com/superseriousbusiness/gotosocial/issues/1186)
+        if (typeof object.publicKey?.owner !== "string" || object.inbox != null) {
+            throw e;
+        }
+
+        apLogger.info(
+            `Received stub actor, re-resolving with key owner uri: ${object.publicKey.owner}`,
+        );
+        object = (await resolver.resolve(object.publicKey.owner)) as any;
+        person = validateActor(object, uri);
+    }
 
     logger.info(`Creating the Person: ${person.id}`);
 
@@ -157,6 +209,21 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
     const isBot = getApType(object) === "Service";
 
     const bday = person["vcard:bday"]?.match(/^\d{4}-\d{2}-\d{2}/);
+
+    let url = getOneApHrefNullable(person.url);
+    const urlParsed = url != null ? new URL(url) : null;
+    const uriParsed = new URL(uri);
+
+    if (urlParsed != null && urlParsed.protocol !== "https:") {
+        throw new Error(`unexpected schema of person url: ${url}`);
+    }
+
+    if (urlParsed != null && urlParsed.host !== uriParsed.host) {
+        apLogger.debug(
+            "Person url host doesn't match person uri host, clearing variable",
+        );
+        url = undefined;
+    }
 
     // Create user
     let user: IRemoteUser;
@@ -189,7 +256,7 @@ export async function createPerson(uri: string, resolver?: Resolver): Promise<Us
             await transactionalEntityManager.save(new UserProfile({
                 userId: user.id,
                 description: person.summary ? htmlToMfm(truncate(person.summary, summaryLength), person.tag) : null,
-                url: getOneApHrefNullable(person.url),
+                url: url,
                 fields,
                 birthday: bday ? bday[0] : null,
                 location: person["vcard:Address"] || null,

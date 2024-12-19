@@ -1,8 +1,6 @@
 import { CacheableRemoteUser } from "@/models/entities/user.js";
-import { toArray } from "@/prelude/array.js";
 import { IObject, isCreate, isDelete, isUpdate, isFollow, isAccept, isReject, isAdd, isRemove, isAnnounce, isLike, isUndo, isBlock, isCollectionOrOrderedCollection, isCollection, isFlag } from "../type.js";
 import { apLogger } from "../logger.js";
-import Resolver from "../resolver.js";
 import create from "./create/index.js";
 import performDeleteActivity from "./delete/index.js";
 import performUpdateActivity from "./update/index.js";
@@ -19,6 +17,7 @@ import flag from "./flag/index.js";
 
 export async function performActivity(actor: CacheableRemoteUser, activity: IObject) {
     if (isCollectionOrOrderedCollection(activity)) {
+        /*
         const resolver = new Resolver();
         for (const item of toArray(isCollection(activity) ? activity.items : activity.orderedItems)) {
             const act = await resolver.resolve(item);
@@ -30,6 +29,9 @@ export async function performActivity(actor: CacheableRemoteUser, activity: IObj
                 }
             }
         }
+        */
+        apLogger.warn("Refusing to ingest collection as activity");
+        return;
     } else {
         await performOneActivity(actor, activity);
     }

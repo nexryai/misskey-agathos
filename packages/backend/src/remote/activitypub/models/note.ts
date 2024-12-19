@@ -88,8 +88,35 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 
     logger.info(`Creating the Note: ${note.id}`);
 
+    if (note.id == null) {
+        throw new Error("Note must have an id");
+    }
+
+    const idUrl = new URL(note.id);
+    if (idUrl.protocol !== "https:") {
+        throw new Error(`unexpected schema of note.id: ${note.id}`);
+    }
+
+    let url = getOneApHrefNullable(note.url);
+    const urlParsed = url != null ? new URL(url) : null;
+
     // 投稿者をフェッチ
     const actor = await resolvePerson(getOneApId(note.attributedTo), resolver) as CacheableRemoteUser;
+    if (actor.uri == null) {
+        apLogger.warn("Note actor uri is null, discarding");
+        return null;
+    }
+
+    const actorUri = new URL(actor.uri);
+    if (idUrl.host !== actorUri.host) {
+        apLogger.warn("Note id host doesn't match actor host, discarding");
+        return null;
+    }
+
+    if (urlParsed != null && urlParsed.host !== actorUri.host) {
+        apLogger.debug("Note url host doesn't match actor host, clearing variable");
+        url = undefined;
+    }
 
     // 投稿者が凍結されていたらスキップ
     if (actor.isSuspended) {
@@ -195,7 +222,6 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
     // vote
     if (reply && reply.hasPoll) {
         const poll = await Polls.findOneByOrFail({ noteId: reply.id });
-
         const tryCreateVote = async (name: string, index: number): Promise<null> => {
             if (poll.expiresAt && Date.now() > new Date(poll.expiresAt).getTime()) {
                 logger.warn(`vote to expired poll from AP: actor=${actor.username}@${actor.host}, note=${note.id}, choice=${name}`);
@@ -239,7 +265,7 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
         apEmojis,
         poll,
         uri: note.id,
-        url: getOneApHrefNullable(note.url),
+        url: url,
     }, silent);
 }
 
