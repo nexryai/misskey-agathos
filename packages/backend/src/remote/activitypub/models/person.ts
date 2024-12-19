@@ -74,12 +74,7 @@ function validateActor(x: IObject, uri: string): IActor {
 
     if (x.followers != null) {
         x.followers = getApId(x.followers);
-        if (
-            !(
-                typeof x.followers === "string" &&
-                x.followers.length > 0 &&
-                extractDbHost(x.followers) === expectHost
-            )
+        if (!(typeof x.followers === "string" && x.followers.length > 0 && extractDbHost(x.followers) === expectHost)
         ) {
             throw new Error("invalid Actor: wrong followers");
         }
@@ -87,13 +82,7 @@ function validateActor(x: IObject, uri: string): IActor {
 
     if (x.following != null) {
         x.following = getApId(x.following);
-        if (
-            !(
-                typeof x.following === "string" &&
-                x.following.length > 0 &&
-                extractDbHost(x.following) === expectHost
-            )
-        ) {
+        if (!(typeof x.following === "string" && x.following.length > 0 && extractDbHost(x.following) === expectHost)) {
             throw new Error("invalid Actor: wrong following");
         }
     }
