@@ -1,4 +1,4 @@
-# Nexkey
+# Altair (a.k.a. Nexkey)
 nexryaiによるMisskey v12フォーク
 
 ### motive
