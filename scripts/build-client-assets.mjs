@@ -7,10 +7,6 @@ import * as terser from "terser";
 import locales from "../locales/index.js";
 import meta from "../package.json" with { type: "json" };
 
-async function copyClientFonts() {
-    await fs.cp("./packages/client/node_modules/three/examples/fonts", "./built/_client_dist_/fonts", { dereference: true, recursive: true });
-}
-
 async function copyClientTablerIcons() {
     await fs.cp("./packages/client/node_modules/@tabler/icons-webfont", "./built/_client_dist_/tabler-icons", { dereference: true, recursive: true });
 }
@@ -60,7 +56,6 @@ async function buildBackendStyle() {
 
 async function build() {
     await Promise.all([
-        copyClientFonts(),
         copyClientTablerIcons(),
         copyClientLocales(),
         copyBackendViews(),
