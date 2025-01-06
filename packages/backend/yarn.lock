@@ -824,10 +824,10 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/bull@4.10.0":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@types/bull/-/bull-4.10.0.tgz#176d7677af2a3df034df4b71daefd63c50a3e438"
-  integrity sha512-RkYW8K2H3J76HT6twmHYbzJ0GtLDDotpLP9ah9gtiA7zfF6peBH1l5fEiK0oeIZ3/642M7Jcb9sPmor8Vf4w6g==
+"@types/bull@4.10.4":
+  version "4.10.4"
+  resolved "https://registry.yarnpkg.com/@types/bull/-/bull-4.10.4.tgz#c7a09c3151d079db5088588719ba2982e2b15dcf"
+  integrity sha512-A+8uxa5GbzKcS7kZ9Z1OcOeSyrvVmfHtZi3VIrH1Gws0G0sTknB2SRllxTaAYhycGn7+nC0Pb8VjxIyZiTM81A==
   dependencies:
     bull "*"
 
@@ -1822,16 +1822,16 @@ bufferutil@^4.0.1:
   dependencies:
     node-gyp-build "^4.3.0"
 
-bull@*, bull@4.12.2:
-  version "4.12.2"
-  resolved "https://registry.yarnpkg.com/bull/-/bull-4.12.2.tgz#302ee8f35fd37c31baf58817cce9a2c6930c3c5d"
-  integrity sha512-WPuc0VCYx+cIVMiZtPwRpWyyJFBrj4/OgKJ6n9Jf4tIw7rQNV+HAKQv15UDkcTvfpGFehvod7Fd1YztbYSJIDQ==
+bull@*, bull@4.16.5:
+  version "4.16.5"
+  resolved "https://registry.yarnpkg.com/bull/-/bull-4.16.5.tgz#855a17e7880862a231dac3c8a6392c77668ce49d"
+  integrity sha512-lDsx2BzkKe7gkCYiT5Acj02DpTwDznl/VNN7Psn7M3USPG7Vs/BaClZJJTAG+ufAR9++N1/NiUTdaFBWDIl5TQ==
   dependencies:
-    cron-parser "^4.2.1"
+    cron-parser "^4.9.0"
     get-port "^5.1.1"
     ioredis "^5.3.2"
     lodash "^4.17.21"
-    msgpackr "^1.10.1"
+    msgpackr "^1.11.2"
     semver "^7.5.2"
     uuid "^8.3.0"
 
@@ -2252,10 +2252,10 @@ create-require@^1.1.0:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cron-parser@^4.2.1:
-  version "4.8.1"
-  resolved "https://registry.yarnpkg.com/cron-parser/-/cron-parser-4.8.1.tgz#47062ea63d21d78c10ddedb08ea4c5b6fc2750fb"
-  integrity sha512-jbokKWGcyU4gl6jAfX97E1gDpY12DJ1cLJZmoDzaAln/shZ+S3KBFBuA2Q6WeUN4gJf/8klnV1EfvhA2lK5IRQ==
+cron-parser@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/cron-parser/-/cron-parser-4.9.0.tgz#0340694af3e46a0894978c6f52a6dbb5c0f11ad5"
+  integrity sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==
   dependencies:
     luxon "^3.2.1"
 
@@ -4908,10 +4908,10 @@ msgpackr-extract@^3.0.2:
     "@msgpackr-extract/msgpackr-extract-linux-x64" "3.0.2"
     "@msgpackr-extract/msgpackr-extract-win32-x64" "3.0.2"
 
-msgpackr@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/msgpackr/-/msgpackr-1.10.1.tgz#51953bb4ce4f3494f0c4af3f484f01cfbb306555"
-  integrity sha512-r5VRLv9qouXuLiIBrLpl2d5ZvPt8svdQTl5/vMvE4nzDMyEX4sgW5yWhuBBj5UmgwOTWj8CIdSXn5sAfsHAWIQ==
+msgpackr@^1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/msgpackr/-/msgpackr-1.11.2.tgz#4463b7f7d68f2e24865c395664973562ad24473d"
+  integrity sha512-F9UngXRlPyWCDEASDpTf6c9uNhGPTqnTeLVt7bN+bU1eajoR/8V9ys2BRaV5C/e5ihE6sJ9uPIKaYt6bFuO32g==
   optionalDependencies:
     msgpackr-extract "^3.0.2"
 
