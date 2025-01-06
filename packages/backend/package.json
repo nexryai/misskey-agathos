@@ -24,7 +24,7 @@
 		"abort-controller": "3.0.0",
 		"ajv": "8.17.1",
 		"archiver": "6.0.2",
-		"argon2": "0.41.0",
+		"argon2": "0.41.1",
 		"autobind-decorator": "2.4.0",
 		"autwh": "0.1.0",
 		"aws-sdk": "2.1686.0",
