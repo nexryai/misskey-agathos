@@ -570,17 +570,17 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
-"@tabler/icons-webfont@3.26.0":
-  version "3.26.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons-webfont/-/icons-webfont-3.26.0.tgz#e12d1314a1a41f1ff9b97e53e62cdf4821fd2560"
-  integrity sha512-iw+6a3BYCHb5txseX0aUbvftN/x1UC28Zk4MVYXXbeTU2v1VeOyuoqF56HdYxxIG1WqO9RLwAbAPSu3VEl/Ruw==
+"@tabler/icons-webfont@3.27.1":
+  version "3.27.1"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-webfont/-/icons-webfont-3.27.1.tgz#b45159d088ffd74f27c26c71ef22a826818dcc06"
+  integrity sha512-rCld5DuHUWMeacEzgzk2KydQprnpTCLW8EgxODd/jRh6R44w3EBI0j2JvMUYv/nYBYP+cxWd2TfFQ+vRCw5ViQ==
   dependencies:
-    "@tabler/icons" "3.26.0"
+    "@tabler/icons" "3.27.1"
 
-"@tabler/icons@3.26.0":
-  version "3.26.0"
-  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.26.0.tgz#7a23b2a99abda32e3b4cf00ce46dddaa5daa1923"
-  integrity sha512-oO3D4ss+DxzxqU1aDy0f1HmToyrO0gcQWIMpzHAfV1quPUx0BZYvNm5xz1DQb4DxNm/+xNvbBGLJy4pzTLYWag==
+"@tabler/icons@3.27.1":
+  version "3.27.1"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-3.27.1.tgz#01debdfde1c18c92678584c516211eea43f79a38"
+  integrity sha512-Utt80OeExBV/Pi9m9Z7ZRHOHQPapMO8t4mCSMb/n5oiLWCEU2HX+9mGzo772SVxyDZ3YQBgmzIYnGKhL3tUSSQ==
 
 "@twemoji/parser@15.0.0":
   version "15.0.0"
