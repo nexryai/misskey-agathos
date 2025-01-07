@@ -80,7 +80,7 @@
 		"cross-env": "7.0.3",
 		"eslint": "8.57.0",
 		"eslint-plugin-import": "2.31.0",
-		"eslint-plugin-vue": "9.29.0",
+		"eslint-plugin-vue": "9.32.0",
 		"rollup": "4.29.2"
 	}
 }
