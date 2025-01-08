@@ -626,9 +626,9 @@
     "@rushstack/node-core-library" "5.10.1"
 
 "@microsoft/api-extractor@^7.19.3":
-  version "7.48.1"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.48.1.tgz#792197cfc5113cd2efc04524c065d682ef58d2ba"
-  integrity sha512-HN9Osa1WxqLM66RaqB5nPAadx+nTIQmY/XtkFdaJvusjG8Tus++QqZtD7KPZDSkhEMGHsYeSyeU8qUzCDUXPjg==
+  version "7.49.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.49.0.tgz#0cd36b62acb9481d81388cb8314d980461fb809b"
+  integrity sha512-X5b462k0/yl8qWdGx3siq5vyI8fTDU9fRnwqTMlGHqFhLxpASmLWA2EU6nft+ZG8cQM2HRZlr4HSo62UqiAnug==
   dependencies:
     "@microsoft/api-extractor-model" "7.30.1"
     "@microsoft/tsdoc" "~0.15.1"
@@ -642,7 +642,7 @@
     resolve "~1.22.1"
     semver "~7.5.4"
     source-map "~0.6.1"
-    typescript "5.4.2"
+    typescript "5.7.2"
 
 "@microsoft/tsdoc-config@~0.17.1":
   version "0.17.1"
@@ -3319,11 +3319,6 @@ type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
-
-typescript@5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.2.tgz#0ae9cebcfae970718474fe0da2c090cad6577372"
-  integrity sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==
 
 typescript@5.7.2:
   version "5.7.2"
