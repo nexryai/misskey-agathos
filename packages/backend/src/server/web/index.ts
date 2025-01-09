@@ -41,7 +41,7 @@ function isAllowedAssetExt(ctx: Koa.Context): boolean {
     return allowedAssetsExt.some(ext => path.endsWith(ext));
 }
 
-// 参考にした: https://github.com/mei23/misskey/blob/2c6db29a4acbce7e4ad8d40a54afc481019199ab/src/server/web/index.ts#L33
+// 参考: https://github.com/mei23/misskey/blob/2c6db29a4acbce7e4ad8d40a54afc481019199ab/src/server/web/index.ts#L33
 // ToDo: script-srcのunsafeを消せるようにする
 export function genCsp(): {csp: string } {
     const csp
@@ -50,8 +50,8 @@ export function genCsp(): {csp: string } {
         + "script-src 'self' 'unsafe-inline' https://www.recaptcha.net/recaptcha/ https://www.gstatic.com/recaptcha/ https://challenges.cloudflare.com; "
         + "img-src 'self' https: data: blob:; "
         + "media-src 'self' https:; "
-        + "style-src 'self' 'unsafe-inline'; "
-        + "font-src 'self'; "
+        + "style-src 'self' 'unsafe-inline' https://fonts.gstatic.com https://fonts.googleapis.com; "
+        + "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com; "
         + "frame-src 'self' https:; "
         + "manifest-src 'self'; "
         + `connect-src 'self' data: blob: ${config.wsUrl}; `	// wssを指定しないとSafariで動かない https://github.com/w3c/webappsec-csp/issues/7#issuecomment-1086257826

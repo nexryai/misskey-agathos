@@ -17,7 +17,7 @@
 ::selection {
 	color: #fff;
 	background-color: var(--accent);
-} 
+}
 
 html {
 	touch-action: manipulation;
@@ -29,7 +29,7 @@ html {
 	accent-color: var(--accent);
 	overflow: auto;
 	overflow-wrap: break-word;
-	font-family: "BIZ UDGothic", Roboto, HelveticaNeue, Arial, sans-serif;
+    font-family: "Noto Sans JP", "Noto Sans SC", "Noto Sans KR", Arial, sans-serif !important;
 	font-size: 14px;
 	line-height: 1.35;
 	text-size-adjust: 100%;
@@ -363,11 +363,11 @@ hr {
 	._section:not(:empty) {
 		box-sizing: border-box;
 		padding: var(--root-margin, 32px);
-	
+
 		@media (max-width: 500px) {
 			--root-margin: 10px;
 		}
-	
+
 		& + ._section:not(:empty) {
 			border-top: solid 0.5px var(--divider);
 		}
