@@ -73,7 +73,7 @@
 		"nested-property": "4.0.0",
 		"node-fetch": "3.3.2",
 		"otpauth": "9.3.6",
-		"parse5": "7.1.2",
+		"parse5": "7.2.1",
 		"pg": "8.13.1",
 		"private-ip": "3.0.2",
 		"probe-image-size": "7.2.3",
