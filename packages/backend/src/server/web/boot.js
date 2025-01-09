@@ -176,7 +176,7 @@
 		errorsElement.appendChild(detailsElement);
 		addStyle(`
 		* {
-			font-family: "Noto Sans JP", "Noto Sans SC", "Noto Sans KR", Arial, sans-serif
+			font-family: "MiSansLatin", "Noto Sans JP", "Noto Sans SC", "Noto Sans KR", Arial, sans-serif
 		}
 
 		#misskey_app,
