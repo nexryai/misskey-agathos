@@ -31,6 +31,9 @@ html
 		link(rel='icon' href= icon || '/favicon.ico')
 		link(rel='apple-touch-icon' href= icon || '/apple-touch-icon.png')
 		link(rel='manifest' href='/manifest.json')
+        link(rel='preconnect' href='https://fonts.googleapis.com')
+        link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin)
+        link(rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans+SC:wght@100..900&display=swap')
 		link(rel='stylesheet' href='/assets/tabler-icons/dist/tabler-icons.min.css')
 		link(rel='modulepreload' href=`/assets/${clientEntry.file}`)
 
