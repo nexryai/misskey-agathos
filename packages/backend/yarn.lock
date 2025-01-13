@@ -831,10 +831,10 @@
   dependencies:
     bull "*"
 
-"@types/cbor@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@types/cbor/-/cbor-6.0.0.tgz#ddead015e14ef4463287d40cd92a6297a34dac8d"
-  integrity sha512-mGQ1lbYOwVti5Xlarn1bTeBZqgY0kstsdjnkoEovgohYKdBjGejHyNGXHdMBeqyQazIv32Jjp33+5pBEaSRy2w==
+"@types/cbor@6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@types/cbor/-/cbor-6.0.4.tgz#6d5f580f9dc4a556805c49c1b8152fa07da4c79d"
+  integrity sha512-Mgo9dwJw9o4K3buIAVChFwud9WQTz4vLgWv7z8RVQnY6vIocZaDTr6Yxa8ldKCyQO5w1rBb5ovzBpfGMOgWZEQ==
   dependencies:
     cbor "*"
 
