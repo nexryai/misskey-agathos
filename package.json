@@ -32,7 +32,7 @@
 		"cssnano": "7.0.6",
 		"execa": "9.5.2",
 		"js-yaml": "4.1.0",
-		"postcss": "^8.4.49",
+		"postcss": "^8.5.0",
 		"terser": "5.37.0"
 	},
 	"devDependencies": {
