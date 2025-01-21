@@ -39,7 +39,7 @@ export default ts.config(
     },
     {
         ignores: [
-            "build/",
+            "built/",
             "node_modules/",
             "dist/",
             "packages/backend/migration/",
