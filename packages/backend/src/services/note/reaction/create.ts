@@ -70,7 +70,6 @@ export default async (user: { id: User["id"]; host: User["host"]; }, note: Note,
     await Notes.createQueryBuilder().update()
         .set({
 		    reactions: () => sql,
-		    score: () => "\"score\" + 1",
         })
         .where("id = :id", { id: note.id })
         .execute();

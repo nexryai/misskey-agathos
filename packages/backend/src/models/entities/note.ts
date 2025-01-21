@@ -129,11 +129,6 @@ export class Note {
 	})
 	public url: string | null;
 
-	@Column("integer", {
-	    default: 0, select: false,
-	})
-	public score: number;
-
 	@Index()
 	@Column({
 	    ...id(),
