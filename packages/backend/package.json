@@ -5,8 +5,6 @@
 	"scripts": {
 		"build": "tsc -p tsconfig.json || echo done. && tsc-alias -p tsconfig.json",
 		"watch": "node watch.mjs",
-		"lint": "eslint --quiet \"src/**/*.ts\"",
-		"lintfix": "eslint --fix --ext .ts \"src/**/*.ts\" .",
 		"mocha": "cross-env NODE_ENV=test TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true TS_NODE_PROJECT=\"./test/tsconfig.json\" mocha",
 		"test": "npm run mocha"
 	},
@@ -155,11 +153,7 @@
 		"@types/web-push": "3.6.4",
 		"@types/websocket": "1.0.10",
 		"@types/ws": "8.5.12",
-		"@typescript-eslint/eslint-plugin": "5.62.0",
-		"@typescript-eslint/parser": "5.62.0",
 		"cross-env": "7.0.3",
-		"eslint": "8.57.0",
-		"eslint-plugin-import": "2.31.0",
 		"execa": "9.5.2",
 		"typescript": "5.5.4"
 	}
