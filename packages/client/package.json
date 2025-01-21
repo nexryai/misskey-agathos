@@ -35,7 +35,7 @@
 		"idb-keyval": "6.2.1",
 		"insert-text-at-cursor": "0.3.0",
 		"json5": "2.2.3",
-		"katex": "0.16.19",
+		"katex": "0.16.21",
 		"matter-js": "0.20.0",
 		"mfm-js": "0.24.0",
 		"photoswipe": "5.4.4",
@@ -44,7 +44,7 @@
 		"querystring": "0.2.1",
 		"rndstr": "1.0.0",
 		"s-age": "1.1.2",
-		"sass": "1.83.1",
+		"sass": "1.83.3",
 		"seedrandom": "3.0.5",
 		"strict-event-emitter-types": "2.0.0",
 		"stringz": "2.1.0",
@@ -55,8 +55,8 @@
 		"tsc-alias": "1.8.10",
 		"tsconfig-paths": "4.2.0",
 		"twemoji-parser": "14.0.0",
-		"typescript": "5.7.2",
-		"uuid": "11.0.4",
+		"typescript": "5.7.3",
+		"uuid": "11.0.5",
 		"vanilla-tilt": "1.8.1",
 		"vite": "6.0.7",
 		"vue": "3.5.13",
@@ -81,6 +81,6 @@
 		"eslint": "8.57.0",
 		"eslint-plugin-import": "2.31.0",
 		"eslint-plugin-vue": "9.32.0",
-		"rollup": "4.29.2"
+		"rollup": "4.30.1"
 	}
 }
