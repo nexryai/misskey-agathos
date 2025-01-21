@@ -252,10 +252,6 @@ export const routes = [{
         name: "announcements",
         component: page(() => import("./pages/admin/announcements.vue")),
     }, {
-        path: "/ads",
-        name: "ads",
-        component: page(() => import("./pages/admin/ads.vue")),
-    }, {
         path: "/database",
         name: "database",
         component: page(() => import("./pages/admin/database.vue")),

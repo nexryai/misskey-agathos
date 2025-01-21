@@ -125,11 +125,6 @@ const menuDef = computed(() => [{
         to: "/admin/announcements",
         active: currentPage.value?.route.name === "announcements",
     }, {
-        icon: "ti ti-ad",
-        text: i18n.ts.ads,
-        to: "/admin/ads",
-        active: currentPage.value?.route.name === "ads",
-    }, {
         icon: "ti ti-exclamation-circle",
         text: i18n.ts.abuseReports,
         to: "/admin/abuses",

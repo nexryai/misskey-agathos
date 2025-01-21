@@ -13,7 +13,6 @@ import I18n from "./global/i18n";
 import RouterView from "./global/RouterView.vue";
 import MkLoading from "./global/MkLoading.vue";
 import MkError from "./global/MkError.vue";
-import MkAd from "./global/MkAd.vue";
 import MkPageHeader from "./global/MkPageHeader.vue";
 import MkSpacer from "./global/MkSpacer.vue";
 import MkStickyContainer from "./global/MkStickyContainer.vue";
@@ -32,7 +31,6 @@ export default function(app: App) {
     app.component("MkUrl", MkUrl);
     app.component("MkLoading", MkLoading);
     app.component("MkError", MkError);
-    app.component("MkAd", MkAd);
     app.component("MkPageHeader", MkPageHeader);
     app.component("MkSpacer", MkSpacer);
     app.component("MkStickyContainer", MkStickyContainer);
@@ -53,7 +51,6 @@ declare module "@vue/runtime-core" {
 		MkUrl: typeof MkUrl;
 		MkLoading: typeof MkLoading;
 		MkError: typeof MkError;
-		MkAd: typeof MkAd;
 		MkPageHeader: typeof MkPageHeader;
 		MkSpacer: typeof MkSpacer;
 		MkStickyContainer: typeof MkStickyContainer;
