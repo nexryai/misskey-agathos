@@ -3,26 +3,11 @@
     <template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
     <MkSpacer v-if="tab === 'overview'" :content-max="600" :margin-min="20">
         <div class="_formRoot">
-            <div class="_formBlock fwhjspax" :style="{ backgroundImage: `url(${ $instance.bannerUrl })` }">
-                <div class="content">
-                    <img :src="$instance.iconUrl || $instance.faviconUrl || '/favicon.ico'" alt="" class="icon"/>
-                    <div class="name">
-                        <b>{{ $instance.name || host }}</b>
-                    </div>
-                </div>
-            </div>
-
-            <MkKeyValue class="_formBlock">
-                <template #key>{{ i18n.ts.description }}</template>
-                <template #value>{{ $instance.description }}</template>
-            </MkKeyValue>
-
             <FormSection>
                 <MkKeyValue class="_formBlock" :copy="version">
-                    <template #key>Misskey</template>
+                    <template #key>Software Version</template>
                     <template #value>{{ version }}</template>
                 </MkKeyValue>
-                <FormLink to="/about-nexkey">{{ i18n.ts.aboutMisskey }}</FormLink>
             </FormSection>
 
             <FormSection>
@@ -50,10 +35,6 @@
                         <MkKeyValue class="_formBlock">
                             <template #key>{{ i18n.ts.notes }}</template>
                             <template #value>{{ number(stats.originalNotesCount) }}</template>
-                        </MkKeyValue>
-                        <MkKeyValue class="_formBlock">
-                            <template #key>{{ i18n.ts.onlineStatus }}</template>
-                            <template #value>{{ number(onlineUsersCount) }}</template>
                         </MkKeyValue>
                     </FormSplit>
                 </FormSection>
@@ -84,7 +65,7 @@
 import { ref, computed } from "vue";
 import XEmojis from "./about.emojis.vue";
 import XFederation from "./about.federation.vue";
-import { version , host } from "@/config";
+import { version } from "@/config";
 import FormLink from "@/components/form/link.vue";
 import FormSection from "@/components/form/section.vue";
 import FormSuspense from "@/components/form/suspense.vue";
@@ -101,13 +82,19 @@ const props = withDefaults(defineProps<{
     initialTab: "overview",
 });
 
-let stats = ref(null);
+let stats = ref({
+    originalUsersCount: 0,
+    originalNotesCount: 0,
+});
 let tab = ref(props.initialTab);
 let onlineUsersCount = ref();
 
 const initStats = () => os.api("stats", {
 }).then((res) => {
-    stats.value = res;
+    stats.value = res as {
+        originalUsersCount: number;
+        originalNotesCount: number;
+    };
 });
 
 os.api("get-online-users-count").then(res => {

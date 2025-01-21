@@ -160,9 +160,6 @@ export const routes = [{
     component: page(() => import("./pages/about.vue")),
     hash: "initialTab",
 }, {
-    path: "/about-nexkey",
-    component: page(() => import("./pages/about-misskey.vue")),
-}, {
     path: "/ads",
     component: page(() => import("./pages/ads.vue")),
 }, {
