@@ -13,7 +13,7 @@ WORKDIR /misskey
 
 COPY . ./
 
-RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang libressl-dev vips-dev python3
+RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang vips-dev python3
 RUN yarn install
 RUN yarn build
 
@@ -23,7 +23,7 @@ WORKDIR /misskey
 
 COPY . ./
 
-RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang libressl-dev vips-dev python3
+RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang vips-dev python3
 RUN cd packages/backend && yarn install --production
 
 FROM node:22-alpine3.21 AS runner
