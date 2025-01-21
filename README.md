@@ -1,4 +1,4 @@
-# Altair (a.k.a. Nexkey)
+# Concorde (a.k.a. Nexkey)
 nexryaiによるMisskey v12フォーク
 
 ### motive
