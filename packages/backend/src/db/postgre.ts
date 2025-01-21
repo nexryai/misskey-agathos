@@ -52,7 +52,6 @@ import { Clip } from "@/models/entities/clip.js";
 import { ClipNote } from "@/models/entities/clip-note.js";
 import { Antenna } from "@/models/entities/antenna.js";
 import { AntennaNote } from "@/models/entities/antenna-note.js";
-import { Relay } from "@/models/entities/relay.js";
 import { MutedNote } from "@/models/entities/muted-note.js";
 import { RegistryItem } from "@/models/entities/registry-item.js";
 import { PasswordResetRequest } from "@/models/entities/password-reset-request.js";
@@ -142,7 +141,6 @@ export const entities = [
     ClipNote,
     Antenna,
     AntennaNote,
-    Relay,
     MutedNote,
     RegistryItem,
     PasswordResetRequest,

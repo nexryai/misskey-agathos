@@ -110,9 +110,6 @@ id: 'aid'
 # Whether Disable Search
 #disableSearch: true
 
-# Ignore AP forwarded activities (default: false)
-#ignoreApForwarded: true
-
 # Whether disable HSTS
 #disableHsts: true
 

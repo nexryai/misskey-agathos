@@ -67,8 +67,6 @@ export type Source = {
 
 	disableAntenna?: boolean;
 	disableSearch?: boolean;
-
-	ignoreApForwarded?: boolean;
 };
 
 /**

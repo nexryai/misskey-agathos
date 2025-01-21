@@ -3,7 +3,6 @@ import Bull from "bull";
 import httpSignature from "@peertube/http-signature";
 import perform from "@/remote/activitypub/perform.js";
 import Logger from "@/services/logger.js";
-import config from "@/config/index.js";
 import { registerOrFetchInstanceDoc } from "@/services/register-or-fetch-instance-doc.js";
 import { Instances } from "@/models/index.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
@@ -11,8 +10,6 @@ import { toPuny, extractDbHost } from "@/misc/convert-host.js";
 import { getApId } from "@/remote/activitypub/type.js";
 import { fetchInstanceMetadata } from "@/services/fetch-instance-metadata.js";
 import DbResolver from "@/remote/activitypub/db-resolver.js";
-import { resolvePerson } from "@/remote/activitypub/models/person.js";
-import { LdSignature } from "@/remote/activitypub/misc/ld-signature.js";
 import { StatusError } from "@/misc/fetch.js";
 import { CacheableRemoteUser } from "@/models/entities/user.js";
 import { UserPublickey } from "@/models/entities/user-publickey.js";
@@ -23,7 +20,7 @@ const logger = new Logger("inbox");
 // ユーザーのinboxにアクティビティが届いた時の処理
 export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
     const signature = job.data.signature;	// HTTP-signature
-    let activity = job.data.activity;
+    const activity = job.data.activity;
 
     //#region Log
     const info = Object.assign({}, activity) as any;
@@ -82,51 +79,7 @@ export default async (job: Bull.Job<InboxJobData>): Promise<string> => {
 
     // また、signatureのsignerは、activity.actorと一致する必要がある
     if (!httpSignatureValidated || authUser.user.uri !== activity.actor) {
-        // 一致しなくても、でもLD-Signatureがありそうならそっちも見る
-        if (!config.ignoreApForwarded && activity.signature) {
-            if (activity.signature.type !== "RsaSignature2017") {
-                return `skip: unsupported LD-signature type ${activity.signature.type}`;
-            }
-
-            // activity.signature.creator: https://example.oom/users/user#main-key
-            // みたいになっててUserを引っ張れば公開キーも入ることを期待する
-            if (activity.signature.creator) {
-                const candicate = activity.signature.creator.replace(/#.*/, "");
-                await resolvePerson(candicate).catch(() => null);
-            }
-
-            // keyIdからLD-Signatureのユーザーを取得
-            authUser = await dbResolver.getAuthUserFromKeyId(activity.signature.creator);
-            if (authUser == null) {
-                return "skip: LD-Signatureのユーザーが取得できませんでした";
-            }
-
-            if (authUser.key == null) {
-                return "skip: LD-SignatureのユーザーはpublicKeyを持っていませんでした";
-            }
-
-            // LD-Signature検証
-            const ldSignature = new LdSignature();
-            const verified = await ldSignature.verifyRsaSignature2017(activity, authUser.key.keyPem).catch(() => false);
-            if (!verified) {
-                return "skip: LD-Signatureの検証に失敗しました";
-            }
-
-            activity = await ldSignature.compactToWellKnown(activity);
-
-            // もう一度actorチェック
-            if (authUser.user.uri !== activity.actor) {
-                return `skip: LD-Signature user(${authUser.user.uri}) !== activity.actor(${activity.actor})`;
-            }
-
-            // ブロックしてたら中断
-            const ldHost = extractDbHost(authUser.user.uri);
-            if (meta.blockedHosts.some(x => ldHost.endsWith(x))) {
-                return `Blocked request: ${ldHost}`;
-            }
-        } else {
-            return `skip: http-signature verification failed and ${config.ignoreApForwarded ? "ignoreApForwarded" : "no LD-Signature"}. keyId=${signature.keyId}`;
-        }
+        return `skip: http-signature verification failed. keyId=${signature.keyId}`;
     }
 
     // activity.idがあればホストが署名者のホストであることを確認する

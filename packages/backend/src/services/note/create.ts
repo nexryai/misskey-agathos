@@ -33,7 +33,6 @@ import { UserProfile } from "@/models/entities/user-profile.js";
 import { db } from "@/db/postgre.js";
 import { getActiveWebhooks } from "@/misc/webhook-cache.js";
 import { updateHashtags } from "../update-hashtag.js";
-import { deliverToRelays } from "../relay.js";
 import { addNoteToAntenna } from "../add-note-to-antenna.js";
 import { createNotification } from "../create-notification.js";
 
@@ -419,7 +418,6 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
                 }
 
                 const dm = new DeliverManager(user, noteActivity);
-                const retryable = false;
 
                 // メンションされたリモートユーザーに配送
                 for (const u of mentionedUsers.filter(u => Users.isRemoteUser(u))) {
@@ -441,10 +439,6 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
                 // フォロワーに配送
                 if (["public", "home", "followers"].includes(note.visibility)) {
                     dm.addFollowersRecipe();
-                }
-
-                if (["public"].includes(note.visibility)) {
-                    deliverToRelays(user, noteActivity, retryable);
                 }
 
                 dm.execute();

@@ -41,9 +41,6 @@ import * as ep___admin_queue_promote from "./endpoints/admin/queue/promote.js";
 import * as ep___admin_queue_deliverDelayed from "./endpoints/admin/queue/deliver-delayed.js";
 import * as ep___admin_queue_inboxDelayed from "./endpoints/admin/queue/inbox-delayed.js";
 import * as ep___admin_queue_stats from "./endpoints/admin/queue/stats.js";
-import * as ep___admin_relays_add from "./endpoints/admin/relays/add.js";
-import * as ep___admin_relays_list from "./endpoints/admin/relays/list.js";
-import * as ep___admin_relays_remove from "./endpoints/admin/relays/remove.js";
 import * as ep___admin_reset2fa from "./endpoints/admin/reset-2fa.js";
 import * as ep___admin_resetPassword from "./endpoints/admin/reset-password.js";
 import * as ep___admin_resolveAbuseUserReport from "./endpoints/admin/resolve-abuse-user-report.js";
@@ -290,9 +287,6 @@ const eps = [
     ["admin/queue/deliver-delayed", ep___admin_queue_deliverDelayed],
     ["admin/queue/inbox-delayed", ep___admin_queue_inboxDelayed],
     ["admin/queue/stats", ep___admin_queue_stats],
-    ["admin/relays/add", ep___admin_relays_add],
-    ["admin/relays/list", ep___admin_relays_list],
-    ["admin/relays/remove", ep___admin_relays_remove],
     ["admin/reset-2fa", ep___admin_reset2fa],
     ["admin/reset-password", ep___admin_resetPassword],
     ["admin/resolve-abuse-user-report", ep___admin_resolveAbuseUserReport],

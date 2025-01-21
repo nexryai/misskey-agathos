@@ -1,6 +1,5 @@
 import { CacheableRemoteUser } from "@/models/entities/user.js";
 import accept from "@/services/following/requests/accept.js";
-import { relayAccepted } from "@/services/relay.js";
 import { IFollow } from "../../type.js";
 import DbResolver from "../../db-resolver.js";
 
@@ -16,12 +15,6 @@ export default async (actor: CacheableRemoteUser, activity: IFollow): Promise<st
 
     if (follower.host != null) {
         return "skip: follower is not a local user";
-    }
-
-    // relay
-    const match = activity.id?.match(/follow-relay\/(\w+)/);
-    if (match) {
-        return await relayAccepted(match[1]);
     }
 
     await accept(actor, follower);

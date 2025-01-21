@@ -4,7 +4,6 @@ import { Users } from "@/models/index.js";
 import { User } from "@/models/entities/user.js";
 import { renderPerson } from "@/remote/activitypub/renderer/person.js";
 import { deliverToFollowers } from "@/remote/activitypub/deliver-manager.js";
-import { deliverToRelays } from "../relay.js";
 
 export async function publishToFollowers(userId: User["id"]) {
     const user = await Users.findOneBy({ id: userId });
@@ -13,8 +12,6 @@ export async function publishToFollowers(userId: User["id"]) {
     // フォロワーがリモートユーザーかつ投稿者がローカルユーザーならUpdateを配信
     if (Users.isLocalUser(user)) {
         const content = renderActivity(renderUpdate(await renderPerson(user), user));
-        const retryable = true;
         deliverToFollowers(user, content);
-        deliverToRelays(user, content, retryable);
     }
 }
