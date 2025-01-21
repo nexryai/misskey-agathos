@@ -94,8 +94,7 @@ let stats = ref({
 let tab = ref(props.initialTab);
 let onlineUsersCount = ref();
 
-const initStats = () => os.api("stats", {
-}).then((res) => {
+const initStats = () => os.api("stats", {}).then((res) => {
     stats.value = res as {
         originalUsersCount: number;
         originalNotesCount: number;
