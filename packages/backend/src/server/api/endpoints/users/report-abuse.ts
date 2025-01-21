@@ -41,7 +41,6 @@ export const paramDef = {
     required: ["userId", "comment"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     // Lookup user
     const user = await getUser(ps.userId).catch(e => {

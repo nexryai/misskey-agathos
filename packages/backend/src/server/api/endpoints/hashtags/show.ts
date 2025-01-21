@@ -31,7 +31,6 @@ export const paramDef = {
     required: ["tag"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const hashtag = await Hashtags.findOneBy({ name: normalizeForSearch(ps.tag) });
     if (hashtag == null) {

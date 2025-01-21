@@ -40,7 +40,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
     const redisServerInfo = await redisClient.info("Server");
     const m = redisServerInfo.match(new RegExp("^redis_version:(.*)", "m"));

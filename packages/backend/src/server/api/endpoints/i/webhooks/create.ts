@@ -25,7 +25,6 @@ export const paramDef = {
     required: ["name", "url", "on"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const webhook = await Webhooks.insert({
         id: genId(),

@@ -15,7 +15,6 @@ export const paramDef = {
     required: ["endpoint"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     const ep = endpoints.find(x => x.name === ps.endpoint);
     if (ep == null) return null;

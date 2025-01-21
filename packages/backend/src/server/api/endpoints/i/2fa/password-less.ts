@@ -15,7 +15,6 @@ export const paramDef = {
     required: ["value"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     await UserProfiles.update(user.id, {
         usePasswordLessLogin: ps.value,

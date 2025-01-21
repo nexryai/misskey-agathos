@@ -27,7 +27,6 @@ const commonReadableHandlerGenerator = (ctx: Koa.Context) => (e: Error): void =>
     ctx.set("Cache-Control", "max-age=300");
 };
 
-// eslint-disable-next-line import/no-default-export
 export default async function(ctx: Koa.Context) {
     const key = ctx.params.key;
 

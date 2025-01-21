@@ -28,7 +28,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const max = 30;
     const day = 1000 * 60 * 60 * 24 * 3; // 3日前まで

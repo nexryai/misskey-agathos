@@ -48,7 +48,6 @@ export const paramDef = {
     required: ["fileId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const file = await DriveFiles.findOneBy({ id: ps.fileId });
 

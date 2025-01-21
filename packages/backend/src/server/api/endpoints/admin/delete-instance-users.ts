@@ -18,7 +18,6 @@ export const paramDef = {
     required: ["host"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const instance = await Instances.findOneBy({ host: toPuny(ps.host) });
 

@@ -46,7 +46,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const followees = await Followings.createQueryBuilder("following")
         .select("following.followeeId")

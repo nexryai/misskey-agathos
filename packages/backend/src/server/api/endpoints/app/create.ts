@@ -29,7 +29,6 @@ export const paramDef = {
     required: ["name", "description", "permission"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     // Generate secret
     const secret = secureRndstr(32, true);

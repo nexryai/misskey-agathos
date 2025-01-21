@@ -29,6 +29,9 @@ export default ts.config(
             "@typescript-eslint/no-explicit-any": "off",
             // あまりにも現状のコードが汚すぎて修正しきれない
             "@typescript-eslint/no-unused-vars": "warn",
+            "@typescript-eslint/no-unsafe-function-types": "off",
+            "no-useless-escape": "off",
+            "no-case-declarations": "off",
             "indent": ["error", 4],
             "quotes": ["error", "double"],
             "semi": ["error", "always"],

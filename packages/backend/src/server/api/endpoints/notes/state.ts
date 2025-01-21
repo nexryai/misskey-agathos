@@ -34,7 +34,6 @@ export const paramDef = {
     required: ["noteId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const note = await Notes.findOneByOrFail({ id: ps.noteId });
 

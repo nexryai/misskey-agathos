@@ -119,7 +119,6 @@ export const paramDef = {
     required: ["userId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const ids = Array.isArray(ps.userId) ? ps.userId : [ps.userId];
 

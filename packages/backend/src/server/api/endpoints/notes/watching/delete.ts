@@ -27,7 +27,6 @@ export const paramDef = {
     required: ["noteId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const note = await getNote(ps.noteId).catch(e => {
         if (e.id === "9725d0ce-ba28-4dde-95a7-2cbb2c15de24") throw new ApiError(meta.errors.noSuchNote);

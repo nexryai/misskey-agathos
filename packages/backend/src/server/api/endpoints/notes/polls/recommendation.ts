@@ -27,7 +27,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = Polls.createQueryBuilder("poll")
         .where("poll.userHost IS NULL")

@@ -28,7 +28,6 @@ export const paramDef = {
     required: ["username", "password"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, _me, token) => {
     const me = _me ? await Users.findOneByOrFail({ id: _me.id }) : null;
     const noUsers = (await Users.countBy({

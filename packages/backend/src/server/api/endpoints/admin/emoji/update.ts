@@ -41,7 +41,6 @@ export const paramDef = {
     required: ["id", "name", "aliases"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     const emoji = await Emojis.findOneBy({ id: ps.id });
 

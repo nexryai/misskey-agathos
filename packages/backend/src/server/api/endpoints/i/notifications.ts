@@ -48,7 +48,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     // includeTypes が空の場合はクエリしない
     if (ps.includeTypes && ps.includeTypes.length === 0) {

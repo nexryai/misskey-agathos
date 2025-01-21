@@ -105,7 +105,6 @@ export const paramDef = {
     },
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, _user, token) => {
     const user = await Users.findOneByOrFail({ id: _user.id });
     const isSecure = token == null;

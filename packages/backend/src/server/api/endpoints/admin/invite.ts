@@ -30,7 +30,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
     const code = rndstr({
         length: 8,

@@ -29,7 +29,6 @@ export const paramDef = {
     required: ["name"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const folders = await DriveFolders.findBy({
         name: ps.name,

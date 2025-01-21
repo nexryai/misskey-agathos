@@ -26,7 +26,6 @@ export const paramDef = {
     required: ["clipId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const clip = await Clips.findOneBy({
         id: ps.clipId,

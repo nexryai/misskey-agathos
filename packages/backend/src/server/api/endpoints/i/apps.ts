@@ -15,7 +15,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = AccessTokens.createQueryBuilder("token")
         .where("token.userId = :userId", { userId: user.id });

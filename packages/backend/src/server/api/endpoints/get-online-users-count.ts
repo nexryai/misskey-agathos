@@ -15,7 +15,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
     const count = await Users.countBy({
         lastActiveDate: MoreThan(new Date(Date.now() - USER_ONLINE_THRESHOLD)),

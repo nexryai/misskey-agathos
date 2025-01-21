@@ -54,7 +54,6 @@ export const paramDef = {
     required: ["appSecret", "token"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     // Lookup app
     const app = await Apps.findOneBy({

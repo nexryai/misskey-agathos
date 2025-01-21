@@ -37,7 +37,6 @@ export const paramDef = {
     required: ["endpoint", "auth", "publickey"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     // if already subscribed
     const exist = await SwSubscriptions.findOneBy({

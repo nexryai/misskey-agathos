@@ -66,7 +66,6 @@ export const paramDef = {
     required: ["name", "src", "keywords", "excludeKeywords", "users", "caseSensitive", "withReplies", "withFile", "notify"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const currentAntennasCount = await Antennas.countBy({
         userId: user.id,

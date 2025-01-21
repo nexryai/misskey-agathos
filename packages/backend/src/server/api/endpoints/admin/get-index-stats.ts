@@ -14,7 +14,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async () => {
     const stats = await db.query("SELECT * FROM pg_indexes;").then(recs => {
         const res = [] as { tablename: string; indexname: string; }[];

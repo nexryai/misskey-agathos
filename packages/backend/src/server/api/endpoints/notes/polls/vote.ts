@@ -67,7 +67,6 @@ export const paramDef = {
     required: ["noteId", "choice"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const createdAt = new Date();
 

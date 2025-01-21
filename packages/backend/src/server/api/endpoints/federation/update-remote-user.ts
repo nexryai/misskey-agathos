@@ -16,7 +16,6 @@ export const paramDef = {
     required: ["userId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     const user = await getRemoteUser(ps.userId);
     await updatePerson(user.uri!);

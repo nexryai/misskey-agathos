@@ -27,7 +27,6 @@ export const paramDef = {
     required: ["key"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = RegistryItems.createQueryBuilder("item")
         .where("item.domain IS NULL")

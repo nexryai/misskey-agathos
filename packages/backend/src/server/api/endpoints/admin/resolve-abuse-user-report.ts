@@ -21,7 +21,6 @@ export const paramDef = {
     required: ["reportId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const report = await AbuseUserReports.findOneByOrFail({ id: ps.reportId });
 

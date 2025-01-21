@@ -23,7 +23,6 @@ export const paramDef = {
     required: ["url", "memo", "place", "priority", "ratio", "expiresAt", "imageUrl"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     await Ads.insert({
         id: genId(),

@@ -30,7 +30,6 @@ export const paramDef = {
     required: [],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const query = makePaginationQuery(RenoteMutings.createQueryBuilder("muting"), ps.sinceId, ps.untilId)
         .andWhere("muting.muterId = :meId", { meId: me.id });

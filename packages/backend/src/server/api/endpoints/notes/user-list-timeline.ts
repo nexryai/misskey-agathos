@@ -53,7 +53,6 @@ export const paramDef = {
     required: ["listId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const list = await UserLists.findOneBy({
         id: ps.listId,

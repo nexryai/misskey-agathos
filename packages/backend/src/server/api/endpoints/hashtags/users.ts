@@ -30,7 +30,6 @@ export const paramDef = {
     required: ["tag", "sort"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const query = Users.createQueryBuilder("user")
         .where(":tag = ANY(user.tags)", { tag: normalizeForSearch(ps.tag) });

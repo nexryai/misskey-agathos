@@ -17,7 +17,6 @@ export const paramDef = {
     required: ["token"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const token = ps.token.replace(/\s/g, "");
 

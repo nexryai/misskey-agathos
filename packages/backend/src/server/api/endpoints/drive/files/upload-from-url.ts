@@ -33,7 +33,6 @@ export const paramDef = {
     required: ["url"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user, _1, _2, _3, ip, headers) => {
     uploadFromUrl({ url: ps.url, user, folderId: ps.folderId, sensitive: ps.isSensitive, force: ps.force, comment: ps.comment, requestIp: ip, requestHeaders: headers }).then(file => {
         DriveFiles.pack(file, { self: true }).then(packedFile => {

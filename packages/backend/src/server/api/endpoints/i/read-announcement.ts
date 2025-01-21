@@ -28,7 +28,6 @@ export const paramDef = {
     required: ["announcementId"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     // Check if announcement exists
     const announcement = await Announcements.findOneBy({ id: ps.announcementId });

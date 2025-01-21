@@ -54,7 +54,6 @@ export const paramDef = {
     required: ["title", "text", "imageUrl"],
 } as const;
 
-// eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     const announcement = await Announcements.insert({
         id: genId(),
