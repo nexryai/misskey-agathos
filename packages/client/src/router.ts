@@ -276,10 +276,6 @@ export const routes = [{
         name: "security",
         component: iAmAdmin ? page(() => import("./pages/admin/security.vue")) : page(() => import("./pages/not-found.vue")),
     }, {
-        path: "/relays",
-        name: "relays",
-        component: page(() => import("./pages/admin/relays.vue")),
-    }, {
         path: "/instance-block",
         name: "instance-block",
         component: iAmAdmin ? page(() => import("./pages/admin/instance-block.vue")) : page(() => import("./pages/not-found.vue")),

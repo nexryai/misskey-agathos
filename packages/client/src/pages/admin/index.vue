@@ -147,12 +147,7 @@ const menuDef = computed(() => [{
         text: i18n.ts.security,
         to: "/admin/security",
         active: currentPage.value?.route.name === "security",
-    }] : []), {
-        icon: "ti ti-planet",
-        text: i18n.ts.relays,
-        to: "/admin/relays",
-        active: currentPage.value?.route.name === "relays",
-    }, ...(iAmAdmin ? [{
+    }] : []), ...(iAmAdmin ? [{
         icon: "ti ti-ban",
         text: i18n.ts.instanceBlocking,
         to: "/admin/instance-block",
