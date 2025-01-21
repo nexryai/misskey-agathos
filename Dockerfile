@@ -7,7 +7,7 @@ RUN apk add --no-cache git alpine-sdk
 RUN git clone https://github.com/nexryai/npmrun.git .
 RUN cargo build --release
 
-FROM node:22-alpine3.20 AS builder
+FROM node:22-alpine3.21 AS builder
 
 WORKDIR /misskey
 
@@ -17,7 +17,7 @@ RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang
 RUN yarn install
 RUN yarn build
 
-FROM node:22-alpine3.20 AS deps_installer
+FROM node:22-alpine3.21 AS deps_installer
 
 WORKDIR /misskey
 
@@ -26,7 +26,7 @@ COPY . ./
 RUN apk add --no-cache ca-certificates git alpine-sdk g++ build-base cmake clang libressl-dev vips-dev python3
 RUN cd packages/backend && yarn install --production
 
-FROM node:22-alpine3.20 AS runner
+FROM node:22-alpine3.21 AS runner
 
 ARG UID="991"
 ARG GID="991"
