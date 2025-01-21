@@ -36,7 +36,6 @@ import * as ep___admin_getUserIps from "./endpoints/admin/get-user-ips.js";
 import * as ep___admin_invite from "./endpoints/admin/invite.js";
 import * as ep___admin_moderators_add from "./endpoints/admin/moderators/add.js";
 import * as ep___admin_moderators_remove from "./endpoints/admin/moderators/remove.js";
-import * as ep___admin_promo_create from "./endpoints/admin/promo/create.js";
 import * as ep___admin_queue_clear from "./endpoints/admin/queue/clear.js";
 import * as ep___admin_queue_promote from "./endpoints/admin/queue/promote.js";
 import * as ep___admin_queue_deliverDelayed from "./endpoints/admin/queue/deliver-delayed.js";
@@ -218,7 +217,6 @@ import * as ep___notifications_markAllAsRead from "./endpoints/notifications/mar
 import * as ep___notifications_read from "./endpoints/notifications/read.js";
 import * as ep___ping from "./endpoints/ping.js";
 import * as ep___pinnedUsers from "./endpoints/pinned-users.js";
-import * as ep___promo_read from "./endpoints/promo/read.js";
 import * as ep___resetDb from "./endpoints/reset-db.js";
 import * as ep___serverInfo from "./endpoints/server-info.js";
 import * as ep___stats from "./endpoints/stats.js";
@@ -287,7 +285,6 @@ const eps = [
     ["admin/invite", ep___admin_invite],
     ["admin/moderators/add", ep___admin_moderators_add],
     ["admin/moderators/remove", ep___admin_moderators_remove],
-    ["admin/promo/create", ep___admin_promo_create],
     ["admin/queue/clear", ep___admin_queue_clear],
     ["admin/queue/promote", ep___admin_queue_promote],
     ["admin/queue/deliver-delayed", ep___admin_queue_deliverDelayed],
@@ -469,7 +466,6 @@ const eps = [
     ["notifications/read", ep___notifications_read],
     ["ping", ep___ping],
     ["pinned-users", ep___pinnedUsers],
-    ["promo/read", ep___promo_read],
     ["reset-db", ep___resetDb],
     ["server-info", ep___serverInfo],
     ["stats", ep___stats],
