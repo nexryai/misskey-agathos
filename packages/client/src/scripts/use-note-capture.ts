@@ -19,77 +19,77 @@ export function useNoteCapture(props: {
         if ((id !== note.value.id) && (id !== pureNote.value.id)) return;
 
         switch (type) {
-            case "reacted": {
-                const reaction = body.reaction;
+        case "reacted": {
+            const reaction = body.reaction;
 
-                if (body.emoji) {
-                    const emojis = note.value.emojis || [];
-                    if (!emojis.includes(body.emoji)) {
-                        note.value.emojis = [...emojis, body.emoji];
-                    }
+            if (body.emoji) {
+                const emojis = note.value.emojis || [];
+                if (!emojis.includes(body.emoji)) {
+                    note.value.emojis = [...emojis, body.emoji];
                 }
-
-                // TODO: reactionsプロパティがない場合ってあったっけ？ なければ || {} は消せる
-                const currentCount = (note.value.reactions || {})[reaction] || 0;
-
-                note.value.reactions[reaction] = currentCount + 1;
-
-                if ($i && (body.userId === $i.id)) {
-                    note.value.myReaction = reaction;
-                }
-                break;
             }
 
-            case "unreacted": {
-                const reaction = body.reaction;
+            // TODO: reactionsプロパティがない場合ってあったっけ？ なければ || {} は消せる
+            const currentCount = (note.value.reactions || {})[reaction] || 0;
 
-                // TODO: reactionsプロパティがない場合ってあったっけ？ なければ || {} は消せる
-                const currentCount = (note.value.reactions || {})[reaction] || 0;
+            note.value.reactions[reaction] = currentCount + 1;
 
-                note.value.reactions[reaction] = Math.max(0, currentCount - 1);
-
-                if ($i && (body.userId === $i.id)) {
-                    note.value.myReaction = null;
-                }
-                break;
+            if ($i && (body.userId === $i.id)) {
+                note.value.myReaction = reaction;
             }
+            break;
+        }
 
-            case "pollVoted": {
-                const choice = body.choice;
+        case "unreacted": {
+            const reaction = body.reaction;
 
-                const choices = [...note.value.poll.choices];
-                choices[choice] = {
-                    ...choices[choice],
-                    votes: choices[choice].votes + 1,
-                    ...($i && (body.userId === $i.id) ? {
-                        isVoted: true,
-                    } : {}),
-                };
+            // TODO: reactionsプロパティがない場合ってあったっけ？ なければ || {} は消せる
+            const currentCount = (note.value.reactions || {})[reaction] || 0;
 
-                note.value.poll.choices = choices;
-                break;
+            note.value.reactions[reaction] = Math.max(0, currentCount - 1);
+
+            if ($i && (body.userId === $i.id)) {
+                note.value.myReaction = null;
             }
+            break;
+        }
 
-            case "deleted": {
-                if (pureNote.value.id !== note.value.id) {
-                    props.isDeletedRef.value = true;
-                    pureNote.value.text = null;
-                    pureNote.value.cw = null;
-                    pureNote.value.fileIds = [];
-                }
+        case "pollVoted": {
+            const choice = body.choice;
+
+            const choices = [...note.value.poll.choices];
+            choices[choice] = {
+                ...choices[choice],
+                votes: choices[choice].votes + 1,
+                ...($i && (body.userId === $i.id) ? {
+                    isVoted: true,
+                } : {}),
+            };
+
+            note.value.poll.choices = choices;
+            break;
+        }
+
+        case "deleted": {
+            if (pureNote.value.id !== note.value.id) {
                 props.isDeletedRef.value = true;
-                note.value.text = null;
-                note.value.cw = null;
-                note.value.fileIds = [];
-                break;
+                pureNote.value.text = null;
+                pureNote.value.cw = null;
+                pureNote.value.fileIds = [];
             }
+            props.isDeletedRef.value = true;
+            note.value.text = null;
+            note.value.cw = null;
+            note.value.fileIds = [];
+            break;
+        }
 
-            case "updated": {
-                note.value.updatedAt = body.updatedAt;
-                note.value.text = body.text;
-                note.value.cw = body.cw;
-                break;
-            }
+        case "updated": {
+            note.value.updatedAt = body.updatedAt;
+            note.value.text = body.text;
+            note.value.cw = body.cw;
+            break;
+        }
         }
     }
 

@@ -99,56 +99,56 @@ export default class Resolver {
         if (!parsed.local) throw new Error("resolveLocal: not local");
 
         switch (parsed.type) {
-            case "notes":
-                const note = await Notes.findOneByOrFail({ id: parsed.id });
-                if (parsed.rest === "activity") {
-                    // this refers to the create activity and not the note itself
-                    return renderActivity(renderCreate(renderNote(note), note));
-                } else {
-                    return renderNote(note);
-                }
-            case "users":
-                const user = await Users.findOneByOrFail({ id: parsed.id });
-                return await renderPerson(user as ILocalUser);
-            case "questions":
-                // Polls are indexed by the note they are attached to.
-                const [pollNote, poll] = await Promise.all([
-                    Notes.findOneByOrFail({ id: parsed.id }),
-                    Polls.findOneByOrFail({ noteId: parsed.id }),
-                ]);
-                return await renderQuestion({ id: pollNote.userId }, pollNote, poll);
-            case "likes":
-                const reaction = await NoteReactions.findOneByOrFail({ id: parsed.id });
-                return renderActivity(renderLike(reaction, { uri: null }));
-            case "follows":
-                // if rest is a <followee id>
-                if (parsed.rest != null && /^\w+$/.test(parsed.rest)) {
-                    const [follower, followee] = await Promise.all(
-                        [parsed.id, parsed.rest].map((id) => Users.findOneByOrFail({ id })));
-                    return renderActivity(renderFollow(follower, followee, url));
-                }
-
-                // Another situation is there is only requestId, then obtained object from database.
-                const followRequest = await FollowRequests.findOneBy({
-                    id: parsed.id,
-                });
-                if (followRequest == null) {
-                    throw new Error("resolveLocal: invalid follow URI");
-                }
-                const follower = await Users.findOneBy({
-                    id: followRequest.followerId,
-                    host: IsNull(),
-                });
-                const followee = await Users.findOneBy({
-                    id: followRequest.followeeId,
-                    host: Not(IsNull()),
-                });
-                if (follower == null || followee == null) {
-                    throw new Error("resolveLocal: invalid follow URI");
-                }
+        case "notes":
+            const note = await Notes.findOneByOrFail({ id: parsed.id });
+            if (parsed.rest === "activity") {
+                // this refers to the create activity and not the note itself
+                return renderActivity(renderCreate(renderNote(note), note));
+            } else {
+                return renderNote(note);
+            }
+        case "users":
+            const user = await Users.findOneByOrFail({ id: parsed.id });
+            return await renderPerson(user as ILocalUser);
+        case "questions":
+            // Polls are indexed by the note they are attached to.
+            const [pollNote, poll] = await Promise.all([
+                Notes.findOneByOrFail({ id: parsed.id }),
+                Polls.findOneByOrFail({ noteId: parsed.id }),
+            ]);
+            return await renderQuestion({ id: pollNote.userId }, pollNote, poll);
+        case "likes":
+            const reaction = await NoteReactions.findOneByOrFail({ id: parsed.id });
+            return renderActivity(renderLike(reaction, { uri: null }));
+        case "follows":
+            // if rest is a <followee id>
+            if (parsed.rest != null && /^\w+$/.test(parsed.rest)) {
+                const [follower, followee] = await Promise.all(
+                    [parsed.id, parsed.rest].map((id) => Users.findOneByOrFail({ id })));
                 return renderActivity(renderFollow(follower, followee, url));
-            default:
-                throw new Error(`resolveLocal: type ${parsed.type} unhandled`);
+            }
+
+            // Another situation is there is only requestId, then obtained object from database.
+            const followRequest = await FollowRequests.findOneBy({
+                id: parsed.id,
+            });
+            if (followRequest == null) {
+                throw new Error("resolveLocal: invalid follow URI");
+            }
+            const follower = await Users.findOneBy({
+                id: followRequest.followerId,
+                host: IsNull(),
+            });
+            const followee = await Users.findOneBy({
+                id: followRequest.followeeId,
+                host: Not(IsNull()),
+            });
+            if (follower == null || followee == null) {
+                throw new Error("resolveLocal: invalid follow URI");
+            }
+            return renderActivity(renderFollow(follower, followee, url));
+        default:
+            throw new Error(`resolveLocal: type ${parsed.type} unhandled`);
         }
     }
 }

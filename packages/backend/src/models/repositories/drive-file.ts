@@ -62,44 +62,44 @@ export const DriveFileRepository = db.getRepository(DriveFile).extend({
         const id = typeof user === "object" ? user.id : user;
 
         const { sum } = await this
-			.createQueryBuilder("file")
-			.where("file.userId = :id", { id: id })
-			.andWhere("file.isLink = FALSE")
-			.select("SUM(file.size)", "sum")
-			.getRawOne();
+            .createQueryBuilder("file")
+            .where("file.userId = :id", { id: id })
+            .andWhere("file.isLink = FALSE")
+            .select("SUM(file.size)", "sum")
+            .getRawOne();
 
         return parseInt(sum, 10) || 0;
     },
 
     async calcDriveUsageOfHost(host: string): Promise<number> {
         const { sum } = await this
-			.createQueryBuilder("file")
-			.where("file.userHost = :host", { host: toPuny(host) })
-			.andWhere("file.isLink = FALSE")
-			.select("SUM(file.size)", "sum")
-			.getRawOne();
+            .createQueryBuilder("file")
+            .where("file.userHost = :host", { host: toPuny(host) })
+            .andWhere("file.isLink = FALSE")
+            .select("SUM(file.size)", "sum")
+            .getRawOne();
 
         return parseInt(sum, 10) || 0;
     },
 
     async calcDriveUsageOfLocal(): Promise<number> {
         const { sum } = await this
-			.createQueryBuilder("file")
-			.where("file.userHost IS NULL")
-			.andWhere("file.isLink = FALSE")
-			.select("SUM(file.size)", "sum")
-			.getRawOne();
+            .createQueryBuilder("file")
+            .where("file.userHost IS NULL")
+            .andWhere("file.isLink = FALSE")
+            .select("SUM(file.size)", "sum")
+            .getRawOne();
 
         return parseInt(sum, 10) || 0;
     },
 
     async calcDriveUsageOfRemote(): Promise<number> {
         const { sum } = await this
-			.createQueryBuilder("file")
-			.where("file.userHost IS NOT NULL")
-			.andWhere("file.isLink = FALSE")
-			.select("SUM(file.size)", "sum")
-			.getRawOne();
+            .createQueryBuilder("file")
+            .where("file.userHost IS NOT NULL")
+            .andWhere("file.isLink = FALSE")
+            .select("SUM(file.size)", "sum")
+            .getRawOne();
 
         return parseInt(sum, 10) || 0;
     },

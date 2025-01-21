@@ -44,20 +44,20 @@ export default define(meta, paramDef, async (ps, me) => {
     query.andWhere("user.isDeleted = FALSE");
 
     switch (ps.state) {
-        case "available": query.andWhere("user.isSuspended = FALSE"); break;
-        case "admin": query.andWhere("user.isAdmin = TRUE"); break;
-        case "moderator": query.andWhere("user.isModerator = TRUE"); break;
-        case "adminOrModerator": query.andWhere("user.isAdmin = TRUE OR user.isModerator = TRUE"); break;
-        case "alive": query.andWhere("user.updatedAt > :date", { date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5) }); break;
-        case "silenced": query.andWhere("user.isSilenced = TRUE"); break;
-        case "suspended": query.andWhere("user.isSuspended = TRUE"); break;
-        case "bot": query.andWhere("user.isBot = TRUE"); break;
-        case "deleted": query.where("user.isDeleted = TRUE"); break;
+    case "available": query.andWhere("user.isSuspended = FALSE"); break;
+    case "admin": query.andWhere("user.isAdmin = TRUE"); break;
+    case "moderator": query.andWhere("user.isModerator = TRUE"); break;
+    case "adminOrModerator": query.andWhere("user.isAdmin = TRUE OR user.isModerator = TRUE"); break;
+    case "alive": query.andWhere("user.updatedAt > :date", { date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5) }); break;
+    case "silenced": query.andWhere("user.isSilenced = TRUE"); break;
+    case "suspended": query.andWhere("user.isSuspended = TRUE"); break;
+    case "bot": query.andWhere("user.isBot = TRUE"); break;
+    case "deleted": query.where("user.isDeleted = TRUE"); break;
     }
 
     switch (ps.origin) {
-        case "local": query.andWhere("user.host IS NULL"); break;
-        case "remote": query.andWhere("user.host IS NOT NULL"); break;
+    case "local": query.andWhere("user.host IS NULL"); break;
+    case "remote": query.andWhere("user.host IS NOT NULL"); break;
     }
 
     if (ps.username) {
@@ -69,13 +69,13 @@ export default define(meta, paramDef, async (ps, me) => {
     }
 
     switch (ps.sort) {
-        case "+follower": query.orderBy("user.followersCount", "DESC"); break;
-        case "-follower": query.orderBy("user.followersCount", "ASC"); break;
-        case "+createdAt": query.orderBy("user.createdAt", "DESC"); break;
-        case "-createdAt": query.orderBy("user.createdAt", "ASC"); break;
-        case "+updatedAt": query.orderBy("user.updatedAt", "DESC", "NULLS LAST"); break;
-        case "-updatedAt": query.orderBy("user.updatedAt", "ASC", "NULLS FIRST"); break;
-        default: query.orderBy("user.id", "ASC"); break;
+    case "+follower": query.orderBy("user.followersCount", "DESC"); break;
+    case "-follower": query.orderBy("user.followersCount", "ASC"); break;
+    case "+createdAt": query.orderBy("user.createdAt", "DESC"); break;
+    case "-createdAt": query.orderBy("user.createdAt", "ASC"); break;
+    case "+updatedAt": query.orderBy("user.updatedAt", "DESC", "NULLS LAST"); break;
+    case "-updatedAt": query.orderBy("user.updatedAt", "ASC", "NULLS FIRST"); break;
+    default: query.orderBy("user.id", "ASC"); break;
     }
 
     query.take(ps.limit);

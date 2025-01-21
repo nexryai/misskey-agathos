@@ -51,12 +51,12 @@ export default async (ctx: Router.RouterContext) => {
 
     if (page) {
         const query = makePaginationQuery(Notes.createQueryBuilder("note"), sinceId, untilId)
-			.andWhere("note.userId = :userId", { userId: user.id })
-			.andWhere(new Brackets(qb => { qb
-				.where("note.visibility = 'public'")
-				.orWhere("note.visibility = 'home'");
-			}))
-			.andWhere("note.localOnly = FALSE");
+            .andWhere("note.userId = :userId", { userId: user.id })
+            .andWhere(new Brackets(qb => { qb
+                .where("note.visibility = 'public'")
+                .orWhere("note.visibility = 'home'");
+            }))
+            .andWhere("note.localOnly = FALSE");
 
         const notes = await query.take(limit).getMany();
 

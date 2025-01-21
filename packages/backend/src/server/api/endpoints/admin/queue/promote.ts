@@ -24,12 +24,12 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     switch (ps.type) {
-        case "deliver":
-            await promoteAllDeliverJobs();
-            break;
-        case "inbox":
-            await promoteAllInboxJobs();
-            break;
+    case "deliver":
+        await promoteAllDeliverJobs();
+        break;
+    case "inbox":
+        await promoteAllInboxJobs();
+        break;
     }
 
     insertModerationLog(me, "promoteQueue");

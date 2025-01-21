@@ -30,41 +30,41 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = Polls.createQueryBuilder("poll")
-		.where("poll.userHost IS NULL")
-		.andWhere("poll.userId != :meId", { meId: user.id })
-		.andWhere("poll.noteVisibility = 'public'")
-		.andWhere(new Brackets(qb => { qb
-			.where("poll.expiresAt IS NULL")
-			.orWhere("poll.expiresAt > :now", { now: new Date() });
-		}));
+        .where("poll.userHost IS NULL")
+        .andWhere("poll.userId != :meId", { meId: user.id })
+        .andWhere("poll.noteVisibility = 'public'")
+        .andWhere(new Brackets(qb => { qb
+            .where("poll.expiresAt IS NULL")
+            .orWhere("poll.expiresAt > :now", { now: new Date() });
+        }));
 
     //#region exclude arleady voted polls
     const votedQuery = PollVotes.createQueryBuilder("vote")
-		.select("vote.noteId")
-		.where("vote.userId = :meId", { meId: user.id });
+        .select("vote.noteId")
+        .where("vote.userId = :meId", { meId: user.id });
 
     query
-		.andWhere(`poll.noteId NOT IN (${ votedQuery.getQuery() })`);
+        .andWhere(`poll.noteId NOT IN (${ votedQuery.getQuery() })`);
 
     query.setParameters(votedQuery.getParameters());
     //#endregion
 
     //#region mute
     const mutingQuery = Mutings.createQueryBuilder("muting")
-		.select("muting.muteeId")
-		.where("muting.muterId = :muterId", { muterId: user.id });
+        .select("muting.muteeId")
+        .where("muting.muterId = :muterId", { muterId: user.id });
 
     query
-		.andWhere(`poll.userId NOT IN (${ mutingQuery.getQuery() })`);
+        .andWhere(`poll.userId NOT IN (${ mutingQuery.getQuery() })`);
 
     query.setParameters(mutingQuery.getParameters());
     //#endregion
 
     const polls = await query
-		.orderBy("poll.noteId", "DESC")
-		.take(ps.limit)
-		.skip(ps.offset)
-		.getMany();
+        .orderBy("poll.noteId", "DESC")
+        .take(ps.limit)
+        .skip(ps.offset)
+        .getMany();
 
     if (polls.length === 0) return [];
 

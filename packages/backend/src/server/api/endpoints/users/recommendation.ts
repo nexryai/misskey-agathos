@@ -36,26 +36,26 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const query = Users.createQueryBuilder("user")
-		.where("user.isLocked = FALSE")
-		.andWhere("user.isExplorable = TRUE")
-		.andWhere("user.isSilenced = FALSE")
-		.andWhere("user.isSuspended = FALSE")
-		.andWhere("user.isDeleted = FALSE")
-		.andWhere("user.host IS NULL")
-		.andWhere("user.updatedAt >= :date", { date: new Date(Date.now() - ms("7days")) })
-		.andWhere("user.id != :meId", { meId: me.id })
-		.orderBy("user.followersCount", "DESC");
+        .where("user.isLocked = FALSE")
+        .andWhere("user.isExplorable = TRUE")
+        .andWhere("user.isSilenced = FALSE")
+        .andWhere("user.isSuspended = FALSE")
+        .andWhere("user.isDeleted = FALSE")
+        .andWhere("user.host IS NULL")
+        .andWhere("user.updatedAt >= :date", { date: new Date(Date.now() - ms("7days")) })
+        .andWhere("user.id != :meId", { meId: me.id })
+        .orderBy("user.followersCount", "DESC");
 
     generateMutedUserQueryForUsers(query, me);
     generateBlockQueryForUsers(query, me);
     generateBlockedUserQuery(query, me);
 
     const followingQuery = Followings.createQueryBuilder("following")
-		.select("following.followeeId")
-		.where("following.followerId = :followerId", { followerId: me.id });
+        .select("following.followeeId")
+        .where("following.followerId = :followerId", { followerId: me.id });
 
     query
-		.andWhere(`user.id NOT IN (${ followingQuery.getQuery() })`);
+        .andWhere(`user.id NOT IN (${ followingQuery.getQuery() })`);
 
     query.setParameters(followingQuery.getParameters());
 

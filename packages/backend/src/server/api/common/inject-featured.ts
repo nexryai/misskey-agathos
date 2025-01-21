@@ -19,12 +19,12 @@ export async function injectFeatured(timeline: Note[], user?: User | null) {
     const day = 1000 * 60 * 60 * 24 * 3; // 3日前まで
 
     const query = Notes.createQueryBuilder("note")
-		.addSelect("note.score")
-		.where("note.userHost IS NULL")
-		.andWhere("note.score > 0")
-		.andWhere("note.createdAt > :date", { date: new Date(Date.now() - day) })
-		.andWhere("note.visibility = 'public'")
-		.innerJoinAndSelect("note.user", "user");
+        .addSelect("note.score")
+        .where("note.userHost IS NULL")
+        .andWhere("note.score > 0")
+        .andWhere("note.createdAt > :date", { date: new Date(Date.now() - day) })
+        .andWhere("note.visibility = 'public'")
+        .innerJoinAndSelect("note.user", "user");
 
     if (user) {
         query.andWhere("note.userId != :userId", { userId: user.id });
@@ -33,16 +33,16 @@ export async function injectFeatured(timeline: Note[], user?: User | null) {
         generateBlockedUserQuery(query, user);
 
         const reactionQuery = NoteReactions.createQueryBuilder("reaction")
-			.select("reaction.noteId")
-			.where("reaction.userId = :userId", { userId: user.id });
+            .select("reaction.noteId")
+            .where("reaction.userId = :userId", { userId: user.id });
 
         query.andWhere(`note.id NOT IN (${ reactionQuery.getQuery() })`);
     }
 
     const notes = await query
-		.orderBy("note.score", "DESC")
-		.take(max)
-		.getMany();
+        .orderBy("note.score", "DESC")
+        .take(max)
+        .getMany();
 
     if (notes.length === 0) return;
 

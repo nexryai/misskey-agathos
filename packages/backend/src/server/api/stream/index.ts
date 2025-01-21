@@ -63,41 +63,41 @@ export default class Connection {
 
     private onUserEvent(data: StreamMessages["user"]["payload"]) { // { type, body }と展開するとそれぞれ型が分離してしまう
         switch (data.type) {
-            case "follow":
-                this.following.add(data.body.id);
-                break;
+        case "follow":
+            this.following.add(data.body.id);
+            break;
 
-            case "unfollow":
-                this.following.delete(data.body.id);
-                break;
+        case "unfollow":
+            this.following.delete(data.body.id);
+            break;
 
-            case "mute":
-                this.muting.add(data.body.id);
-                break;
+        case "mute":
+            this.muting.add(data.body.id);
+            break;
 
-            case "unmute":
-                this.muting.delete(data.body.id);
-                break;
+        case "unmute":
+            this.muting.delete(data.body.id);
+            break;
 
-            case "block":
-                this.blocking.add(data.body.id);
-                break;
+        case "block":
+            this.blocking.add(data.body.id);
+            break;
 
-            case "unblock":
-                this.blocking.delete(data.body.id);
-                break;
+        case "unblock":
+            this.blocking.delete(data.body.id);
+            break;
 
-            case "updateUserProfile":
-                this.userProfile = data.body;
-                break;
+        case "updateUserProfile":
+            this.userProfile = data.body;
+            break;
 
-            case "terminate":
-                this.wsConnection.close();
-                this.dispose();
-                break;
+        case "terminate":
+            this.wsConnection.close();
+            this.dispose();
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -119,21 +119,21 @@ export default class Connection {
         const { type, body } = obj;
 
         switch (type) {
-            case "readNotification": this.onReadNotification(body); break;
-            case "subNote": this.onSubscribeNote(body); break;
-            case "s": this.onSubscribeNote(body); break; // alias
-            case "sr": this.onSubscribeNote(body); this.readNote(body); break;
-            case "unsubNote": this.onUnsubscribeNote(body); break;
-            case "un": this.onUnsubscribeNote(body); break; // alias
-            case "connect": this.onChannelConnectRequested(body); break;
-            case "disconnect": this.onChannelDisconnectRequested(body); break;
-            case "channel": this.onChannelMessageRequested(body); break;
-            case "ch": this.onChannelMessageRequested(body); break; // alias
+        case "readNotification": this.onReadNotification(body); break;
+        case "subNote": this.onSubscribeNote(body); break;
+        case "s": this.onSubscribeNote(body); break; // alias
+        case "sr": this.onSubscribeNote(body); this.readNote(body); break;
+        case "unsubNote": this.onUnsubscribeNote(body); break;
+        case "un": this.onUnsubscribeNote(body); break; // alias
+        case "connect": this.onChannelConnectRequested(body); break;
+        case "disconnect": this.onChannelDisconnectRequested(body); break;
+        case "channel": this.onChannelMessageRequested(body); break;
+        case "ch": this.onChannelMessageRequested(body); break; // alias
 
-                // 個々のチャンネルではなくルートレベルでこれらのメッセージを受け取る理由は、
-                // クライアントの事情を考慮したとき、入力フォームはノートチャンネルやメッセージのメインコンポーネントとは別
-                // なこともあるため、それらのコンポーネントがそれぞれ各チャンネルに接続するようにするのは面倒なため。
-            case "typingOnMessaging": this.typingOnMessaging(body); break;
+            // 個々のチャンネルではなくルートレベルでこれらのメッセージを受け取る理由は、
+            // クライアントの事情を考慮したとき、入力フォームはノートチャンネルやメッセージのメインコンポーネントとは別
+            // なこともあるため、それらのコンポーネントがそれぞれ各チャンネルに接続するようにするのは面倒なため。
+        case "typingOnMessaging": this.typingOnMessaging(body); break;
         }
     }
 

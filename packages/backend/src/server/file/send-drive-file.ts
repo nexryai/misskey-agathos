@@ -33,10 +33,10 @@ export default async function(ctx: Koa.Context) {
 
     // Fetch drive file
     const file = await DriveFiles.createQueryBuilder("file")
-		.where("file.accessKey = :accessKey", { accessKey: key })
-		.orWhere("file.thumbnailAccessKey = :thumbnailAccessKey", { thumbnailAccessKey: key })
-		.orWhere("file.webpublicAccessKey = :webpublicAccessKey", { webpublicAccessKey: key })
-		.getOne();
+        .where("file.accessKey = :accessKey", { accessKey: key })
+        .orWhere("file.thumbnailAccessKey = :thumbnailAccessKey", { thumbnailAccessKey: key })
+        .orWhere("file.webpublicAccessKey = :webpublicAccessKey", { webpublicAccessKey: key })
+        .getOne();
 
     if (file == null) {
         ctx.status = 404;

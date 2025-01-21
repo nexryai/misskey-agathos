@@ -37,9 +37,9 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<"No
     }
 
     const keywords = antenna.keywords
-		// Clean up
-		.map(xs => xs.filter(x => x !== ""))
-		.filter(xs => xs.length > 0);
+    // Clean up
+        .map(xs => xs.filter(x => x !== ""))
+        .filter(xs => xs.length > 0);
 
     if (keywords.length > 0) {
         if (note.text == null) return false;
@@ -55,9 +55,9 @@ export async function checkHitAntenna(antenna: Antenna, note: (Note | Packed<"No
     }
 
     const excludeKeywords = antenna.excludeKeywords
-		// Clean up
-		.map(xs => xs.filter(x => x !== ""))
-		.filter(xs => xs.length > 0);
+    // Clean up
+        .map(xs => xs.filter(x => x !== ""))
+        .filter(xs => xs.length > 0);
 
     if (excludeKeywords.length > 0) {
         if (note.text == null) return false;

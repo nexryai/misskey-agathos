@@ -44,12 +44,12 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (isUsername) {
         const usernameQuery = Users.createQueryBuilder("user")
-			.where("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.query.replace("@", "").toLowerCase()) + "%" })
-			.andWhere(new Brackets(qb => { qb
-				.where("user.updatedAt IS NULL")
-				.orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
-			}))
-			.andWhere("user.isSuspended = FALSE");
+            .where("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.query.replace("@", "").toLowerCase()) + "%" })
+            .andWhere(new Brackets(qb => { qb
+                .where("user.updatedAt IS NULL")
+                .orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
+            }))
+            .andWhere("user.isSuspended = FALSE");
 
         if (ps.origin === "local") {
             usernameQuery.andWhere("user.host IS NULL");
@@ -58,25 +58,25 @@ export default define(meta, paramDef, async (ps, me) => {
         }
 
         users = await usernameQuery
-			.orderBy("user.updatedAt", "DESC", "NULLS LAST")
-			.take(ps.limit)
-			.skip(ps.offset)
-			.getMany();
+            .orderBy("user.updatedAt", "DESC", "NULLS LAST")
+            .take(ps.limit)
+            .skip(ps.offset)
+            .getMany();
     } else {
         const nameQuery = Users.createQueryBuilder("user")
-			.where(new Brackets(qb => { 
+            .where(new Brackets(qb => { 
 			    qb.where("user.name ILIKE :query", { query: "%" + sqlLikeEscape(ps.query) + "%" });
 
 			    // Also search username if it qualifies as username
 			    if (Users.validateLocalUsername(ps.query)) {
 			        qb.orWhere("user.usernameLower LIKE :username", { username: "%" + sqlLikeEscape(ps.query.toLowerCase()) + "%" });
 			    }
-			}))
-			.andWhere(new Brackets(qb => { qb
-				.where("user.updatedAt IS NULL")
-				.orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
-			}))
-			.andWhere("user.isSuspended = FALSE");
+            }))
+            .andWhere(new Brackets(qb => { qb
+                .where("user.updatedAt IS NULL")
+                .orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
+            }))
+            .andWhere("user.isSuspended = FALSE");
 
         if (ps.origin === "local") {
             nameQuery.andWhere("user.host IS NULL");
@@ -85,15 +85,15 @@ export default define(meta, paramDef, async (ps, me) => {
         }
 
         users = await nameQuery
-			.orderBy("user.updatedAt", "DESC", "NULLS LAST")
-			.take(ps.limit)
-			.skip(ps.offset)
-			.getMany();
+            .orderBy("user.updatedAt", "DESC", "NULLS LAST")
+            .take(ps.limit)
+            .skip(ps.offset)
+            .getMany();
 
         if (users.length < ps.limit) {
             const profQuery = UserProfiles.createQueryBuilder("prof")
-				.select("prof.userId")
-				.where("prof.description ILIKE :query", { query: "%" + sqlLikeEscape(ps.query) + "%" });
+                .select("prof.userId")
+                .where("prof.description ILIKE :query", { query: "%" + sqlLikeEscape(ps.query) + "%" });
 
             if (ps.origin === "local") {
                 profQuery.andWhere("prof.userHost IS NULL");
@@ -102,19 +102,19 @@ export default define(meta, paramDef, async (ps, me) => {
             }
 
             const query = Users.createQueryBuilder("user")
-				.where(`user.id IN (${ profQuery.getQuery() })`)
-				.andWhere(new Brackets(qb => { qb
-					.where("user.updatedAt IS NULL")
-					.orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
-				}))
-				.andWhere("user.isSuspended = FALSE")
-				.setParameters(profQuery.getParameters());
+                .where(`user.id IN (${ profQuery.getQuery() })`)
+                .andWhere(new Brackets(qb => { qb
+                    .where("user.updatedAt IS NULL")
+                    .orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
+                }))
+                .andWhere("user.isSuspended = FALSE")
+                .setParameters(profQuery.getParameters());
 
             users = users.concat(await query
-				.orderBy("user.updatedAt", "DESC", "NULLS LAST")
-				.take(ps.limit)
-				.skip(ps.offset)
-				.getMany(),
+                .orderBy("user.updatedAt", "DESC", "NULLS LAST")
+                .take(ps.limit)
+                .skip(ps.offset)
+                .getMany(),
             );
         }
     }

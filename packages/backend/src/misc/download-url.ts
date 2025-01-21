@@ -26,7 +26,7 @@ export async function downloadUrl(url: string, path: string): Promise<void> {
     const maxSize = config.maxFileSize || 262144000;
 
     const req = got
-		.stream(url, {
+        .stream(url, {
 		    headers: {
 		        "User-Agent": config.userAgent,
 		    },
@@ -47,14 +47,14 @@ export async function downloadUrl(url: string, path: string): Promise<void> {
 		    retry: {
 		        limit: 0,
 		    },
-		})
-		.on("redirect", (res: Got.Response, opts: Got.NormalizedOptions) => {
+        })
+        .on("redirect", (res: Got.Response, opts: Got.NormalizedOptions) => {
 		    if (!isValidUrl(opts.url)) {
 		        logger.warn(`Invalid URL: ${opts.url}`);
 		        req.destroy();
 		    }
-		})
-		.on("response", (res: Got.Response) => {
+        })
+        .on("response", (res: Got.Response) => {
 		    if ((process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") && !config.proxy && res.ip) {
 		        if (isPrivateIp(res.ip)) {
 		            logger.warn(`Blocked address: ${res.ip}`);
@@ -70,12 +70,12 @@ export async function downloadUrl(url: string, path: string): Promise<void> {
 		            req.destroy();
 		        }
 		    }
-		}).on("downloadProgress", (progress: Got.Progress) => {
+        }).on("downloadProgress", (progress: Got.Progress) => {
 		    if (progress.transferred > maxSize) {
 		        logger.warn(`maxSize exceeded (${progress.transferred} > ${maxSize}) on downloadProgress`);
 		        req.destroy();
 		    }
-		});
+        });
 
     try {
         await pipeline(req, fs.createWriteStream(path));

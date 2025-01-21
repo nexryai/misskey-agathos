@@ -71,16 +71,16 @@ export const paramDef = {
         avatarId: { type: "string", format: "misskey:id", nullable: true },
         bannerId: { type: "string", format: "misskey:id", nullable: true },
         fields: { type: "array",
-                  minItems: 0,
-                  maxItems: 16,
-                  items: {
-                      type: "object",
-                      properties: {
-                          name: { type: "string" },
-                          value: { type: "string" },
-                      },
-                      required: ["name", "value"],
-                  },
+            minItems: 0,
+            maxItems: 16,
+            items: {
+                type: "object",
+                properties: {
+                    name: { type: "string" },
+                    value: { type: "string" },
+                },
+                required: ["name", "value"],
+            },
         },
         isLocked: { type: "boolean" },
         isExplorable: { type: "boolean" },
@@ -170,10 +170,10 @@ export default define(meta, paramDef, async (ps, _user, token) => {
 
     if (ps.fields) {
         profileUpdates.fields = ps.fields
-			.filter(x => typeof x.name === "string" && x.name !== "" && typeof x.value === "string" && x.value !== "")
-			.map(x => {
+            .filter(x => typeof x.name === "string" && x.name !== "" && typeof x.value === "string" && x.value !== "")
+            .map(x => {
 			    return { name: x.name, value: x.value };
-			});
+            });
     }
 
     //#region emojis/tags

@@ -22,8 +22,8 @@ function normalizeHost(src: string | undefined, noteUserHost: string | null): st
     // クエリに使うホスト
     let host = src === "." ? null	// .はローカルホスト (ここがマッチするのはリアクションのみ)
         : src === undefined ? noteUserHost	// ノートなどでホスト省略表記の場合はローカルホスト (ここがリアクションにマッチすることはない)
-        : isSelfHost(src) ? null	// 自ホスト指定
-        : (src || noteUserHost);	// 指定されたホスト || ノートなどの所有者のホスト (こっちがリアクションにマッチすることはない)
+            : isSelfHost(src) ? null	// 自ホスト指定
+                : (src || noteUserHost);	// 指定されたホスト || ノートなどの所有者のホスト (こっちがリアクションにマッチすることはない)
 
     host = toPunyNullable(host);
 
@@ -83,20 +83,20 @@ export function aggregateNoteEmojis(notes: Note[]) {
     let emojis: { name: string | null; host: string | null; }[] = [];
     for (const note of notes) {
         emojis = emojis.concat(note.emojis
-			.map(e => parseEmojiStr(e, note.userHost)));
+            .map(e => parseEmojiStr(e, note.userHost)));
         if (note.renote) {
             emojis = emojis.concat(note.renote.emojis
-				.map(e => parseEmojiStr(e, note.renote!.userHost)));
+                .map(e => parseEmojiStr(e, note.renote!.userHost)));
             if (note.renote.user) {
                 emojis = emojis.concat(note.renote.user.emojis
-					.map(e => parseEmojiStr(e, note.renote!.userHost)));
+                    .map(e => parseEmojiStr(e, note.renote!.userHost)));
             }
         }
         const customReactions = Object.keys(note.reactions).map(x => decodeReaction(x)).filter(x => x.name != null) as typeof emojis;
         emojis = emojis.concat(customReactions);
         if (note.user) {
             emojis = emojis.concat(note.user.emojis
-				.map(e => parseEmojiStr(e, note.userHost)));
+                .map(e => parseEmojiStr(e, note.userHost)));
         }
     }
     return emojis.filter(x => x.name != null) as { name: string; host: string | null; }[];

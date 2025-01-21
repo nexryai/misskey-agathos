@@ -22,14 +22,14 @@ export async function fetchMeta(noCache = false): Promise<Meta> {
         } else {
             // metaが空のときfetchMetaが同時に呼ばれるとここが同時に呼ばれてしまうことがあるのでフェイルセーフなupsertを使う
             const saved = await transactionalEntityManager
-				.upsert(
+                .upsert(
 				    Meta,
 				    {
 				        id: "x",
 				    },
 				    ["id"],
-				)
-				.then((x) => transactionalEntityManager.findOneByOrFail(Meta, x.identifiers[0]));
+                )
+                .then((x) => transactionalEntityManager.findOneByOrFail(Meta, x.identifiers[0]));
 
             cache = saved;
             return saved;

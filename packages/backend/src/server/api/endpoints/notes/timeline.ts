@@ -49,24 +49,24 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const followees = await Followings.createQueryBuilder("following")
-		.select("following.followeeId")
-		.where("following.followerId = :followerId", { followerId: user.id })
-		.getMany();
+        .select("following.followeeId")
+        .where("following.followerId = :followerId", { followerId: user.id })
+        .getMany();
 
     const query = makePaginationQuery(Notes.createQueryBuilder("note"),
         ps.sinceId, ps.untilId, ps.sinceDate, ps.untilDate)
-		.andWhere("note.id > :minId", { minId: genId(new Date(Date.now() - (1000 * 60 * 60 * 24 * 10))) }) // 10日前まで
-		.innerJoinAndSelect("note.user", "user")
-		.leftJoinAndSelect("user.avatar", "avatar")
-		.leftJoinAndSelect("user.banner", "banner")
-		.leftJoinAndSelect("note.reply", "reply")
-		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("reply.user", "replyUser")
-		.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
-		.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
-		.leftJoinAndSelect("renote.user", "renoteUser")
-		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
-		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
+        .andWhere("note.id > :minId", { minId: genId(new Date(Date.now() - (1000 * 60 * 60 * 24 * 10))) }) // 10日前まで
+        .innerJoinAndSelect("note.user", "user")
+        .leftJoinAndSelect("user.avatar", "avatar")
+        .leftJoinAndSelect("user.banner", "banner")
+        .leftJoinAndSelect("note.reply", "reply")
+        .leftJoinAndSelect("note.renote", "renote")
+        .leftJoinAndSelect("reply.user", "replyUser")
+        .leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+        .leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+        .leftJoinAndSelect("renote.user", "renoteUser")
+        .leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+        .leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
 
     if (followees.length > 0) {
         const meOrFolloweeIds = [user.id, ...followees.map(f => f.followeeId)];

@@ -10,10 +10,10 @@ export async function checkExpiredMutings(job: Bull.Job<Record<string, unknown>>
     logger.info("Checking expired mutings...");
 
     const expired = await Mutings.createQueryBuilder("muting")
-		.where("muting.expiresAt IS NOT NULL")
-		.andWhere("muting.expiresAt < :now", { now: new Date() })
-		.innerJoinAndSelect("muting.mutee", "mutee")
-		.getMany();
+        .where("muting.expiresAt IS NOT NULL")
+        .andWhere("muting.expiresAt < :now", { now: new Date() })
+        .innerJoinAndSelect("muting.mutee", "mutee")
+        .getMany();
 
     if (expired.length > 0) {
         await Mutings.delete({

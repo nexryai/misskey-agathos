@@ -84,12 +84,12 @@ async function findCascadingNotes(note: Note) {
 
     const recursive = async (noteId: string) => {
         const query = Notes.createQueryBuilder("note")
-			.where("note.replyId = :noteId", { noteId })
-			.orWhere(new Brackets(q => {
+            .where("note.replyId = :noteId", { noteId })
+            .orWhere(new Brackets(q => {
 			    q.where("note.renoteId = :noteId", { noteId })
-				.andWhere("note.text IS NOT NULL");
-			}))
-			.leftJoinAndSelect("note.user", "user");
+                    .andWhere("note.text IS NOT NULL");
+            }))
+            .leftJoinAndSelect("note.user", "user");
         const replies = await query.getMany();
         for (const reply of replies) {
             cascadingNotes.push(reply);

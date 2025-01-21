@@ -534,9 +534,9 @@ export async function updateFeatured(userId: User["id"], resolver?: Resolver) {
     // Resolve and regist Notes
     const limit = promiseLimit<Note | null>(2);
     const featuredNotes = await Promise.all(items
-		.filter(item => getApType(item) === "Note")	// TODO: Noteでなくてもいいかも
-		.slice(0, 5)
-		.map(item => limit(() => resolveNote(item, resolver))));
+        .filter(item => getApType(item) === "Note")	// TODO: Noteでなくてもいいかも
+        .slice(0, 5)
+        .map(item => limit(() => resolveNote(item, resolver))));
 
     await db.transaction(async transactionalEntityManager => {
         await transactionalEntityManager.delete(UserNotePining, { userId: user.id });

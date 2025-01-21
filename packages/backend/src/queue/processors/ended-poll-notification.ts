@@ -15,11 +15,11 @@ export async function endedPollNotification(job: Bull.Job<EndedPollNotificationJ
     }
 
     const votes = await PollVotes.createQueryBuilder("vote")
-		.select("vote.userId")
-		.where("vote.noteId = :noteId", { noteId: note.id })
-		.innerJoinAndSelect("vote.user", "user")
-		.andWhere("user.host IS NULL")
-		.getMany();
+        .select("vote.userId")
+        .where("vote.noteId = :noteId", { noteId: note.id })
+        .innerJoinAndSelect("vote.user", "user")
+        .andWhere("user.host IS NULL")
+        .getMany();
 
     const userIds = [...new Set([note.userId, ...votes.map(v => v.userId)])];
 

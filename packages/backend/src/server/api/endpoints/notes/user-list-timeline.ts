@@ -66,19 +66,19 @@ export default define(meta, paramDef, async (ps, user) => {
 
     //#region Construct query
     const query = makePaginationQuery(Notes.createQueryBuilder("note"), ps.sinceId, ps.untilId)
-		.innerJoin(UserListJoinings.metadata.targetName, "userListJoining", "userListJoining.userId = note.userId")
-		.innerJoinAndSelect("note.user", "user")
-		.leftJoinAndSelect("user.avatar", "avatar")
-		.leftJoinAndSelect("user.banner", "banner")
-		.leftJoinAndSelect("note.reply", "reply")
-		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("reply.user", "replyUser")
-		.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
-		.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
-		.leftJoinAndSelect("renote.user", "renoteUser")
-		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
-		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
-		.andWhere("userListJoining.userListId = :userListId", { userListId: list.id });
+        .innerJoin(UserListJoinings.metadata.targetName, "userListJoining", "userListJoining.userId = note.userId")
+        .innerJoinAndSelect("note.user", "user")
+        .leftJoinAndSelect("user.avatar", "avatar")
+        .leftJoinAndSelect("user.banner", "banner")
+        .leftJoinAndSelect("note.reply", "reply")
+        .leftJoinAndSelect("note.renote", "renote")
+        .leftJoinAndSelect("reply.user", "replyUser")
+        .leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+        .leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+        .leftJoinAndSelect("renote.user", "renoteUser")
+        .leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+        .leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
+        .andWhere("userListJoining.userListId = :userListId", { userListId: list.id });
 
     generateVisibilityQuery(query, user);
     generateMutedUserQuery(query, user);

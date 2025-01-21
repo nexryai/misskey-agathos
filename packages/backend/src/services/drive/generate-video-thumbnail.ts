@@ -10,14 +10,14 @@ export async function GenerateVideoThumbnail(source: string): Promise<IImage> {
             FFmpeg({
                 source,
             })
-			.on("end", res)
-			.on("error", rej)
-			.screenshot({
+                .on("end", res)
+                .on("error", rej)
+                .screenshot({
 			    folder: dir,
 			    filename: "out.png",	// must have .png extension
 			    count: 1,
 			    timestamps: ["5%"],
-			});
+                });
         });
 
         // JPEGに変換 (Webpでもいいが、MastodonはWebpをサポートせず表示できなくなる)

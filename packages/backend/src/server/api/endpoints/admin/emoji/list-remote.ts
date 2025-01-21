@@ -84,9 +84,9 @@ export default define(meta, paramDef, async (ps) => {
     }
 
     const emojis = await q
-		.orderBy("emoji.id", "DESC")
-		.take(ps.limit)
-		.getMany();
+        .orderBy("emoji.id", "DESC")
+        .take(ps.limit)
+        .getMany();
 
     return Emojis.packMany(emojis);
 });

@@ -16,9 +16,9 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = RegistryItems.createQueryBuilder("item")
-		.select("item.scope")
-		.where("item.domain IS NULL")
-		.andWhere("item.userId = :userId", { userId: user.id });
+        .select("item.scope")
+        .where("item.domain IS NULL")
+        .andWhere("item.userId = :userId", { userId: user.id });
 
     const items = await query.getMany();
 

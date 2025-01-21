@@ -79,8 +79,8 @@ router.get(webFingerPath, async ctx => {
             fromId(resource.split("/").pop()!) :
             fromAcct(Acct.parse(
                 resource.startsWith(`${config.url.toLowerCase()}/@`) ? resource.split("/").pop()! :
-                resource.startsWith("acct:") ? resource.slice("acct:".length) :
-                resource));
+                    resource.startsWith("acct:") ? resource.slice("acct:".length) :
+                        resource));
 
     const fromAcct = (acct: Acct.Acct): FindOptionsWhere<User> | number =>
         !acct.host || acct.host === config.host.toLowerCase() ? {

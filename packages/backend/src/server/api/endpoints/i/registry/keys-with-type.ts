@@ -20,9 +20,9 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = RegistryItems.createQueryBuilder("item")
-		.where("item.domain IS NULL")
-		.andWhere("item.userId = :userId", { userId: user.id })
-		.andWhere("item.scope = :scope", { scope: ps.scope });
+        .where("item.domain IS NULL")
+        .andWhere("item.userId = :userId", { userId: user.id })
+        .andWhere("item.scope = :scope", { scope: ps.scope });
 
     const items = await query.getMany();
 
@@ -32,11 +32,11 @@ export default define(meta, paramDef, async (ps, user) => {
         const type = typeof item.value;
         res[item.key] =
 			item.value === null ? "null" :
-			Array.isArray(item.value) ? "array" :
-			type === "number" ? "number" :
-			type === "string" ? "string" :
-			type === "boolean" ? "boolean" :
-			type === "object" ? "object" :
+			    Array.isArray(item.value) ? "array" :
+			        type === "number" ? "number" :
+			            type === "string" ? "string" :
+			                type === "boolean" ? "boolean" :
+			                    type === "object" ? "object" :
 			null as never;
     }
 

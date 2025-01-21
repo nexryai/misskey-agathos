@@ -45,10 +45,10 @@ export const fromThemeString = (str?: string) : ThemeValue => {
 export const toThemeString = (value: Color | Func | RefProp | RefConst | Css) => {
     if (typeof value === "string") return value;
     switch (value.type) {
-        case "func": return `:${value.name}<${value.arg}<@${value.value}`;
-        case "refProp": return `@${value.key}`;
-        case "refConst": return `$${value.key}`;
-        case "css": return `" ${value.value}`;
+    case "func": return `:${value.name}<${value.arg}<@${value.value}`;
+    case "refProp": return `@${value.key}`;
+    case "refConst": return `$${value.key}`;
+    case "css": return `" ${value.value}`;
     }
 };
 
@@ -72,9 +72,9 @@ export const convertToViewModel = (theme: Theme): ThemeViewModel => {
 
     // 定数の登録
     const consts = Object
-		.keys(theme.props)
-		.filter(k => k.startsWith("$"))
-		.map(k => [ k, fromThemeString(theme.props[k]) ] as [ string, ThemeValue ]);
+        .keys(theme.props)
+        .filter(k => k.startsWith("$"))
+        .map(k => [ k, fromThemeString(theme.props[k]) ] as [ string, ThemeValue ]);
 
     vm.push(...consts);
     return vm;

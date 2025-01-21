@@ -16,7 +16,7 @@ export default ts.config(
         }
     },
     {
-        files: ["**/*.ts", "**/*.js", "**/*.vue"],
+        files: ["**/*.ts", "**/*.js"],
 
         languageOptions: {
             parserOptions: {
@@ -27,12 +27,21 @@ export default ts.config(
             "@typescript-eslint/no-unused-expressions": "off",
             "@typescript-eslint/ban-ts-comment": "off",
             "@typescript-eslint/no-explicit-any": "off",
+            // あまりにも現状のコードが汚すぎて修正しきれない
+            "@typescript-eslint/no-unused-vars": "warn",
             "indent": ["error", 4],
             "quotes": ["error", "double"],
             "semi": ["error", "always"],
         }
     },
     {
-        ignores: ["build/", "node_modules/", "dist/", "packages/backend/migration/", "scripts/"]
+        ignores: [
+            "build/",
+            "node_modules/",
+            "dist/",
+            "packages/backend/migration/",
+            "packages/client/assets",
+            "scripts/"
+        ]
     }
 );

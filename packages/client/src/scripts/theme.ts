@@ -113,11 +113,11 @@ function compile(theme: Theme): Record<string, string> {
             const color = getColor(parts.join("<"));
 
             switch (func) {
-                case "darken": return color.darken(arg);
-                case "lighten": return color.lighten(arg);
-                case "alpha": return color.setAlpha(arg);
-                case "hue": return color.spin(arg);
-                case "saturate": return color.saturate(arg);
+            case "darken": return color.darken(arg);
+            case "lighten": return color.lighten(arg);
+            case "alpha": return color.setAlpha(arg);
+            case "hue": return color.spin(arg);
+            case "saturate": return color.saturate(arg);
             }
         }
 

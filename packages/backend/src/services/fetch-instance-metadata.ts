@@ -92,13 +92,13 @@ async function fetchNodeinfo(instance: Instance): Promise<NodeInfo> {
 
     try {
         const wellknown = await getJson("https://" + instance.host + "/.well-known/nodeinfo")
-			.catch(e => {
+            .catch(e => {
 			    if (e.statusCode === 404) {
 			        throw "No nodeinfo provided";
 			    } else {
 			        throw e.statusCode || e.message;
 			    }
-			}) as Record<string, unknown>;
+            }) as Record<string, unknown>;
 
         if (wellknown.links == null || !Array.isArray(wellknown.links)) {
             throw "No wellknown links";
@@ -116,9 +116,9 @@ async function fetchNodeinfo(instance: Instance): Promise<NodeInfo> {
         }
 
         const info = await getJson(link.href)
-			.catch(e => {
+            .catch(e => {
 			    throw e.statusCode || e.message;
-			});
+            });
 
         logger.succ(`Successfuly fetched nodeinfo of ${instance.host}`);
 
@@ -198,7 +198,7 @@ async function fetchIconUrl(instance: Instance, doc: DOMWindow["document"] | nul
 			    links.find(link => link.relList.contains("apple-touch-icon"))?.href,
 			    links.find(link => link.relList.contains("icon"))?.href,
 			]
-			.find(href => href);
+			    .find(href => href);
 
         if (href) {
             return (new URL(href, url)).href;

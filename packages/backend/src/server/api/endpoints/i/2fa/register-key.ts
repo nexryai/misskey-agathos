@@ -40,9 +40,9 @@ export default define(meta, paramDef, async (ps, user) => {
     // 32 byte challenge
     const entropy = await randomBytes(32);
     const challenge = entropy.toString("base64")
-		.replace(/=/g, "")
-		.replace(/\+/g, "-")
-		.replace(/\//g, "_");
+        .replace(/=/g, "")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_");
 
     const challengeId = genId();
 

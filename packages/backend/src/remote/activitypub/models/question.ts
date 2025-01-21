@@ -22,10 +22,10 @@ export async function extractPollFromQuestion(source: string | IObject, resolver
     }
 
     const choices = question[multiple ? "anyOf" : "oneOf"]!
-		.map((x, i) => x.name!);
+        .map((x, i) => x.name!);
 
     const votes = question[multiple ? "anyOf" : "oneOf"]!
-		.map((x, i) => x.replies && x.replies.totalItems || x._misskey_votes || 0);
+        .map((x, i) => x.replies && x.replies.totalItems || x._misskey_votes || 0);
 
     if (choices.length > 10) {
         throw new Error("too many choices");

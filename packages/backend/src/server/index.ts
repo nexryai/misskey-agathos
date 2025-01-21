@@ -130,15 +130,15 @@ export default () => new Promise(resolve => {
 
     server.on("error", e => {
         switch ((e as any).code) {
-            case "EACCES":
-                serverLogger.error(`You do not have permission to listen on port ${config.port}.`);
-                break;
-            case "EADDRINUSE":
-                serverLogger.error(`Port ${config.port} is already in use by another process.`);
-                break;
-            default:
-                serverLogger.error(e);
-                break;
+        case "EACCES":
+            serverLogger.error(`You do not have permission to listen on port ${config.port}.`);
+            break;
+        case "EADDRINUSE":
+            serverLogger.error(`Port ${config.port} is already in use by another process.`);
+            break;
+        default:
+            serverLogger.error(e);
+            break;
         }
 
         if (cluster.isWorker) {

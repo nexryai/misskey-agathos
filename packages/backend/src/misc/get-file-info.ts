@@ -185,10 +185,10 @@ async function detectImageSize(path: string): Promise<{
 function getBlurhash(path: string): Promise<string> {
     return new Promise((resolve, reject) => {
         sharp(path)
-			.raw()
-			.ensureAlpha()
-			.resize(64, 64, { fit: "inside" })
-			.toBuffer((err, buffer, { width, height }) => {
+            .raw()
+            .ensureAlpha()
+            .resize(64, 64, { fit: "inside" })
+            .toBuffer((err, buffer, { width, height }) => {
 			    if (err) return reject(err);
 
 			    let hash;
@@ -200,6 +200,6 @@ function getBlurhash(path: string): Promise<string> {
 			    }
 
 			    resolve(hash);
-			});
+            });
     });
 }

@@ -22,28 +22,28 @@ subsdcriber.on("message", async (_, data) => {
     if (obj.channel === "internal") {
         const { type, body } = obj.message;
         switch (type) {
-            case "webhookCreated":
-                if (body.active) {
+        case "webhookCreated":
+            if (body.active) {
+                webhooks.push(body);
+            }
+            break;
+        case "webhookUpdated":
+            if (body.active) {
+                const i = webhooks.findIndex(a => a.id === body.id);
+                if (i > -1) {
+                    webhooks[i] = body;
+                } else {
                     webhooks.push(body);
                 }
-                break;
-            case "webhookUpdated":
-                if (body.active) {
-                    const i = webhooks.findIndex(a => a.id === body.id);
-                    if (i > -1) {
-                        webhooks[i] = body;
-                    } else {
-                        webhooks.push(body);
-                    }
-                } else {
-                    webhooks = webhooks.filter(a => a.id !== body.id);
-                }
-                break;
-            case "webhookDeleted":
+            } else {
                 webhooks = webhooks.filter(a => a.id !== body.id);
-                break;
-            default:
-                break;
+            }
+            break;
+        case "webhookDeleted":
+            webhooks = webhooks.filter(a => a.id !== body.id);
+            break;
+        default:
+            break;
         }
     }
 });

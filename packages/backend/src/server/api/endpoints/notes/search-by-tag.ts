@@ -70,17 +70,17 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const query = makePaginationQuery(Notes.createQueryBuilder("note"), ps.sinceId, ps.untilId)
-		.innerJoinAndSelect("note.user", "user")
-		.leftJoinAndSelect("user.avatar", "avatar")
-		.leftJoinAndSelect("user.banner", "banner")
-		.leftJoinAndSelect("note.reply", "reply")
-		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("reply.user", "replyUser")
-		.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
-		.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
-		.leftJoinAndSelect("renote.user", "renoteUser")
-		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
-		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
+        .innerJoinAndSelect("note.user", "user")
+        .leftJoinAndSelect("user.avatar", "avatar")
+        .leftJoinAndSelect("user.banner", "banner")
+        .leftJoinAndSelect("note.reply", "reply")
+        .leftJoinAndSelect("note.renote", "renote")
+        .leftJoinAndSelect("reply.user", "replyUser")
+        .leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+        .leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+        .leftJoinAndSelect("renote.user", "renoteUser")
+        .leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+        .leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
 
     generateVisibilityQuery(query, me);
     if (me) generateMutedUserQuery(query, me);

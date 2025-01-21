@@ -89,18 +89,18 @@ export default define(meta, paramDef, async (ps) => {
     const query = makePaginationQuery(AbuseUserReports.createQueryBuilder("report"), ps.sinceId, ps.untilId);
 
     switch (ps.state) {
-        case "resolved": query.andWhere("report.resolved = TRUE"); break;
-        case "unresolved": query.andWhere("report.resolved = FALSE"); break;
+    case "resolved": query.andWhere("report.resolved = TRUE"); break;
+    case "unresolved": query.andWhere("report.resolved = FALSE"); break;
     }
 
     switch (ps.reporterOrigin) {
-        case "local": query.andWhere("report.reporterHost IS NULL"); break;
-        case "remote": query.andWhere("report.reporterHost IS NOT NULL"); break;
+    case "local": query.andWhere("report.reporterHost IS NULL"); break;
+    case "remote": query.andWhere("report.reporterHost IS NOT NULL"); break;
     }
 
     switch (ps.targetUserOrigin) {
-        case "local": query.andWhere("report.targetUserHost IS NULL"); break;
-        case "remote": query.andWhere("report.targetUserHost IS NOT NULL"); break;
+    case "local": query.andWhere("report.targetUserHost IS NULL"); break;
+    case "remote": query.andWhere("report.targetUserHost IS NOT NULL"); break;
     }
 
     const reports = await query.take(ps.limit).getMany();

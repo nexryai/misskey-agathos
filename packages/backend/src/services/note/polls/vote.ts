@@ -69,7 +69,7 @@ export default async function(user: CacheableUser, note: Note, choice: number) {
         noteId: note.id,
         userId: Not(user.id),
     })
-	.then(watchers => {
+        .then(watchers => {
 	    for (const watcher of watchers) {
 	        createNotification(watcher.userId, "pollVote", {
 	            notifierId: user.id,
@@ -77,5 +77,5 @@ export default async function(user: CacheableUser, note: Note, choice: number) {
 	            choice: choice,
 	        });
 	    }
-	});
+        });
 }

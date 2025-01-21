@@ -59,27 +59,27 @@ export default define(meta, paramDef, async (ps, user) => {
 
     const query = makePaginationQuery(Notes.createQueryBuilder("note"),
         ps.sinceId, ps.untilId, ps.sinceDate, ps.untilDate)
-		.innerJoin(AntennaNotes.metadata.targetName, "antennaNote", "antennaNote.noteId = note.id")
-		.innerJoinAndSelect("note.user", "user")
-		.leftJoinAndSelect("user.avatar", "avatar")
-		.leftJoinAndSelect("user.banner", "banner")
-		.leftJoinAndSelect("note.reply", "reply")
-		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("reply.user", "replyUser")
-		.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
-		.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
-		.leftJoinAndSelect("renote.user", "renoteUser")
-		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
-		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
-		.andWhere("antennaNote.antennaId = :antennaId", { antennaId: antenna.id });
+        .innerJoin(AntennaNotes.metadata.targetName, "antennaNote", "antennaNote.noteId = note.id")
+        .innerJoinAndSelect("note.user", "user")
+        .leftJoinAndSelect("user.avatar", "avatar")
+        .leftJoinAndSelect("user.banner", "banner")
+        .leftJoinAndSelect("note.reply", "reply")
+        .leftJoinAndSelect("note.renote", "renote")
+        .leftJoinAndSelect("reply.user", "replyUser")
+        .leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+        .leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+        .leftJoinAndSelect("renote.user", "renoteUser")
+        .leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+        .leftJoinAndSelect("renoteUser.banner", "renoteUserBanner")
+        .andWhere("antennaNote.antennaId = :antennaId", { antennaId: antenna.id });
 
     generateVisibilityQuery(query, user);
     generateMutedUserQuery(query, user);
     generateBlockedUserQuery(query, user);
 
     const notes = await query
-		.take(ps.limit)
-		.getMany();
+        .take(ps.limit)
+        .getMany();
 
     if (notes.length > 0) {
         readNote(user.id, notes);

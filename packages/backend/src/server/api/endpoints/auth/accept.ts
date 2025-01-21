@@ -33,7 +33,7 @@ export const paramDef = {
 export default define(meta, paramDef, async (ps, user) => {
     // Fetch token
     const session = await AuthSessions
-		.findOneBy({ token: ps.token });
+        .findOneBy({ token: ps.token });
 
     if (session == null) {
         throw new ApiError(meta.errors.noSuchSession);

@@ -34,7 +34,7 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, user) => {
     const query = makePaginationQuery(DriveFolders.createQueryBuilder("folder"), ps.sinceId, ps.untilId)
-		.andWhere("folder.userId = :userId", { userId: user.id });
+        .andWhere("folder.userId = :userId", { userId: user.id });
 
     if (ps.folderId) {
         query.andWhere("folder.parentId = :parentId", { parentId: ps.folderId });

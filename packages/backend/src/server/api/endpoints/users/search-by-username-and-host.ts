@@ -45,8 +45,8 @@ export default define(meta, paramDef, async (ps, me) => {
 
     if (ps.host) {
         const q = Users.createQueryBuilder("user")
-			.where("user.isSuspended = FALSE")
-			.andWhere("user.host LIKE :host", { host: sqlLikeEscape(ps.host.toLowerCase()) + "%" });
+            .where("user.isSuspended = FALSE")
+            .andWhere("user.host LIKE :host", { host: sqlLikeEscape(ps.host.toLowerCase()) + "%" });
 
         if (ps.username) {
             q.andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" });
@@ -63,51 +63,51 @@ export default define(meta, paramDef, async (ps, me) => {
 
         if (me) {
             const followingQuery = Followings.createQueryBuilder("following")
-				.select("following.followeeId")
-				.where("following.followerId = :followerId", { followerId: me.id });
+                .select("following.followeeId")
+                .where("following.followerId = :followerId", { followerId: me.id });
 
             const query = Users.createQueryBuilder("user")
-				.where(`user.id IN (${ followingQuery.getQuery() })`)
-				.andWhere("user.id != :meId", { meId: me.id })
-				.andWhere("user.isSuspended = FALSE")
-				.andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" })
-				.andWhere(new Brackets(qb => { qb
-					.where("user.updatedAt IS NULL")
-					.orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
-				}));
+                .where(`user.id IN (${ followingQuery.getQuery() })`)
+                .andWhere("user.id != :meId", { meId: me.id })
+                .andWhere("user.isSuspended = FALSE")
+                .andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" })
+                .andWhere(new Brackets(qb => { qb
+                    .where("user.updatedAt IS NULL")
+                    .orWhere("user.updatedAt > :activeThreshold", { activeThreshold: activeThreshold });
+                }));
 
             query.setParameters(followingQuery.getParameters());
 
             users = await query
-				.orderBy("user.usernameLower", "ASC")
-				.take(ps.limit)
-				.getMany();
+                .orderBy("user.usernameLower", "ASC")
+                .take(ps.limit)
+                .getMany();
 
             if (users.length < ps.limit) {
                 const otherQuery = await Users.createQueryBuilder("user")
-					.where(`user.id NOT IN (${ followingQuery.getQuery() })`)
-					.andWhere("user.id != :meId", { meId: me.id })
-					.andWhere("user.isSuspended = FALSE")
-					.andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" })
-					.andWhere("user.updatedAt IS NOT NULL");
+                    .where(`user.id NOT IN (${ followingQuery.getQuery() })`)
+                    .andWhere("user.id != :meId", { meId: me.id })
+                    .andWhere("user.isSuspended = FALSE")
+                    .andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" })
+                    .andWhere("user.updatedAt IS NOT NULL");
 
                 otherQuery.setParameters(followingQuery.getParameters());
 
                 const otherUsers = await otherQuery
-					.orderBy("user.updatedAt", "DESC")
-					.take(ps.limit - users.length)
-					.getMany();
+                    .orderBy("user.updatedAt", "DESC")
+                    .take(ps.limit - users.length)
+                    .getMany();
 
                 users = users.concat(otherUsers);
             }
         } else {
             users = await Users.createQueryBuilder("user")
-				.where("user.isSuspended = FALSE")
-				.andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" })
-				.andWhere("user.updatedAt IS NOT NULL")
-				.orderBy("user.updatedAt", "DESC")
-				.take(ps.limit - users.length)
-				.getMany();
+                .where("user.isSuspended = FALSE")
+                .andWhere("user.usernameLower LIKE :username", { username: sqlLikeEscape(ps.username.toLowerCase()) + "%" })
+                .andWhere("user.updatedAt IS NOT NULL")
+                .orderBy("user.updatedAt", "DESC")
+                .take(ps.limit - users.length)
+                .getMany();
         }
 
         return await Users.packMany(users, me, { detail: !!ps.detail });

@@ -59,57 +59,57 @@ export default define(meta, paramDef, async (ps, user) => {
         return [];
     }
     const followingQuery = Followings.createQueryBuilder("following")
-		.select("following.followeeId")
-		.where("following.followerId = :followerId", { followerId: user.id });
+        .select("following.followeeId")
+        .where("following.followerId = :followerId", { followerId: user.id });
 
     const mutingQuery = Mutings.createQueryBuilder("muting")
-		.select("muting.muteeId")
-		.where("muting.muterId = :muterId", { muterId: user.id });
+        .select("muting.muteeId")
+        .where("muting.muterId = :muterId", { muterId: user.id });
 
     const mutingInstanceQuery = UserProfiles.createQueryBuilder("user_profile")
-		.select("user_profile.mutedInstances")
-		.where("user_profile.userId = :muterId", { muterId: user.id });
+        .select("user_profile.mutedInstances")
+        .where("user_profile.userId = :muterId", { muterId: user.id });
 
     const suspendedQuery = Users.createQueryBuilder("users")
-		.select("users.id")
-		.where("users.isSuspended = TRUE");
+        .select("users.id")
+        .where("users.isSuspended = TRUE");
 
     const query = makePaginationQuery(Notifications.createQueryBuilder("notification"), ps.sinceId, ps.untilId)
-		.andWhere("notification.notifieeId = :meId", { meId: user.id })
-		.leftJoinAndSelect("notification.notifier", "notifier")
-		.leftJoinAndSelect("notification.note", "note")
-		.leftJoinAndSelect("notifier.avatar", "notifierAvatar")
-		.leftJoinAndSelect("notifier.banner", "notifierBanner")
-		.leftJoinAndSelect("note.user", "user")
-		.leftJoinAndSelect("user.avatar", "avatar")
-		.leftJoinAndSelect("user.banner", "banner")
-		.leftJoinAndSelect("note.reply", "reply")
-		.leftJoinAndSelect("note.renote", "renote")
-		.leftJoinAndSelect("reply.user", "replyUser")
-		.leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
-		.leftJoinAndSelect("replyUser.banner", "replyUserBanner")
-		.leftJoinAndSelect("renote.user", "renoteUser")
-		.leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
-		.leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
+        .andWhere("notification.notifieeId = :meId", { meId: user.id })
+        .leftJoinAndSelect("notification.notifier", "notifier")
+        .leftJoinAndSelect("notification.note", "note")
+        .leftJoinAndSelect("notifier.avatar", "notifierAvatar")
+        .leftJoinAndSelect("notifier.banner", "notifierBanner")
+        .leftJoinAndSelect("note.user", "user")
+        .leftJoinAndSelect("user.avatar", "avatar")
+        .leftJoinAndSelect("user.banner", "banner")
+        .leftJoinAndSelect("note.reply", "reply")
+        .leftJoinAndSelect("note.renote", "renote")
+        .leftJoinAndSelect("reply.user", "replyUser")
+        .leftJoinAndSelect("replyUser.avatar", "replyUserAvatar")
+        .leftJoinAndSelect("replyUser.banner", "replyUserBanner")
+        .leftJoinAndSelect("renote.user", "renoteUser")
+        .leftJoinAndSelect("renoteUser.avatar", "renoteUserAvatar")
+        .leftJoinAndSelect("renoteUser.banner", "renoteUserBanner");
 
     // muted users
     query.andWhere(new Brackets(qb => { qb
-		.where(`notification.notifierId NOT IN (${ mutingQuery.getQuery() })`)
-		.orWhere("notification.notifierId IS NULL");
+        .where(`notification.notifierId NOT IN (${ mutingQuery.getQuery() })`)
+        .orWhere("notification.notifierId IS NULL");
     }));
     query.setParameters(mutingQuery.getParameters());
 
     // muted instances
     query.andWhere(new Brackets(qb => { qb
-		.andWhere("notifier.host IS NULL")
-		.orWhere(`NOT (( ${mutingInstanceQuery.getQuery()} )::jsonb ? notifier.host)`);
+        .andWhere("notifier.host IS NULL")
+        .orWhere(`NOT (( ${mutingInstanceQuery.getQuery()} )::jsonb ? notifier.host)`);
     }));
     query.setParameters(mutingInstanceQuery.getParameters());
 
     // suspended users
     query.andWhere(new Brackets(qb => { qb
-		.where(`notification.notifierId NOT IN (${ suspendedQuery.getQuery() })`)
-		.orWhere("notification.notifierId IS NULL");
+        .where(`notification.notifierId NOT IN (${ suspendedQuery.getQuery() })`)
+        .orWhere("notification.notifierId IS NULL");
     }));
 
     if (ps.following) {

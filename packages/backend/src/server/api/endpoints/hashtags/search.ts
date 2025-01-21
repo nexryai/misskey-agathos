@@ -30,12 +30,12 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps) => {
     const hashtags = await Hashtags.createQueryBuilder("tag")
-		.where("tag.name like :q", { q: sqlLikeEscape(ps.query.toLowerCase()) + "%" })
-		.orderBy("tag.count", "DESC")
-		.groupBy("tag.id")
-		.take(ps.limit)
-		.skip(ps.offset)
-		.getMany();
+        .where("tag.name like :q", { q: sqlLikeEscape(ps.query.toLowerCase()) + "%" })
+        .orderBy("tag.count", "DESC")
+        .groupBy("tag.id")
+        .take(ps.limit)
+        .skip(ps.offset)
+        .getMany();
 
     return hashtags.map(tag => tag.name);
 });

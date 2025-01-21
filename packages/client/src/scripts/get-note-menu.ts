@@ -297,7 +297,7 @@ export function getNoteMenu(props: {
                         }, {}, "closed");
                     },
                 }]
-            : []
+                : []
             ),
             ...(appearNote.userId === $i.id || (($i.isModerator || $i.isAdmin) && enableSudo) ? [
                 null,
@@ -312,9 +312,9 @@ export function getNoteMenu(props: {
                     danger: true,
                     action: del,
                 }]
-            : []
+                : []
             )]
-		.filter(x => x !== undefined);
+            .filter(x => x !== undefined);
     } else {
         menu = [{
             icon: "ti ti-copy",
@@ -331,7 +331,7 @@ export function getNoteMenu(props: {
                 window.open(appearNote.url || appearNote.uri, "_blank");
             },
         } : undefined]
-		.filter(x => x !== undefined);
+            .filter(x => x !== undefined);
     }
 
     if (noteActions.length > 0) {

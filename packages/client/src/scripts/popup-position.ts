@@ -116,41 +116,41 @@ export function calcPopupPosition(el: HTMLElement, props: {
 		transformOrigin: string;
 	} => {
         switch (props.direction) {
-            case "top": {
-                const [left, top] = calcPosWhenTop();
+        case "top": {
+            const [left, top] = calcPosWhenTop();
 
-                // ツールチップを上に向かって表示するスペースがなければ下に向かって出す
-                if (top - window.pageYOffset < 0) {
-                    const [left, top] = calcPosWhenBottom();
-                    return { left, top, transformOrigin: "center top" };
-                }
-
-                return { left, top, transformOrigin: "center bottom" };
-            }
-
-            case "bottom": {
+            // ツールチップを上に向かって表示するスペースがなければ下に向かって出す
+            if (top - window.pageYOffset < 0) {
                 const [left, top] = calcPosWhenBottom();
-                // TODO: ツールチップを下に向かって表示するスペースがなければ上に向かって出す
                 return { left, top, transformOrigin: "center top" };
             }
 
-            case "left": {
-                const [left, top] = calcPosWhenLeft();
+            return { left, top, transformOrigin: "center bottom" };
+        }
 
-                // ツールチップを左に向かって表示するスペースがなければ右に向かって出す
-                if (left - window.pageXOffset < 0) {
-                    const [left, top] = calcPosWhenRight();
-                    return { left, top, transformOrigin: "left center" };
-                }
+        case "bottom": {
+            const [left, top] = calcPosWhenBottom();
+            // TODO: ツールチップを下に向かって表示するスペースがなければ上に向かって出す
+            return { left, top, transformOrigin: "center top" };
+        }
 
-                return { left, top, transformOrigin: "right center" };
-            }
+        case "left": {
+            const [left, top] = calcPosWhenLeft();
 
-            case "right": {
+            // ツールチップを左に向かって表示するスペースがなければ右に向かって出す
+            if (left - window.pageXOffset < 0) {
                 const [left, top] = calcPosWhenRight();
-                // TODO: ツールチップを右に向かって表示するスペースがなければ左に向かって出す
                 return { left, top, transformOrigin: "left center" };
             }
+
+            return { left, top, transformOrigin: "right center" };
+        }
+
+        case "right": {
+            const [left, top] = calcPosWhenRight();
+            // TODO: ツールチップを右に向かって表示するスペースがなければ左に向かって出す
+            return { left, top, transformOrigin: "left center" };
+        }
         }
     };
 

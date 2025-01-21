@@ -19,7 +19,7 @@ export async function initializeSw() {
                 userVisibleOnly: true,
                 applicationServerKey: urlBase64ToUint8Array(instance.swPublickey),
             })
-			.then(subscription => {
+                .then(subscription => {
 			    function encode(buffer: ArrayBuffer | null) {
 			        return btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
 			    }
@@ -30,9 +30,9 @@ export async function initializeSw() {
 			        auth: encode(subscription.getKey("auth")),
 			        publickey: encode(subscription.getKey("p256dh")),
 			    });
-			})
-			// When subscribe failed
-			.catch(async (err: Error) => {
+                })
+            // When subscribe failed
+                .catch(async (err: Error) => {
 			    // 通知が許可されていなかったとき
 			    if (err.name === "NotAllowedError") {
 			        return;
@@ -43,7 +43,7 @@ export async function initializeSw() {
 			    // そのサブスクリプションを解除しておく
 			    const subscription = await registration.pushManager.getSubscription();
 			    if (subscription) subscription.unsubscribe();
-			});
+                });
         }
     });
 }
@@ -55,8 +55,8 @@ export async function initializeSw() {
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
     const padding = "=".repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
-		.replace(/-/g, "+")
-		.replace(/_/g, "/");
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
 
     const rawData = window.atob(base64);
     const outputArray = new Uint8Array(rawData.length);

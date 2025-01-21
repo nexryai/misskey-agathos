@@ -93,9 +93,9 @@ function validateContentType(contentType: string): boolean {
     if (parts[0] === "application/activity+json") return true;
     if (parts[0] !== "application/ld+json") return false;
     return parts
-		.slice(1)
-		.some(
+        .slice(1)
+        .some(
 		    (part) =>
 		        part.trim() === "profile=\"https://www.w3.org/ns/activitystreams\"",
-		);
+        );
 }

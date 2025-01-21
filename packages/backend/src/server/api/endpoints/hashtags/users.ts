@@ -33,7 +33,7 @@ export const paramDef = {
 // eslint-disable-next-line import/no-default-export
 export default define(meta, paramDef, async (ps, me) => {
     const query = Users.createQueryBuilder("user")
-		.where(":tag = ANY(user.tags)", { tag: normalizeForSearch(ps.tag) });
+        .where(":tag = ANY(user.tags)", { tag: normalizeForSearch(ps.tag) });
 
     const recent = new Date(Date.now() - (1000 * 60 * 60 * 24 * 5));
 
@@ -48,12 +48,12 @@ export default define(meta, paramDef, async (ps, me) => {
     }
 
     switch (ps.sort) {
-        case "+follower": query.orderBy("user.followersCount", "DESC"); break;
-        case "-follower": query.orderBy("user.followersCount", "ASC"); break;
-        case "+createdAt": query.orderBy("user.createdAt", "DESC"); break;
-        case "-createdAt": query.orderBy("user.createdAt", "ASC"); break;
-        case "+updatedAt": query.orderBy("user.updatedAt", "DESC"); break;
-        case "-updatedAt": query.orderBy("user.updatedAt", "ASC"); break;
+    case "+follower": query.orderBy("user.followersCount", "DESC"); break;
+    case "-follower": query.orderBy("user.followersCount", "ASC"); break;
+    case "+createdAt": query.orderBy("user.createdAt", "DESC"); break;
+    case "-createdAt": query.orderBy("user.createdAt", "ASC"); break;
+    case "+updatedAt": query.orderBy("user.updatedAt", "DESC"); break;
+    case "-updatedAt": query.orderBy("user.updatedAt", "ASC"); break;
     }
 
     const users = await query.take(ps.limit).getMany();

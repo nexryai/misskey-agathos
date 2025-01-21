@@ -178,8 +178,8 @@ export const UserRepository = db.getRepository(User).extend({
         const elapsed = Date.now() - user.lastActiveDate.getTime();
         return (
             elapsed < USER_ONLINE_THRESHOLD ? "online" :
-            elapsed < USER_ACTIVE_THRESHOLD ? "active" :
-            "offline"
+                elapsed < USER_ACTIVE_THRESHOLD ? "active" :
+                    "offline"
         );
     },
 
@@ -240,21 +240,21 @@ export const UserRepository = db.getRepository(User).extend({
 
         const relation = meId && !isMe && opts.detail ? await this.getRelation(meId, user.id) : null;
         const pins = opts.detail ? await UserNotePinings.createQueryBuilder("pin")
-			.where("pin.userId = :userId", { userId: user.id })
-			.innerJoinAndSelect("pin.note", "note")
-			.orderBy("pin.id", "DESC")
-			.getMany() : [];
+            .where("pin.userId = :userId", { userId: user.id })
+            .innerJoinAndSelect("pin.note", "note")
+            .orderBy("pin.id", "DESC")
+            .getMany() : [];
         const profile = opts.detail ? await UserProfiles.findOneByOrFail({ userId: user.id }) : null;
 
         const followingCount = profile == null ? null :
             (profile.ffVisibility === "public") || isMe ? user.followingCount :
-            (profile.ffVisibility === "followers") && (relation && relation.isFollowing) ? user.followingCount :
-            null;
+                (profile.ffVisibility === "followers") && (relation && relation.isFollowing) ? user.followingCount :
+                    null;
 
         const followersCount = profile == null ? null :
             (profile.ffVisibility === "public") || isMe ? user.followersCount :
-            (profile.ffVisibility === "followers") && (relation && relation.isFollowing) ? user.followersCount :
-            null;
+                (profile.ffVisibility === "followers") && (relation && relation.isFollowing) ? user.followersCount :
+                    null;
 
         const falsy = opts.detail ? false : undefined;
 

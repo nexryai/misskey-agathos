@@ -97,31 +97,31 @@ export class Storage<T extends StateDef> {
         this.reactiveState[key].value = value;
 
         switch (this.def[key].where) {
-            case "device": {
-                const deviceState = JSON.parse(localStorage.getItem(this.keyForLocalStorage) || "{}");
-                deviceState[key] = value;
-                localStorage.setItem(this.keyForLocalStorage, JSON.stringify(deviceState));
-                break;
-            }
-            case "deviceAccount": {
-                if ($i == null) break;
-                const deviceAccountState = JSON.parse(localStorage.getItem(this.keyForLocalStorage + "::" + $i.id) || "{}");
-                deviceAccountState[key] = value;
-                localStorage.setItem(this.keyForLocalStorage + "::" + $i.id, JSON.stringify(deviceAccountState));
-                break;
-            }
-            case "account": {
-                if ($i == null) break;
-                const cache = JSON.parse(localStorage.getItem(this.keyForLocalStorage + "::cache::" + $i.id) || "{}");
-                cache[key] = value;
-                localStorage.setItem(this.keyForLocalStorage + "::cache::" + $i.id, JSON.stringify(cache));
-                api("i/registry/set", {
-                    scope: ["client", this.key],
-                    key: key,
-                    value: value,
-                });
-                break;
-            }
+        case "device": {
+            const deviceState = JSON.parse(localStorage.getItem(this.keyForLocalStorage) || "{}");
+            deviceState[key] = value;
+            localStorage.setItem(this.keyForLocalStorage, JSON.stringify(deviceState));
+            break;
+        }
+        case "deviceAccount": {
+            if ($i == null) break;
+            const deviceAccountState = JSON.parse(localStorage.getItem(this.keyForLocalStorage + "::" + $i.id) || "{}");
+            deviceAccountState[key] = value;
+            localStorage.setItem(this.keyForLocalStorage + "::" + $i.id, JSON.stringify(deviceAccountState));
+            break;
+        }
+        case "account": {
+            if ($i == null) break;
+            const cache = JSON.parse(localStorage.getItem(this.keyForLocalStorage + "::cache::" + $i.id) || "{}");
+            cache[key] = value;
+            localStorage.setItem(this.keyForLocalStorage + "::cache::" + $i.id, JSON.stringify(cache));
+            api("i/registry/set", {
+                scope: ["client", this.key],
+                key: key,
+                value: value,
+            });
+            break;
+        }
         }
     }
 

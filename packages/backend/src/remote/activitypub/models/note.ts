@@ -146,9 +146,9 @@ export async function createNote(value: string | IObject, resolver?: Resolver, s
 
     note.attachment = Array.isArray(note.attachment) ? note.attachment : note.attachment ? [note.attachment] : [];
     const files = note.attachment
-		.map(attach => attach.sensitive = note.sensitive)
+        .map(attach => attach.sensitive = note.sensitive)
         ? (await Promise.all(note.attachment.map(x => limit(() => resolveImage(actor, x)) as Promise<DriveFile>)))
-			.filter(image => image != null)
+            .filter(image => image != null)
         : [];
 
     // リプライ

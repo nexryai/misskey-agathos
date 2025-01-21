@@ -46,15 +46,15 @@ export default define(meta, paramDef, async (ps, me) => {
     query.andWhere("user.isDeleted = FALSE");
 
     switch (ps.state) {
-        case "admin": query.andWhere("user.isAdmin = TRUE"); break;
-        case "moderator": query.andWhere("user.isModerator = TRUE"); break;
-        case "adminOrModerator": query.andWhere("user.isAdmin = TRUE OR user.isModerator = TRUE"); break;
-        case "alive": query.andWhere("user.updatedAt > :date", { date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5) }); break;
+    case "admin": query.andWhere("user.isAdmin = TRUE"); break;
+    case "moderator": query.andWhere("user.isModerator = TRUE"); break;
+    case "adminOrModerator": query.andWhere("user.isAdmin = TRUE OR user.isModerator = TRUE"); break;
+    case "alive": query.andWhere("user.updatedAt > :date", { date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5) }); break;
     }
 
     switch (ps.origin) {
-        case "local": query.andWhere("user.host IS NULL"); break;
-        case "remote": query.andWhere("user.host IS NOT NULL"); break;
+    case "local": query.andWhere("user.host IS NULL"); break;
+    case "remote": query.andWhere("user.host IS NOT NULL"); break;
     }
 
     if (ps.hostname) {
@@ -62,13 +62,13 @@ export default define(meta, paramDef, async (ps, me) => {
     }
 
     switch (ps.sort) {
-        case "+follower": query.orderBy("user.followersCount", "DESC"); break;
-        case "-follower": query.orderBy("user.followersCount", "ASC"); break;
-        case "+createdAt": query.orderBy("user.createdAt", "DESC"); break;
-        case "-createdAt": query.orderBy("user.createdAt", "ASC"); break;
-        case "+updatedAt": query.andWhere("user.updatedAt IS NOT NULL").orderBy("user.updatedAt", "DESC"); break;
-        case "-updatedAt": query.andWhere("user.updatedAt IS NOT NULL").orderBy("user.updatedAt", "ASC"); break;
-        default: query.orderBy("user.id", "ASC"); break;
+    case "+follower": query.orderBy("user.followersCount", "DESC"); break;
+    case "-follower": query.orderBy("user.followersCount", "ASC"); break;
+    case "+createdAt": query.orderBy("user.createdAt", "DESC"); break;
+    case "-createdAt": query.orderBy("user.createdAt", "ASC"); break;
+    case "+updatedAt": query.andWhere("user.updatedAt IS NOT NULL").orderBy("user.updatedAt", "DESC"); break;
+    case "-updatedAt": query.andWhere("user.updatedAt IS NOT NULL").orderBy("user.updatedAt", "ASC"); break;
+    default: query.orderBy("user.id", "ASC"); break;
     }
 
     if (me) generateMutedUserQueryForUsers(query, me);

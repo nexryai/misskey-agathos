@@ -1,5 +1,5 @@
 // https://github.com/typeorm/typeorm/issues/2400
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ 
 // @ts-ignore
 import pg from "pg";
 pg.types.setTypeParser(20, Number);

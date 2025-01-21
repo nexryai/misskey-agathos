@@ -68,12 +68,12 @@ export default async (user: { id: User["id"]; host: User["host"]; }, note: Note,
     // Increment reactions count
     const sql = `jsonb_set("reactions", '{${reaction}}', (COALESCE("reactions"->>'${reaction}', '0')::int + 1)::text::jsonb)`;
     await Notes.createQueryBuilder().update()
-		.set({
+        .set({
 		    reactions: () => sql,
 		    score: () => "\"score\" + 1",
-		})
-		.where("id = :id", { id: note.id })
-		.execute();
+        })
+        .where("id = :id", { id: note.id })
+        .execute();
 
     // カスタム絵文字リアクションだったら絵文字情報も送る
     const decodedReaction = decodeReaction(reaction);

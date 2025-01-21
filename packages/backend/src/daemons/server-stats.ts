@@ -136,18 +136,18 @@ function getUsedMemoryFromProc(): Promise<number | null> {
             try {
                 let valueInBytes;
                 switch (unit) {
-                    case "kb":
-                        valueInBytes = value * 1024;
-                        break;
-                    case "mb":
-                        valueInBytes = value * 1024 * 1024;
-                        break;
-                    case "gb":
-                        valueInBytes = value * 1024 * 1024 * 1024;
-                        break;
-                    default:
-                        reject(new Error("Unknown unit: " + unit));
-                        return;
+                case "kb":
+                    valueInBytes = value * 1024;
+                    break;
+                case "mb":
+                    valueInBytes = value * 1024 * 1024;
+                    break;
+                case "gb":
+                    valueInBytes = value * 1024 * 1024 * 1024;
+                    break;
+                default:
+                    reject(new Error("Unknown unit: " + unit));
+                    return;
                 }
                 resolve(totalMem - valueInBytes);
             } catch (error) {

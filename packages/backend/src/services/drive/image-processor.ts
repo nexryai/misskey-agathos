@@ -16,16 +16,16 @@ export async function convertToJpeg(path: string, width: number, height: number)
 
 export async function convertSharpToJpeg(sharp: sharp.Sharp, width: number, height: number): Promise<IImage> {
     const data = await sharp
-		.resize(width, height, {
+        .resize(width, height, {
 		    fit: "inside",
 		    withoutEnlargement: true,
-		})
-		.rotate()
-		.jpeg({
+        })
+        .rotate()
+        .jpeg({
 		    quality: 85,
 		    progressive: true,
-		})
-		.toBuffer();
+        })
+        .toBuffer();
 
     return {
         data,
@@ -44,15 +44,15 @@ export async function convertToWebp(path: string, width: number, height: number,
 
 export async function convertSharpToWebp(sharp: sharp.Sharp, width: number, height: number, quality = 85): Promise<IImage> {
     const data = await sharp
-		.resize(width, height, {
+        .resize(width, height, {
 		    fit: "inside",
 		    withoutEnlargement: true,
-		})
-		.rotate()
-		.webp({
+        })
+        .rotate()
+        .webp({
 		    quality,
-		})
-		.toBuffer();
+        })
+        .toBuffer();
 
     return {
         data,
@@ -71,13 +71,13 @@ export async function convertToPng(path: string, width: number, height: number):
 
 export async function convertSharpToPng(sharp: sharp.Sharp, width: number, height: number): Promise<IImage> {
     const data = await sharp
-		.resize(width, height, {
+        .resize(width, height, {
 		    fit: "inside",
 		    withoutEnlargement: true,
-		})
-		.rotate()
-		.png()
-		.toBuffer();
+        })
+        .rotate()
+        .png()
+        .toBuffer();
 
     return {
         data,

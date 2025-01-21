@@ -170,13 +170,13 @@ export default define(meta, paramDef, async (ps, user) => {
     const fileIds = ps.fileIds != null ? ps.fileIds : ps.mediaIds != null ? ps.mediaIds : null;
     if (fileIds != null) {
         files = await DriveFiles.createQueryBuilder("file")
-			.where("file.userId = :userId AND file.id IN (:...fileIds)", {
+            .where("file.userId = :userId AND file.id IN (:...fileIds)", {
 			    userId: user.id,
 			    fileIds,
-			})
-			.orderBy("array_position(ARRAY[:...fileIds], \"id\"::text)")
-			.setParameters({ fileIds })
-			.getMany();
+            })
+            .orderBy("array_position(ARRAY[:...fileIds], \"id\"::text)")
+            .setParameters({ fileIds })
+            .getMany();
     }
 
     let renote: Note | null = null;

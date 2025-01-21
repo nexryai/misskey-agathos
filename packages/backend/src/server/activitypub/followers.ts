@@ -45,7 +45,7 @@ export default async (ctx: Router.RouterContext) => {
     //}
     const followersCount = profile == null ? 0 :
         (profile.ffVisibility === "public") ? user.followersCount :
-        0;
+            0;
 
     //#endregion
 

@@ -103,8 +103,8 @@ export async function deleteAccount(job: Bull.Job<DbUserDeleteJobData>): Promise
 
     { // Delete notes
         const notesCount = await Notes.createQueryBuilder("note")
-    .where("note.userId = :userId", { userId: job.data.user.id })
-    .getCount();
+            .where("note.userId = :userId", { userId: job.data.user.id })
+            .getCount();
 
         while (true) {
             const notes = await Notes.find({
@@ -121,8 +121,8 @@ export async function deleteAccount(job: Bull.Job<DbUserDeleteJobData>): Promise
             await Notes.delete(notes.map(note => note.id));
 
             const currentNotesCount = await Notes.createQueryBuilder("note")
-			.where("note.userId = :userId", { userId: job.data.user.id })
-			.getCount();
+                .where("note.userId = :userId", { userId: job.data.user.id })
+                .getCount();
 
             const deleteprogress = currentNotesCount === 0 ? 99 : Math.floor(100 - (currentNotesCount / notesCount) * 100);
 

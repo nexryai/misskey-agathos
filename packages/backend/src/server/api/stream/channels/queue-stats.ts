@@ -24,15 +24,15 @@ export default class extends Channel {
 
     public onMessage(type: string, body: any) {
         switch (type) {
-            case "requestLog":
-                ev.once(`queueStatsLog:${body.id}`, statsLog => {
-                    this.send("statsLog", statsLog);
-                });
-                ev.emit("requestQueueStatsLog", {
-                    id: body.id,
-                    length: body.length,
-                });
-                break;
+        case "requestLog":
+            ev.once(`queueStatsLog:${body.id}`, statsLog => {
+                this.send("statsLog", statsLog);
+            });
+            ev.emit("requestQueueStatsLog", {
+                id: body.id,
+                length: body.length,
+            });
+            break;
         }
     }
 

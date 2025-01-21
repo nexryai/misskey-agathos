@@ -68,15 +68,15 @@ export default define(meta, paramDef, async () => {
     now.setMinutes(Math.round(now.getMinutes() / 5) * 5, 0, 0);
 
     const tagNotes = await Notes.createQueryBuilder("note")
-		.where("note.createdAt > :date", { date: new Date(now.getTime() - rangeA) })
-		.andWhere(new Brackets(qb => { qb
-			.where("note.visibility = 'public'")
-			.orWhere("note.visibility = 'home'");
-		}))
-		.andWhere("note.tags != '{}'")
-		.select(["note.tags", "note.userId"])
-		.cache(60000) // 1 min
-		.getMany();
+        .where("note.createdAt > :date", { date: new Date(now.getTime() - rangeA) })
+        .andWhere(new Brackets(qb => { qb
+            .where("note.visibility = 'public'")
+            .orWhere("note.visibility = 'home'");
+        }))
+        .andWhere("note.tags != '{}'")
+        .select(["note.tags", "note.userId"])
+        .cache(60000) // 1 min
+        .getMany();
 
     if (tagNotes.length === 0) {
         return [];
@@ -107,9 +107,9 @@ export default define(meta, paramDef, async () => {
 
     // タグを人気順に並べ替え
     const hots = tags
-		.sort((a, b) => b.users.length - a.users.length)
-		.map(tag => tag.name)
-		.slice(0, max);
+        .sort((a, b) => b.users.length - a.users.length)
+        .map(tag => tag.name)
+        .slice(0, max);
 
     //#region 2(または3)で話題と判定されたタグそれぞれについて過去の投稿数グラフを取得する
     const countPromises: Promise<number[]>[] = [];
@@ -121,13 +121,13 @@ export default define(meta, paramDef, async () => {
 
     for (let i = 0; i < range; i++) {
         countPromises.push(Promise.all(hots.map(tag => Notes.createQueryBuilder("note")
-			.select("count(distinct note.userId)")
-			.where(`'{"${safeForSql(tag) ? tag : "aichan_kawaii"}"}' <@ note.tags`)
-			.andWhere("note.createdAt < :lt", { lt: new Date(now.getTime() - (interval * i)) })
-			.andWhere("note.createdAt > :gt", { gt: new Date(now.getTime() - (interval * (i + 1))) })
-			.cache(60000) // 1 min
-			.getRawOne()
-			.then(x => parseInt(x.count, 10)),
+            .select("count(distinct note.userId)")
+            .where(`'{"${safeForSql(tag) ? tag : "aichan_kawaii"}"}' <@ note.tags`)
+            .andWhere("note.createdAt < :lt", { lt: new Date(now.getTime() - (interval * i)) })
+            .andWhere("note.createdAt > :gt", { gt: new Date(now.getTime() - (interval * (i + 1))) })
+            .cache(60000) // 1 min
+            .getRawOne()
+            .then(x => parseInt(x.count, 10)),
         )));
     }
 
@@ -135,12 +135,12 @@ export default define(meta, paramDef, async () => {
     //#endregion
 
     const totalCounts = await Promise.all(hots.map(tag => Notes.createQueryBuilder("note")
-		.select("count(distinct note.userId)")
-		.where(`'{"${safeForSql(tag) ? tag : "aichan_kawaii"}"}' <@ note.tags`)
-		.andWhere("note.createdAt > :gt", { gt: new Date(now.getTime() - rangeA) })
-		.cache(60000 * 60) // 60 min
-		.getRawOne()
-		.then(x => parseInt(x.count, 10)),
+        .select("count(distinct note.userId)")
+        .where(`'{"${safeForSql(tag) ? tag : "aichan_kawaii"}"}' <@ note.tags`)
+        .andWhere("note.createdAt > :gt", { gt: new Date(now.getTime() - rangeA) })
+        .cache(60000 * 60) // 60 min
+        .getRawOne()
+        .then(x => parseInt(x.count, 10)),
     ));
 
     const stats = hots.map((tag, i) => ({

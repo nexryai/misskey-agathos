@@ -101,9 +101,9 @@ function PEMString(pemBuffer: Buffer, type = "CERTIFICATE") {
 
 export function hash(data: Buffer) {
     return crypto
-		.createHash("sha256")
-		.update(data)
-		.digest();
+        .createHash("sha256")
+        .update(data)
+        .digest();
 }
 
 export function verifyLogin({
@@ -138,9 +138,9 @@ export function verifyLogin({
     );
 
     return crypto
-		.createVerify("SHA256")
-		.update(verificationData)
-		.verify(PEMString(publicKey), signature);
+        .createVerify("SHA256")
+        .update(verificationData)
+        .verify(PEMString(publicKey), signature);
 }
 
 export const procedures = {
@@ -214,9 +214,9 @@ export const procedures = {
             }
 
             const isValid = crypto
-				.createVerify("SHA256")
-				.update(verificationData)
-				.verify(PEMString(attCert), attStmt.sig);
+                .createVerify("SHA256")
+                .update(verificationData)
+                .verify(PEMString(attCert), attStmt.sig);
 
             // TODO: Check 'attestationChallenge' field in extension of cert matches hash(clientDataJSON)
 
@@ -260,8 +260,8 @@ export const procedures = {
             }
 
             const certificateChain = header.x5c
-				.map((key: any) => PEMString(key))
-				.concat([GSR2]);
+                .map((key: any) => PEMString(key))
+                .concat([GSR2]);
 
             if (getCertSubject(certificateChain[0]).CN !== "attest.android.com") {
                 throw new Error("invalid common name");
@@ -277,9 +277,9 @@ export const procedures = {
             );
 
             const valid = crypto
-				.createVerify("sha256")
-				.update(signatureBase)
-				.verify(certificateChain[0], base64URLDecode(signature));
+                .createVerify("sha256")
+                .update(signatureBase)
+                .verify(certificateChain[0], base64URLDecode(signature));
 
             const negTwo = publicKey.get(-2);
 
@@ -326,9 +326,9 @@ export const procedures = {
                 const attCert = attStmt.x5c[0];
 
                 const validSignature = crypto
-					.createVerify("SHA256")
-					.update(verificationData)
-					.verify(PEMString(attCert), attStmt.sig);
+                    .createVerify("SHA256")
+                    .update(verificationData)
+                    .verify(PEMString(attCert), attStmt.sig);
 
                 const negTwo = publicKey.get(-2);
 
@@ -409,9 +409,9 @@ export const procedures = {
             ]);
 
             const validSignature = crypto
-				.createVerify("SHA256")
-				.update(verificationData)
-				.verify(PEMString(attCert), attStmt.sig);
+                .createVerify("SHA256")
+                .update(verificationData)
+                .verify(PEMString(attCert), attStmt.sig);
 
             return {
                 valid: validSignature,

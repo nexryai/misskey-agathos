@@ -96,12 +96,12 @@ export default define(meta, paramDef, async (ps, me) => {
     }
 
     const query = makePaginationQuery(Followings.createQueryBuilder("following"), ps.sinceId, ps.untilId)
-		.andWhere("following.followerId = :userId", { userId: user.id })
-		.innerJoinAndSelect("following.followee", "followee");
+        .andWhere("following.followerId = :userId", { userId: user.id })
+        .innerJoinAndSelect("following.followee", "followee");
 
     const followings = await query
-		.take(ps.limit)
-		.getMany();
+        .take(ps.limit)
+        .getMany();
 
     return await Followings.packMany(followings, me, { populateFollowee: true });
 });

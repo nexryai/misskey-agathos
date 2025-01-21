@@ -138,26 +138,26 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
     // Renote Visibility Check
     if (data.renote) {
         switch (data.renote.visibility) {
-            case "public":
-                // public noteは無条件にrenote可能
-                break;
-            case "home":
-                // home noteはhome以下にrenote可能
-                if (data.visibility === "public") {
-                    data.visibility = "home";
-                }
-                break;
-            case "followers":
-                // 他人のfollowers noteはreject
-                if (data.renote.userId !== user.id) {
-                    throw new Error("Renote target is not public or home");
-                }
-                // Renote対象がfollowersならfollowersにする
-                data.visibility = "followers";
-                break;
-            case "specified":
-                // specified / direct noteはreject
+        case "public":
+            // public noteは無条件にrenote可能
+            break;
+        case "home":
+            // home noteはhome以下にrenote可能
+            if (data.visibility === "public") {
+                data.visibility = "home";
+            }
+            break;
+        case "followers":
+            // 他人のfollowers noteはreject
+            if (data.renote.userId !== user.id) {
                 throw new Error("Renote target is not public or home");
+            }
+            // Renote対象がfollowersならfollowersにする
+            data.visibility = "followers";
+            break;
+        case "specified":
+            // specified / direct noteはreject
+            throw new Error("Renote target is not public or home");
         }
 
         // Check blocking
@@ -273,9 +273,9 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
     // TODO: キャッシュしたい
     if (!config.disableAntenna) {
         Followings.createQueryBuilder("following")
-			.andWhere("following.followeeId = :userId", { userId: note.userId })
-			.getMany()
-			.then(async followings => {
+            .andWhere("following.followeeId = :userId", { userId: note.userId })
+            .getMany()
+            .then(async followings => {
 			    const blockings = await Blockings.findBy({ blockerId: user.id });
 			    const followers = followings.map(f => f.followerId);
 			    for (const antenna of (await getAntennas())) {
@@ -286,7 +286,7 @@ export default async (user: { id: User["id"]; username: User["username"]; host: 
 			            }
 			        });
 			    }
-			});
+            });
     }
 
     if (data.reply) {
@@ -466,12 +466,12 @@ async function renderNoteOrRenoteActivity(data: Option, note: Note) {
 
 function incRenoteCount(renote: Note) {
     Notes.createQueryBuilder().update()
-		.set({
+        .set({
 		    renoteCount: () => "\"renoteCount\" + 1",
 		    score: () => "\"score\" + 1",
-		})
-		.where("id = :id", { id: renote.id })
-		.execute();
+        })
+        .where("id = :id", { id: renote.id })
+        .execute();
 }
 
 async function insertNote(user: { id: User["id"]; host: User["host"]; }, data: Option, tags: string[], emojis: string[], mentionedUsers: MinimumUser[]) {
@@ -633,12 +633,12 @@ function saveReply(reply: Note, note: Note) {
 
 function incNotesCountOfUser(user: { id: User["id"]; }) {
     Users.createQueryBuilder().update()
-		.set({
+        .set({
 		    updatedAt: new Date(),
 		    notesCount: () => "\"notesCount\" + 1",
-		})
-		.where("id = :id", { id: user.id })
-		.execute();
+        })
+        .where("id = :id", { id: user.id })
+        .execute();
 }
 
 async function extractMentionedUsers(user: { host: User["host"]; }, tokens: mfm.MfmNode[]): Promise<User[]> {

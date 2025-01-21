@@ -85,10 +85,10 @@ export function getUserMenu(user, router: Router = mainRouter) {
 
             const expiresAt = period === "indefinitely" ? null
                 : period === "tenMinutes" ? Date.now() + (1000 * 60 * 10)
-                : period === "oneHour" ? Date.now() + (1000 * 60 * 60)
-                : period === "oneDay" ? Date.now() + (1000 * 60 * 60 * 24)
-                : period === "oneWeek" ? Date.now() + (1000 * 60 * 60 * 24 * 7)
-                : null;
+                    : period === "oneHour" ? Date.now() + (1000 * 60 * 60)
+                        : period === "oneDay" ? Date.now() + (1000 * 60 * 60 * 24)
+                            : period === "oneWeek" ? Date.now() + (1000 * 60 * 60 * 24 * 7)
+                                : null;
 
             os.apiWithDialog("mute/create", {
                 userId: user.id,

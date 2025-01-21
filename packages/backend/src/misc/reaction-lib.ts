@@ -1,4 +1,4 @@
-/* eslint-disable key-spacing */
+ 
 import { IsNull } from "typeorm";
 import { Emojis } from "@/models/index.js";
 import { emojiRegex } from "./emoji-regex.js";

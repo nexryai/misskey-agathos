@@ -46,19 +46,19 @@ export default class Logger {
         const worker = cluster.isPrimary ? "*" : cluster.worker.id;
         const l =
 			level === "error" ? important ? chalk.bgRed.white("ERR ") : chalk.red("ERR ") :
-			level === "warning" ? chalk.yellow("WARN") :
-			level === "success" ? important ? chalk.bgGreen.white("DONE") : chalk.green("DONE") :
-			level === "debug" ? chalk.gray("VERB") :
-			level === "info" ? chalk.blue("INFO") :
-			null;
+			    level === "warning" ? chalk.yellow("WARN") :
+			        level === "success" ? important ? chalk.bgGreen.white("DONE") : chalk.green("DONE") :
+			            level === "debug" ? chalk.gray("VERB") :
+			                level === "info" ? chalk.blue("INFO") :
+			                    null;
         const domains = [this.domain].concat(subDomains).map(d => d.color ? chalk.rgb(...convertColor.keyword.rgb(d.color))(d.name) : chalk.white(d.name));
         const m =
 			level === "error" ? chalk.red(message) :
-			level === "warning" ? chalk.yellow(message) :
-			level === "success" ? chalk.green(message) :
-			level === "debug" ? chalk.gray(message) :
-			level === "info" ? message :
-			null;
+			    level === "warning" ? chalk.yellow(message) :
+			        level === "success" ? chalk.green(message) :
+			            level === "debug" ? chalk.gray(message) :
+			                level === "info" ? message :
+			                    null;
 
         let log = `${l} ${worker}\t[${domains.join(" ")}]\t${m}`;
         if (envOption.withLogTime) log = chalk.gray(time) + " " + log;
@@ -69,10 +69,10 @@ export default class Logger {
             if (this.syslogClient) {
                 const send =
 					level === "error" ? this.syslogClient.error :
-					level === "warning" ? this.syslogClient.warning :
-					level === "success" ? this.syslogClient.info :
-					level === "debug" ? this.syslogClient.info :
-					level === "info" ? this.syslogClient.info :
+					    level === "warning" ? this.syslogClient.warning :
+					        level === "success" ? this.syslogClient.info :
+					            level === "debug" ? this.syslogClient.info :
+					                level === "info" ? this.syslogClient.info :
 					null as never;
 
                 send.bind(this.syslogClient)(message).catch(() => {});

@@ -41,22 +41,22 @@ export default define(meta, paramDef, async (ps, me) => {
     const query = Instances.createQueryBuilder("instance");
 
     switch (ps.sort) {
-        case "+pubSub": query.orderBy("instance.followingCount", "DESC").orderBy("instance.followersCount", "DESC"); break;
-        case "-pubSub": query.orderBy("instance.followingCount", "ASC").orderBy("instance.followersCount", "ASC"); break;
-        case "+notes": query.orderBy("instance.notesCount", "DESC"); break;
-        case "-notes": query.orderBy("instance.notesCount", "ASC"); break;
-        case "+users": query.orderBy("instance.usersCount", "DESC"); break;
-        case "-users": query.orderBy("instance.usersCount", "ASC"); break;
-        case "+following": query.orderBy("instance.followingCount", "DESC"); break;
-        case "-following": query.orderBy("instance.followingCount", "ASC"); break;
-        case "+followers": query.orderBy("instance.followersCount", "DESC"); break;
-        case "-followers": query.orderBy("instance.followersCount", "ASC"); break;
-        case "+caughtAt": query.orderBy("instance.caughtAt", "DESC"); break;
-        case "-caughtAt": query.orderBy("instance.caughtAt", "ASC"); break;
-        case "+lastCommunicatedAt": query.orderBy("instance.lastCommunicatedAt", "DESC"); break;
-        case "-lastCommunicatedAt": query.orderBy("instance.lastCommunicatedAt", "ASC"); break;
+    case "+pubSub": query.orderBy("instance.followingCount", "DESC").orderBy("instance.followersCount", "DESC"); break;
+    case "-pubSub": query.orderBy("instance.followingCount", "ASC").orderBy("instance.followersCount", "ASC"); break;
+    case "+notes": query.orderBy("instance.notesCount", "DESC"); break;
+    case "-notes": query.orderBy("instance.notesCount", "ASC"); break;
+    case "+users": query.orderBy("instance.usersCount", "DESC"); break;
+    case "-users": query.orderBy("instance.usersCount", "ASC"); break;
+    case "+following": query.orderBy("instance.followingCount", "DESC"); break;
+    case "-following": query.orderBy("instance.followingCount", "ASC"); break;
+    case "+followers": query.orderBy("instance.followersCount", "DESC"); break;
+    case "-followers": query.orderBy("instance.followersCount", "ASC"); break;
+    case "+caughtAt": query.orderBy("instance.caughtAt", "DESC"); break;
+    case "-caughtAt": query.orderBy("instance.caughtAt", "ASC"); break;
+    case "+lastCommunicatedAt": query.orderBy("instance.lastCommunicatedAt", "DESC"); break;
+    case "-lastCommunicatedAt": query.orderBy("instance.lastCommunicatedAt", "ASC"); break;
 
-        default: query.orderBy("instance.id", "DESC"); break;
+    default: query.orderBy("instance.id", "DESC"); break;
     }
 
     if (typeof ps.blocked === "boolean") {

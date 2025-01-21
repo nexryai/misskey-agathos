@@ -38,18 +38,18 @@ export default define(meta, paramDef, async (ps, me) => {
     if (ps.attachedToRemoteUserOnly) query.andWhere("tag.attachedRemoteUsersCount != 0");
 
     switch (ps.sort) {
-        case "+mentionedUsers": query.orderBy("tag.mentionedUsersCount", "DESC"); break;
-        case "-mentionedUsers": query.orderBy("tag.mentionedUsersCount", "ASC"); break;
-        case "+mentionedLocalUsers": query.orderBy("tag.mentionedLocalUsersCount", "DESC"); break;
-        case "-mentionedLocalUsers": query.orderBy("tag.mentionedLocalUsersCount", "ASC"); break;
-        case "+mentionedRemoteUsers": query.orderBy("tag.mentionedRemoteUsersCount", "DESC"); break;
-        case "-mentionedRemoteUsers": query.orderBy("tag.mentionedRemoteUsersCount", "ASC"); break;
-        case "+attachedUsers": query.orderBy("tag.attachedUsersCount", "DESC"); break;
-        case "-attachedUsers": query.orderBy("tag.attachedUsersCount", "ASC"); break;
-        case "+attachedLocalUsers": query.orderBy("tag.attachedLocalUsersCount", "DESC"); break;
-        case "-attachedLocalUsers": query.orderBy("tag.attachedLocalUsersCount", "ASC"); break;
-        case "+attachedRemoteUsers": query.orderBy("tag.attachedRemoteUsersCount", "DESC"); break;
-        case "-attachedRemoteUsers": query.orderBy("tag.attachedRemoteUsersCount", "ASC"); break;
+    case "+mentionedUsers": query.orderBy("tag.mentionedUsersCount", "DESC"); break;
+    case "-mentionedUsers": query.orderBy("tag.mentionedUsersCount", "ASC"); break;
+    case "+mentionedLocalUsers": query.orderBy("tag.mentionedLocalUsersCount", "DESC"); break;
+    case "-mentionedLocalUsers": query.orderBy("tag.mentionedLocalUsersCount", "ASC"); break;
+    case "+mentionedRemoteUsers": query.orderBy("tag.mentionedRemoteUsersCount", "DESC"); break;
+    case "-mentionedRemoteUsers": query.orderBy("tag.mentionedRemoteUsersCount", "ASC"); break;
+    case "+attachedUsers": query.orderBy("tag.attachedUsersCount", "DESC"); break;
+    case "-attachedUsers": query.orderBy("tag.attachedUsersCount", "ASC"); break;
+    case "+attachedLocalUsers": query.orderBy("tag.attachedLocalUsersCount", "DESC"); break;
+    case "-attachedLocalUsers": query.orderBy("tag.attachedLocalUsersCount", "ASC"); break;
+    case "+attachedRemoteUsers": query.orderBy("tag.attachedRemoteUsersCount", "DESC"); break;
+    case "-attachedRemoteUsers": query.orderBy("tag.attachedRemoteUsersCount", "ASC"); break;
     }
 
     query.select([

@@ -29,7 +29,7 @@ export async function updateHashtag(user: { id: User["id"]; host: User["host"]; 
 
     if (index != null) {
         const q = Hashtags.createQueryBuilder("tag").update()
-			.where("name = :name", { name: tag });
+            .where("name = :name", { name: tag });
 
         const set = {} as any;
 

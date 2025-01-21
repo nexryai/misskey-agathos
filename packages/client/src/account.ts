@@ -45,9 +45,9 @@ export async function signout() {
 
         if (accounts.length === 0) {
             await navigator.serviceWorker.getRegistrations()
-				.then(registrations => {
+                .then(registrations => {
 				    return Promise.all(registrations.map(registration => registration.unregister()));
-				});
+                });
         }
     } catch (err) {}
     //#endregion
@@ -86,8 +86,8 @@ function fetchAccount(token: string): Promise<Account> {
                 i: token,
             }),
         })
-		.then(res => res.json())
-		.then(res => {
+            .then(res => res.json())
+            .then(res => {
 		    if (res.error) {
 		        if (res.error.id === "a8c724b3-6e9c-4b46-b1a8-bc3ed6258370") {
 		            showSuspendedDialog().then(() => {
@@ -104,8 +104,8 @@ function fetchAccount(token: string): Promise<Account> {
 		        res.token = token;
 		        done(res);
 		    }
-		})
-		.catch(fail);
+            })
+            .catch(fail);
     });
 }
 
