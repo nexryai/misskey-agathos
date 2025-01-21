@@ -1,5 +1,5 @@
 // https://github.com/typeorm/typeorm/issues/2400
- 
+
 // @ts-ignore
 import pg from "pg";
 pg.types.setTypeParser(20, Number);
@@ -57,7 +57,6 @@ import { PromoRead } from "@/models/entities/promo-read.js";
 import { Relay } from "@/models/entities/relay.js";
 import { MutedNote } from "@/models/entities/muted-note.js";
 import { RegistryItem } from "@/models/entities/registry-item.js";
-import { Ad } from "@/models/entities/ad.js";
 import { PasswordResetRequest } from "@/models/entities/password-reset-request.js";
 import { UserPending } from "@/models/entities/user-pending.js";
 import { Webhook } from "@/models/entities/webhook.js";
@@ -150,7 +149,6 @@ export const entities = [
     Relay,
     MutedNote,
     RegistryItem,
-    Ad,
     PasswordResetRequest,
     UserPending,
     Webhook,

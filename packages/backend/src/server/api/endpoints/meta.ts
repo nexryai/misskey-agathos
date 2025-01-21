@@ -1,8 +1,7 @@
-import { IsNull, MoreThan } from "typeorm";
+import { IsNull } from "typeorm";
 import config from "@/config/index.js";
 import { fetchMeta } from "@/misc/fetch-meta.js";
-import { Ads, Emojis, Users } from "@/models/index.js";
-import { DB_MAX_NOTE_TEXT_LENGTH } from "@/misc/hard-limits.js";
+import { Emojis, Users } from "@/models/index.js";
 import { MAX_NOTE_TEXT_LENGTH } from "@/const.js";
 import define from "../define.js";
 
@@ -328,12 +327,6 @@ export default define(meta, paramDef, async (ps, me) => {
         },
     });
 
-    const ads = await Ads.find({
-        where: {
-            expiresAt: MoreThan(new Date()),
-        },
-    });
-
     const response: any = {
         maintainerName: instance.maintainerName,
         maintainerEmail: instance.maintainerEmail,
@@ -373,13 +366,7 @@ export default define(meta, paramDef, async (ps, me) => {
         emojis: await Emojis.packMany(emojis),
         defaultLightTheme: instance.defaultLightTheme,
         defaultDarkTheme: instance.defaultDarkTheme,
-        ads: ads.map(ad => ({
-            id: ad.id,
-            url: ad.url,
-            place: ad.place,
-            ratio: ad.ratio,
-            imageUrl: ad.imageUrl,
-        })),
+        ads: [],
         enableEmail: false,
 
         enableTwitterIntegration: instance.enableTwitterIntegration,
