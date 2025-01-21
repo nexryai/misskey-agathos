@@ -5,9 +5,14 @@
         <div class="_formRoot">
             <FormSection>
                 <MkKeyValue class="_formBlock" :copy="version">
-                    <template #key>Software Version</template>
+                    <template #key>System Software Version</template>
                     <template #value>{{ version }}</template>
                 </MkKeyValue>
+                <FormLink to="https://github.com/nexryai/nexkey" external>
+                    <template #icon><i class="ti ti-code"></i></template>
+                    {{ i18n.ts._aboutMisskey.source }}
+                    <template #suffix>GitHub</template>
+                </FormLink>
             </FormSection>
 
             <FormSection>
