@@ -42,11 +42,13 @@ export default ts.config(
             "built/",
             "node_modules/",
             "dist/",
+            "packages/backend/built",
             "packages/backend/migration/",
             "packages/backend/src/server/web/*js",
             "packages/backend/test/",
             "packages/client/assets",
             "packages/client/@types",
+            "packages/misskey-js/built",
             "locales/",
             "scripts/"
         ]
