@@ -421,9 +421,6 @@ router.get("/cli", async ctx => {
     });
 });
 
-const override = (source: string, target: string, depth = 0) =>
-    [, ...target.split("/").filter(x => x), ...source.split("/").filter(x => x).splice(depth)].join("/");
-
 router.get("/flush", async ctx => {
     const { csp } = genCsp();
     await ctx.render("flush");

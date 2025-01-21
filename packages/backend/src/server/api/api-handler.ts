@@ -74,6 +74,7 @@ export default (endpoint: IEndpoint, ctx: Koa.Context) => new Promise<void>((res
                             ip: ip,
                         }).orIgnore(true).execute();
                     } catch {
+                        // ignore
                     }
                 }
             });

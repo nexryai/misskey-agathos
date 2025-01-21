@@ -49,7 +49,9 @@ export async function signout() {
 				    return Promise.all(registrations.map(registration => registration.unregister()));
                 });
         }
-    } catch (err) {}
+    } catch (err) {
+        console.error(err);
+    }
     //#endregion
 
     document.cookie = "igi=; path=/";
