@@ -12,10 +12,6 @@
                 </div>
 
                 <XNotes v-if="searchQuery" ref="notes" :pagination="searchPagination"/>
-                <div v-if="!searchQuery" class="no_search">
-                    <h4>{{ i18n.ts.featured }}</h4>
-                    <XFeatured/>
-                </div>
             </MkSpacer>
         </div>
 
@@ -34,10 +30,6 @@
                 </div>
 
                 <XUserList v-if="userSearchQuery" ref="searchEl" class="_gap" :pagination="userSearchPagination"/>
-                <div v-if="!userSearchQuery" class="no_search">
-                    <h4>{{ i18n.ts.pinnedUsers }}</h4>
-                    <XUsers/>
-                </div>
             </MkSpacer>
         </div>
     </div>
@@ -45,9 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from "vue";
-import XFeatured from "./explore.featured.vue";
-import XUsers from "./explore.users.vue";
+import { ref, computed, watch } from "vue";
 import MkFolder from "@/components/MkFolder.vue";
 import MkInput from "@/components/form/input.vue";
 import MkRadios from "@/components/form/radios.vue";
@@ -60,36 +50,36 @@ const props = defineProps<{
 	tag?: string;
 }>();
 
-let tab = $ref("notes");
-let tagsEl = $ref<InstanceType<typeof MkFolder>>();
-let searchQuery = $ref(null);
-let userSearchQuery = $ref(null);
-let userSearchOrigin = $ref("combined");
+let tab = ref("notes");
+let tagsEl = ref<InstanceType<typeof MkFolder>>();
+let searchQuery = ref("");
+let userSearchQuery = ref("");
+let userSearchOrigin = ref("combined");
 
 watch(() => props.tag, () => {
-    if (tagsEl) tagsEl.toggleContent(props.tag == null);
+    if (tagsEl.value) tagsEl.value.toggleContent(props.tag == null);
 });
 
 const searchPagination = {
     endpoint: "notes/search" as const,
     limit: 10,
     params: computed(() => ({
-        query: searchQuery,
+        query: searchQuery.value,
     })),
 };
 
 const userSearchPagination = {
     endpoint: "users/search" as const,
     limit: 10,
-    params: computed(() => (userSearchQuery && userSearchQuery !== "") ? {
-        query: userSearchQuery,
-        origin: userSearchOrigin,
+    params: computed(() => (userSearchQuery.value !== "") ? {
+        query: userSearchQuery.value,
+        origin: userSearchOrigin.value,
     } : null),
 };
 
-const headerActions = $computed(() => []);
+const headerActions = computed(() => []);
 
-const headerTabs = $computed(() => [{
+const headerTabs = computed(() => [{
     key: "notes",
     icon: "ti ti-bolt",
     title: i18n.ts.notes,
@@ -104,9 +94,3 @@ definePageMetadata(computed(() => ({
     icon: "ti ti-hash",
 })));
 </script>
-
-<style>
-.no_search {
-	margin-top: 60px;
-}
-</style>
