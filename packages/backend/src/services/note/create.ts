@@ -462,7 +462,6 @@ function incRenoteCount(renote: Note) {
     Notes.createQueryBuilder().update()
         .set({
 		    renoteCount: () => "\"renoteCount\" + 1",
-		    score: () => "\"score\" + 1",
         })
         .where("id = :id", { id: renote.id })
         .execute();
