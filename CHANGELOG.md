@@ -1,3 +1,10 @@
+## 12.25Q1.1
+ - Client: フォントの変更、UIの改善
+ - Breaking: ハイライトと広告機能の削除
+ - Feat: WebSocketサーバーのパフォーマンスを改善
+ - Chore: 依存関係の更新
+ - Chore: 削除された機能のクリーンアップ
+
 ## 12.24Q4.2
  - SECURITY FIX: リモートのActivityの検証が不十分だった問題を修正
  - SECURITY FIX: 特定の状況でSSRF攻撃が可能になる問題を緩和
