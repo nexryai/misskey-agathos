@@ -127,7 +127,7 @@ export async function login(token: Account["token"], redirect?: string) {
     if (_DEV_) console.log("logging as token ", token);
     const me = await fetchAccount(token);
     localStorage.setItem("account", JSON.stringify(me));
-    document.cookie = `token=${token}; path=/; max-age=31536000`; // bull dashboardの認証とかで使う
+    document.cookie = `token=${token}; path=/proxy; max-age=31536000; SameSite=Strict; Secure`; // MediaProxyの認証で使う
     await addAccount(me.id, token);
 
     if (redirect) {
