@@ -14,6 +14,8 @@ import Logger from "@/services/logger.js";
 
 const logger = new Logger("streaming");
 
+const MAX_CHANNELS_PER_CONNECTION = 32;
+
 /**
  * Main stream connection
  */
@@ -258,6 +260,10 @@ export class Connection {
      * チャンネルに接続
      */
     public connectChannel(id: string, params: any, channel: string, pong = false) {
+        if (this.channels.length >= MAX_CHANNELS_PER_CONNECTION) {
+            return;
+        }
+
         if ((channels as any)[channel].requireCredential && this.user == null) {
             return;
         }
