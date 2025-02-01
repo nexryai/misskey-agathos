@@ -1,50 +1,53 @@
 import { EventEmitter } from "events";
-import * as websocket from "websocket";
+import { WebSocket } from "ws";
 import readNote from "@/services/note/read.js";
 import { User } from "@/models/entities/user.js";
-import { Followings, Mutings, RenoteMutings, UserProfiles, Blockings } from "@/models/index.js";
+import { Followings, Mutings, UserProfiles, Blockings, RenoteMutings } from "@/models/index.js";
 import { AccessToken } from "@/models/entities/access-token.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
-import { UserGroup } from "@/models/entities/user-group.js";
 import { Packed } from "@/misc/schema.js";
 import { readNotification } from "../common/read-notification.js";
 import channels from "./channels/index.js";
 import Channel from "./channel.js";
 import { StreamEventEmitter, StreamMessages } from "./types.js";
+import Logger from "@/services/logger.js";
+
+const logger = new Logger("streaming");
 
 /**
  * Main stream connection
  */
-export default class Connection {
+export class Connection {
     public user?: User;
     public userProfile?: UserProfile | null;
     public following: Set<User["id"]> = new Set();
     public muting: Set<User["id"]> = new Set();
     public blocking: Set<User["id"]> = new Set(); // "被"blocking
+    public renoteMuting: Set<User["id"]> = new Set();
     public token?: AccessToken;
-    private wsConnection: websocket.connection;
+    private socket: WebSocket;
     public subscriber: StreamEventEmitter;
     private channels: Channel[] = [];
     private subscribingNotes: any = {};
     private cachedNotes: Packed<"Note">[] = [];
 
     constructor(
-        wsConnection: websocket.connection,
+        socket: WebSocket,
         subscriber: EventEmitter,
         user: User | null | undefined,
         token: AccessToken | null | undefined,
     ) {
-        this.wsConnection = wsConnection;
+        this.socket = socket;
         this.subscriber = subscriber;
         if (user) this.user = user;
         if (token) this.token = token;
 
-        this.onWsConnectionMessage = this.onWsConnectionMessage.bind(this);
+        this.onMessage = this.onMessage.bind(this);
         this.onUserEvent = this.onUserEvent.bind(this);
         this.onNoteStreamMessage = this.onNoteStreamMessage.bind(this);
         this.onBroadcastMessage = this.onBroadcastMessage.bind(this);
 
-        this.wsConnection.on("message", this.onWsConnectionMessage);
+        this.socket.on("message", this.onMessage);
 
         this.subscriber.on("broadcast", data => {
             this.onBroadcastMessage(data);
@@ -92,7 +95,7 @@ export default class Connection {
             break;
 
         case "terminate":
-            this.wsConnection.close();
+            this.socket.close();
             this.dispose();
             break;
 
@@ -101,39 +104,48 @@ export default class Connection {
         }
     }
 
-    /**
-	 * クライアントからメッセージ受信時
-	 */
-    private async onWsConnectionMessage(data: websocket.Message) {
-        if (data.type !== "utf8") return;
-        if (data.utf8Data == null) return;
+    // @ts-ignore
+    private async onMessage(data: WebSocket.RawData, isRaw: boolean) {
+        if (data.isRaw) return;
+        if (isRaw) {
+            logger.warn("received unexpected raw data from websocket");
+            return;
+        }
 
         let obj: Record<string, any>;
 
         try {
-            obj = JSON.parse(data.utf8Data);
-        } catch (e) {
+            obj = JSON.parse(data);
+        } catch (err) {
+            logger.error(err as Error);
             return;
         }
 
         const { type, body } = obj;
 
         switch (type) {
-        case "readNotification": this.onReadNotification(body); break;
-        case "subNote": this.onSubscribeNote(body); break;
-        case "s": this.onSubscribeNote(body); break; // alias
-        case "sr": this.onSubscribeNote(body); this.readNote(body); break;
-        case "unsubNote": this.onUnsubscribeNote(body); break;
-        case "un": this.onUnsubscribeNote(body); break; // alias
-        case "connect": this.onChannelConnectRequested(body); break;
-        case "disconnect": this.onChannelDisconnectRequested(body); break;
-        case "channel": this.onChannelMessageRequested(body); break;
-        case "ch": this.onChannelMessageRequested(body); break; // alias
-
-            // 個々のチャンネルではなくルートレベルでこれらのメッセージを受け取る理由は、
-            // クライアントの事情を考慮したとき、入力フォームはノートチャンネルやメッセージのメインコンポーネントとは別
-            // なこともあるため、それらのコンポーネントがそれぞれ各チャンネルに接続するようにするのは面倒なため。
-        case "typingOnMessaging": this.typingOnMessaging(body); break;
+        case "readNotification":
+            this.onReadNotification(body);
+            break;
+        case "subNote": case "s":
+            this.onSubscribeNote(body);
+            break;
+        case "sr":
+            this.onSubscribeNote(body);
+            this.readNote(body);
+            break;
+        case "unsubNote": case "un":
+            this.onUnsubscribeNote(body);
+            break;
+        case "connect":
+            this.onChannelConnectRequested(body);
+            break;
+        case "disconnect":
+            this.onChannelDisconnectRequested(body);
+            break;
+        case "channel": case "ch":
+            this.onChannelMessageRequested(body);
+            break;
         }
     }
 
@@ -168,7 +180,7 @@ export default class Connection {
 
         if (this.user && (note.userId !== this.user.id)) {
             readNote(this.user.id, [note], {
-                following: this.following,
+                following: this.following
             });
         }
     }
@@ -179,8 +191,8 @@ export default class Connection {
     }
 
     /**
-	 * 投稿購読要求時
-	 */
+     * 投稿購読要求時
+     */
     private onSubscribeNote(payload: any) {
         if (!payload.id) return;
 
@@ -196,8 +208,8 @@ export default class Connection {
     }
 
     /**
-	 * 投稿購読解除要求時
-	 */
+     * 投稿購読解除要求時
+     */
     private onUnsubscribeNote(payload: any) {
         if (!payload.id) return;
 
@@ -217,34 +229,34 @@ export default class Connection {
     }
 
     /**
-	 * チャンネル接続要求時
-	 */
+     * チャンネル接続要求時
+     */
     private onChannelConnectRequested(payload: any) {
         const { channel, id, params, pong } = payload;
         this.connectChannel(id, params, channel, pong);
     }
 
     /**
-	 * チャンネル切断要求時
-	 */
+     * チャンネル切断要求時
+     */
     private onChannelDisconnectRequested(payload: any) {
         const { id } = payload;
         this.disconnectChannel(id);
     }
 
     /**
-	 * クライアントにメッセージ送信
-	 */
+     * クライアントにメッセージ送信
+     */
     public sendMessageToWs(type: string, payload: any) {
-        this.wsConnection.send(JSON.stringify({
+        this.socket.send(JSON.stringify({
             type: type,
             body: payload,
         }));
     }
 
     /**
-	 * チャンネルに接続
-	 */
+     * チャンネルに接続
+     */
     public connectChannel(id: string, params: any, channel: string, pong = false) {
         if ((channels as any)[channel].requireCredential && this.user == null) {
             return;
@@ -267,9 +279,9 @@ export default class Connection {
     }
 
     /**
-	 * チャンネルから切断
-	 * @param id チャンネルコネクションID
-	 */
+     * チャンネルから切断
+     * @param id チャンネルコネクションID
+     */
     public disconnectChannel(id: string) {
         const channel = this.channels.find(c => c.id === id);
 
@@ -280,23 +292,13 @@ export default class Connection {
     }
 
     /**
-	 * チャンネルへメッセージ送信要求時
-	 * @param data メッセージ
-	 */
+     * チャンネルへメッセージ送信要求時
+     * @param data メッセージ
+     */
     private onChannelMessageRequested(data: any) {
         const channel = this.channels.find(c => c.id === data.id);
         if (channel != null && channel.onMessage != null) {
             channel.onMessage(data.type, data.body);
-        }
-    }
-
-    private typingOnMessaging(param: { partner?: User["id"]; group?: UserGroup["id"]; }) {
-        if (this.user) {
-            if (param.partner) {
-                publishMessagingStream(param.partner, this.user.id, "typing", this.user.id);
-            } else if (param.group) {
-                publishGroupMessagingStream(param.group, "typing", this.user.id);
-            }
         }
     }
 
@@ -351,8 +353,8 @@ export default class Connection {
     }
 
     /**
-	 * ストリームが切れたとき
-	 */
+     * ストリームが切れたとき
+     */
     public dispose() {
         for (const c of this.channels.filter(c => c.dispose)) {
             if (c.dispose) c.dispose();

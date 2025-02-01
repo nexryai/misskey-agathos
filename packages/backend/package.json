@@ -105,7 +105,6 @@
 		"ulid": "2.3.0",
 		"uuid": "11.0.5",
 		"web-push": "3.6.7",
-		"websocket": "1.0.35",
 		"ws": "8.18.0",
 		"xev": "3.0.2"
 	},
@@ -149,7 +148,6 @@
 		"@types/tmp": "0.2.6",
 		"@types/uuid": "9.0.8",
 		"@types/web-push": "3.6.4",
-		"@types/websocket": "1.0.10",
 		"@types/ws": "8.5.12",
 		"cross-env": "7.0.3",
 		"execa": "9.5.2",

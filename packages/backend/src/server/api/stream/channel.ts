@@ -1,4 +1,4 @@
-import Connection from ".";
+import { Connection } from "./index.js";
 
 /**
  * Stream channel
@@ -32,10 +32,6 @@ export default abstract class Channel {
 
 	protected get renoteMuting() {
 	    return this.connection.renoteMuting;
-	}
-
-	protected get followingChannels() {
-	    return this.connection.followingChannels;
 	}
 
 	protected get subscriber() {
