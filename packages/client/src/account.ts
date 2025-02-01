@@ -80,6 +80,10 @@ export async function removeAccount(id: Account["id"]) {
 }
 
 function fetchAccount(token: string): Promise<Account> {
+    // remove old token
+    document.cookie = "token=; path=/; max-age=0";
+    document.cookie = `token=${token}; path=/proxy; max-age=86400; SameSite=Strict; Secure`; // MediaProxyの認証で使う
+
     return new Promise((done, fail) => {
         // Fetch user
         fetch(`${apiUrl}/i`, {
@@ -127,7 +131,6 @@ export async function login(token: Account["token"], redirect?: string) {
     if (_DEV_) console.log("logging as token ", token);
     const me = await fetchAccount(token);
     localStorage.setItem("account", JSON.stringify(me));
-    document.cookie = `token=${token}; path=/proxy; max-age=31536000; SameSite=Strict; Secure`; // MediaProxyの認証で使う
     await addAccount(me.id, token);
 
     if (redirect) {
