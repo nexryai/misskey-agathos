@@ -21,6 +21,12 @@ export const iAmAdmin = $i != null && $i.isAdmin;
 
 export async function signout() {
     waiting();
+    document.cookie.split(";").forEach((cookie) => {
+        const cookieName = cookie.split("=")[0].trim();
+        if (cookieName === "token") {
+            document.cookie = `${cookieName}=; max-age=0; path=/`;
+        }
+    });
     localStorage.removeItem("account");
 
     await removeAccount($i.id);
