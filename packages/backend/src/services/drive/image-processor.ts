@@ -53,7 +53,7 @@ export async function convertToWebp(path: string, width: number, height: number,
     return encoded;
 }
 
-export async function convertVipsToWebp(image: Image, width: number, height: number, quality = 75): Promise<IImage> {
+export async function convertVipsToWebp(image: Image, width: number, height: number, quality = 70): Promise<IImage> {
     // Resize
     const originalWidth = image.width;
     const originalHeight = image.height;
@@ -71,7 +71,7 @@ export async function convertVipsToWebp(image: Image, width: number, height: num
     const resized = image.resize(scale);
     image.delete();
 
-    const encoded = resized.webpsaveBuffer({
+    const encoded = resized.writeToBuffer(".webp", {
         Q: quality,
         lossless: false,
     });
