@@ -47,7 +47,10 @@ export async function convertToWebp(path: string, width: number, height: number,
         access: vips.Access.sequential,
     });
 
-    return convertVipsToWebp(image, width, height, quality);
+    const encoded = convertVipsToWebp(image, width, height, quality);
+    vips.shutdown();
+
+    return encoded;
 }
 
 export async function convertVipsToWebp(image: Image, width: number, height: number, quality = 75): Promise<IImage> {
