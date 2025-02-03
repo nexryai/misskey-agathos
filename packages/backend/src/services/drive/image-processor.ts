@@ -42,7 +42,10 @@ export async function convertSharpToJpeg(sharp: sharp.Sharp, width: number, heig
  */
 export async function convertToWebp(path: string, width: number, height: number, quality = 75): Promise<IImage> {
     const vips = await Vips();
-    const image = vips.Image.newFromFile(path);
+    vips.Cache.max(0);
+    const image = vips.Image.newFromFile(path, {
+        access: vips.Access.sequential,
+    });
 
     return convertVipsToWebp(image, width, height, quality);
 }
@@ -63,10 +66,14 @@ export async function convertVipsToWebp(image: Image, width: number, height: num
 
 
     const resized = image.resize(scale);
+    image.delete();
+
     const encoded = resized.webpsaveBuffer({
         Q: quality,
         lossless: false,
     });
+
+    resized.delete();
 
     return {
         data: Buffer.from(encoded),
