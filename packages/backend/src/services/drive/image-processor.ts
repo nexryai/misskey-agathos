@@ -1,11 +1,9 @@
 import sharp from "sharp";
-import Vips, { Image } from "wasm-vips";
-
 
 export type IImage = {
-	data: Buffer;
-	ext: string | null;
-	type: string;
+    data: Buffer;
+    ext: string | null;
+    type: string;
 };
 
 /**
@@ -19,13 +17,13 @@ export async function convertToJpeg(path: string, width: number, height: number)
 export async function convertSharpToJpeg(sharp: sharp.Sharp, width: number, height: number): Promise<IImage> {
     const data = await sharp
         .resize(width, height, {
-		    fit: "inside",
-		    withoutEnlargement: true,
+            fit: "inside",
+            withoutEnlargement: true,
         })
         .rotate()
         .jpeg({
-		    quality: 85,
-		    progressive: true,
+            quality: 85,
+            progressive: true,
         })
         .toBuffer();
 
@@ -40,60 +38,19 @@ export async function convertSharpToJpeg(sharp: sharp.Sharp, width: number, heig
  * Convert to WebP
  *   with resize, remove metadata, resolve orientation, stop animation
  */
-export async function convertToWebp(path: string, width: number, height: number, quality = 75): Promise<IImage> {
-    const vips = await Vips();
-    vips.Cache.max(0);
-    const image = vips.Image.newFromFile(path, {
-        access: vips.Access.sequential,
-    });
-
-    const encoded = convertVipsToWebp(image, width, height, quality);
-    vips.shutdown();
-
-    return encoded;
-}
-
-export async function convertVipsToWebp(image: Image, width: number, height: number, quality = 70): Promise<IImage> {
-    // Resize
-    const originalWidth = image.width;
-    const originalHeight = image.height;
-
-    const ratio = originalWidth / originalHeight;
-    const targetRatio = width / height;
-
-    const scale =
-        ratio > targetRatio ?
-            height < width ?
-                height / originalHeight : width / originalWidth
-            : 1;
-
-
-    const resized = image.resize(scale);
-    image.delete();
-
-    const encoded = resized.writeToBuffer(".webp", {
-        Q: quality,
-        lossless: false,
-    });
-
-    resized.delete();
-
-    return {
-        data: Buffer.from(encoded),
-        ext: "webp",
-        type: "image/webp",
-    } as IImage;
+export async function convertToWebp(path: string, width: number, height: number, quality = 85): Promise<IImage> {
+    return convertSharpToWebp(await sharp(path), width, height, quality);
 }
 
 export async function convertSharpToWebp(sharp: sharp.Sharp, width: number, height: number, quality = 85): Promise<IImage> {
     const data = await sharp
         .resize(width, height, {
-		    fit: "inside",
-		    withoutEnlargement: true,
+            fit: "inside",
+            withoutEnlargement: true,
         })
         .rotate()
         .webp({
-		    quality,
+            quality,
         })
         .toBuffer();
 
@@ -115,8 +72,8 @@ export async function convertToPng(path: string, width: number, height: number):
 export async function convertSharpToPng(sharp: sharp.Sharp, width: number, height: number): Promise<IImage> {
     const data = await sharp
         .resize(width, height, {
-		    fit: "inside",
-		    withoutEnlargement: true,
+            fit: "inside",
+            withoutEnlargement: true,
         })
         .rotate()
         .png()

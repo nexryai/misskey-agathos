@@ -5549,11 +5549,6 @@ w3c-xmlserializer@^5.0.0:
   dependencies:
     xml-name-validator "^5.0.0"
 
-wasm-vips@0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/wasm-vips/-/wasm-vips-0.0.11.tgz#d147f54ef19c6f110135958acae6004968488950"
-  integrity sha512-bzFU7WcimMY4WeqnZk7whKVpSXxpagISXPJwsk2VHF4lgIN9rl4uUo5sF9x6jOlACuCH6ITZUJ7QPTYmy60NCQ==
-
 web-push@3.6.7:
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/web-push/-/web-push-3.6.7.tgz#5f5e645951153e37ef90a6ddea5c150ea0f709e1"
