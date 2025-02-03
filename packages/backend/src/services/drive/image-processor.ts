@@ -1,6 +1,4 @@
 import sharp from "sharp";
-import Vips, { Image } from "wasm-vips";
-
 
 export type IImage = {
 	data: Buffer;
@@ -40,39 +38,8 @@ export async function convertSharpToJpeg(sharp: sharp.Sharp, width: number, heig
  * Convert to WebP
  *   with resize, remove metadata, resolve orientation, stop animation
  */
-export async function convertToWebp(path: string, width: number, height: number, quality = 75): Promise<IImage> {
-    const vips = await Vips();
-    const image = vips.Image.newFromFile(path);
-
-    return convertVipsToWebp(image, width, height, quality);
-}
-
-export async function convertVipsToWebp(image: Image, width: number, height: number, quality = 75): Promise<IImage> {
-    // Resize
-    const originalWidth = image.width;
-    const originalHeight = image.height;
-
-    const ratio = originalWidth / originalHeight;
-    const targetRatio = width / height;
-
-    const scale =
-        ratio > targetRatio ?
-            height < width ?
-                height / originalHeight : width / originalWidth
-            : 1;
-
-
-    const resized = image.resize(scale);
-    const encoded = resized.webpsaveBuffer({
-        Q: quality,
-        lossless: false,
-    });
-
-    return {
-        data: Buffer.from(encoded),
-        ext: "webp",
-        type: "image/webp",
-    } as IImage;
+export async function convertToWebp(path: string, width: number, height: number, quality = 85): Promise<IImage> {
+    return convertSharpToWebp(await sharp(path), width, height, quality);
 }
 
 export async function convertSharpToWebp(sharp: sharp.Sharp, width: number, height: number, quality = 85): Promise<IImage> {
