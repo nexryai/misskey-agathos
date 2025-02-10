@@ -313,7 +313,7 @@ export const paramDef = {
 export default define(meta, paramDef, async (ps, me) => {
     const instance = await fetchMeta(true);
 
-    const emojis = await Emojis.find({
+    const emojis = me ? await Emojis.find({
         where: {
             host: IsNull(),
         },
@@ -325,7 +325,7 @@ export default define(meta, paramDef, async (ps, me) => {
             id: "meta_emojis",
             milliseconds: 3600000,	// 1 hour
         },
-    });
+    }) : [];
 
     const response: any = {
         maintainerName: instance.maintainerName,

@@ -80,6 +80,7 @@ import * as os from "@/os";
 import number from "@/filters/number";
 import { i18n } from "@/i18n";
 import { definePageMetadata } from "@/scripts/page-metadata";
+import { $i } from "@/account";
 
 const props = withDefaults(defineProps<{
 	initialTab?: string;
@@ -110,15 +111,15 @@ const headerActions = computed(() => []);
 const headerTabs = computed(() => [{
     key: "overview",
     title: i18n.ts.overview,
-}, {
+}, $i != null ? {
     key: "emojis",
     title: i18n.ts.customEmojis,
     icon: "ti ti-mood-happy",
-}, {
+} : {},  $i != null ? {
     key: "federation",
     title: i18n.ts.federation,
     icon: "ti ti-whirl",
-}]);
+} : {}]);
 
 definePageMetadata(computed(() => ({
     title: i18n.ts.instanceInfo,
