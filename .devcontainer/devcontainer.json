@@ -17,6 +17,14 @@
 
 	// Configure tool-specific properties.
     "customizations" : {
+		"vscode": {
+      		"extensions": [
+        		"dbaeumer.vscode-eslint",
+				"vue.volar",
+				"ms-vscode.vscode-typescript-next",
+				"editorconfig.editorconfig"
+      		]
+    	},
         "jetbrains" : {
             "backend" : "WebStorm"
         }
