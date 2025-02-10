@@ -79,12 +79,6 @@ function showMenu(ev) {
         action: () => {
             os.pageWindow("/about");
         },
-    }, {
-        text: i18n.ts.aboutMisskey,
-        icon: "ti ti-info-circle",
-        action: () => {
-            os.pageWindow("/about-nexkey");
-        },
     }, null, {
         text: i18n.ts.help,
         icon: "ti ti-help",

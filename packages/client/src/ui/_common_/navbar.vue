@@ -116,10 +116,6 @@ function openInstanceMenu(ev: MouseEvent) {
             text: "API Console",
             icon: "ti ti-terminal-2",
         }],
-    }, {
-        type: "link",
-        text: i18n.ts.aboutMisskey,
-        to: "/about-nexkey",
     }], ev.currentTarget ?? ev.target, {
         align: "left",
     });
