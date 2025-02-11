@@ -95,7 +95,7 @@
 		"stringz": "2.1.0",
 		"tinycolor2": "1.6.0",
 		"tmp": "0.2.3",
-		"ts-loader": "9.5.1",
+		"ts-loader": "9.5.2",
 		"ts-node": "10.9.2",
 		"tsc-alias": "1.8.10",
 		"tsconfig-paths": "4.2.0",
