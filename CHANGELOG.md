@@ -1,3 +1,8 @@
+## 12.25Q1.2
+
+### 重要: Dockerのイメージのリポジトリが変更されました
+新しいパスは`docker.io/nexryai/concorde`です
+
 ## 12.25Q1.1
  - Client: フォントの変更、UIの改善
  - Breaking: ハイライトと広告機能の削除

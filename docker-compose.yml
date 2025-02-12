@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     #build: .
-    image: nexryai/nexkey
+    image: docker.io/nexryai/concorde
     restart: always
     links:
       - db
