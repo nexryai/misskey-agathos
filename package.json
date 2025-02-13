@@ -31,7 +31,7 @@
 		"cssnano": "7.0.6",
 		"execa": "9.5.2",
 		"js-yaml": "4.1.0",
-		"postcss": "^8.5.1",
+		"postcss": "^8.5.2",
 		"terser": "5.38.1"
 	},
 	"devDependencies": {
