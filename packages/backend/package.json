@@ -34,7 +34,7 @@
 		"chalk-template": "1.1.0",
 		"cli-highlight": "2.1.11",
 		"co-body": "6.2.0",
-		"color-convert": "2.0.1",
+		"color-convert": "3.0.1",
 		"content-disposition": "0.5.4",
 		"date-fns": "4.1.0",
 		"escape-regexp": "0.0.1",
